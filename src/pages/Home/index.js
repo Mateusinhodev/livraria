@@ -34,9 +34,11 @@ function Home() {
                 {livros.map((livro) => {
                     let thumbnail = livro.volumeInfo.imageLinks && livro.volumeInfo.imageLinks.smallThumbnail;
                     return(
-                        <article key={livro.id}>
+                        <article className='card-livro' key={livro.id}>
                             <strong>{livro.volumeInfo.title}</strong>
-                            <img src={thumbnail}/>
+                            <div>
+                                <img src={thumbnail}/>
+                            </div>
                             <Link to={`/livro/${livro.id}`}>Acessar</Link>
                         </article>
                     )
