@@ -1,17 +1,18 @@
 .lista-livros {
-    width: 60%;
+    width: 90%;
     margin: 0 auto;
     margin-top: 25px;
     display: grid;
-    grid-template-columns: repeat(3, minmax(200px, 0.5fr));
+    grid-template-columns: repeat(4, minmax(200px, 0.5fr));
     grid-gap: 20px;
     box-sizing: border-box;
 }
 
 .card-livro{
-    background-color: #686D76;
+    height: 345px;
+    background-color: #EEEEEE;
     border-radius: 1rem;
-    padding: 0.5rem;
+    padding: 0.8rem;
     margin-bottom: 10px;
     box-shadow: 0 5px 5px rgba(136, 134, 132, 0.5);
     transition: .5s;
@@ -21,19 +22,20 @@
 
 .card-livro div img {
     width: 100%;
-    height: 350px;
+    height: 280px;
     border-radius: 1rem 1rem 0 0;
 }
 
 .card-livro strong {
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .card-livro a {
-    position: relative;
+    position: absolute;
     text-decoration: none;
-    left: 10px;
-    right: 10px;
+    left: 13px;
+    right: 13px;
+    border-radius: 2px;
     background-color: #DC5F00;
     color: #FFF;
     font-weight: bold;
