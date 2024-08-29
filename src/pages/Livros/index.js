@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import './livro-info.css'
 import api from '../../services/api'
 
 function Livro() {
@@ -51,6 +51,13 @@ function Livro() {
             <span>{livro.volumeInfo.description}</span>
 
             <strong>Autor: {livro.volumeInfo.authors}</strong>
+
+            <div className="area-buttons">
+                <button>Salvar</button>
+                <button>
+                    <a href="#">Resumos</a>
+                </button>
+            </div>
         </div>
     )
 }
