@@ -12,7 +12,7 @@ function Home() {
 
     useEffect(() => {
         async function loadLivros() {
-            const response = await api.get("https://www.googleapis.com/books/v1/volumes?q=react&key", {
+            const response = await api.get("https://www.googleapis.com/books/v1/volumes?q=books&key", {
                 params: {
                     api_key: "AIzaSyDXg_R6YQRMJGUi6SrSuettnTzj7WWxOFQ",
                     language:"pt-BR",
@@ -21,7 +21,7 @@ function Home() {
 
             console.log(response.data.items)
 
-            setLivros(response.data.items.slice(0,10))
+            setLivros(response.data.items)
         }
 
         loadLivros();

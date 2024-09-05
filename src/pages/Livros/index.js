@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import './livro-info.css'
 import api from '../../services/api'
 
 function Livro() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [livro, setLivro] = useState({});
     const [loading, setLoading] = useState(true);
 
@@ -21,7 +22,9 @@ function Livro() {
                 setLoading(false);
             })
             .catch(() => {
-                console.log("FILME NAO ENCONTRADO")
+                console.log("FILME NAO ENCONTRADO");
+                navigate("/", {replace: true})
+                return;
             })
         }
 
@@ -31,7 +34,7 @@ function Livro() {
             console.log("Componente foi desmontado")
         } 
 
-    }, [])
+    }, [navigate, id])
 
     if(loading) {
         return(
@@ -55,7 +58,7 @@ function Livro() {
             <div className="area-buttons">
                 <button>Salvar</button>
                 <button>
-                    <a href="#">Resumos</a>
+                    <a target="blank" rel="external" href={`https://www.google.com/search?tbm=bks&q=${livro.volumeInfo.title}`}>Livro</a>
                 </button>
             </div>
         </div>
