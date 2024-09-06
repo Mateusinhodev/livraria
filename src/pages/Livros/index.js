@@ -36,6 +36,24 @@ function Livro() {
 
     }, [navigate, id])
 
+    function salvarLivro() {
+        const minhaLista = localStorage.getItem("@livraria");
+
+        const livrosSalvos = JSON.parse(minhaLista) || [];
+
+        const hasLivro = livrosSalvos.some((livroSalvo) => livrosSalvos.id === livro.id);
+
+        if(hasLivro) {
+            alert("LIVRO JÁ ESTÁ SALVO NA LISTA");
+            return;
+        }
+
+
+        livrosSalvos.push(livro);
+        localStorage.setItem("@livraria", JSON.stringify(livrosSalvos));
+        alert("LIVRO SALVO COM SUCESSO");
+    }
+
     if(loading) {
         return(
             <div className="livro-info">
@@ -56,7 +74,7 @@ function Livro() {
             <strong>Autor: {livro.volumeInfo.authors}</strong>
 
             <div className="area-buttons">
-                <button>Salvar</button>
+                <button onClick={salvarLivro}>Salvar</button>
                 <button>
                     <a target="blank" rel="external" href={`https://www.google.com/search?tbm=bks&q=${livro.volumeInfo.title}`}>Livro</a>
                 </button>
