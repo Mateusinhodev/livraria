@@ -12,16 +12,16 @@ function Home() {
 
     useEffect(() => {
         async function loadLivros() {
-            const response = await api.get("https://www.googleapis.com/books/v1/volumes?q=books&key", {
+            const response = await api.get("https://www.googleapis.com/books/v1/volumes?q=livros&maxResults=40", {
                 params: {
                     api_key: "AIzaSyDXg_R6YQRMJGUi6SrSuettnTzj7WWxOFQ",
                     language:"pt-BR",
                 }
             })
 
-            console.log(response.data.items)
+            console.log(response.data.items.slice(0, 40))
 
-            setLivros(response.data.items)
+            setLivros(response.data.items.slice(0, 40))
         }
 
         loadLivros();
