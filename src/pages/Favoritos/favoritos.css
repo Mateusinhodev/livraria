@@ -1,0 +1,38 @@
+.meus-livros {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.meus-livros h1 {
+    margin-bottom: 14px;
+}
+
+.meus-livros span {
+    font-size: 18px;
+}
+
+.meus-livros ul {
+    width: 720px;
+}
+
+.meus-livros ul li {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.meus-livros div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.meus-livros div a {
+    text-decoration: none;
+    color: #06469b;
+    margin-right: 14px;
+}

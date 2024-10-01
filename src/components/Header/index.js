@@ -5,7 +5,7 @@ function Header() {
     return (
         <header>
             <Link className='logo' to="/">Livraria</Link>
-            <Link className='livros_lidos'>Meus livros</Link>
+            <Link className='favoritos' to="/favoritos">Meus livros</Link>
         </header>
     )
 }

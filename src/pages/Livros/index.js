@@ -6,6 +6,7 @@ import api from '../../services/api'
 function Livro() {
     const { id } = useParams();
     const navigate = useNavigate();
+
     const [livro, setLivro] = useState({});
     const [loading, setLoading] = useState(true);
 
@@ -37,11 +38,11 @@ function Livro() {
     }, [navigate, id])
 
     function salvarLivro() {
-        const minhaLista = localStorage.getItem("@livraria");
+        const meusLivros = localStorage.getItem("@livraria");
 
-        const livrosSalvos = JSON.parse(minhaLista) || [];
+        let livrosSalvos = JSON.parse(meusLivros) || [];
 
-        const hasLivro = livrosSalvos.some((livroSalvo) => livrosSalvos.id === livro.id);
+        const hasLivro = livrosSalvos.some( (livroSalvo) => livroSalvo.id === livro.id);
 
         if(hasLivro) {
             alert("LIVRO JÁ ESTÁ SALVO NA LISTA");
