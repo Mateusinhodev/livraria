@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import './livro-info.css'
 import api from '../../services/api'
+import { toast } from "react-toastify";
 
 function Livro() {
     const { id } = useParams();
@@ -45,14 +46,14 @@ function Livro() {
         const hasLivro = livrosSalvos.some( (livroSalvo) => livroSalvo.id === livro.id);
 
         if(hasLivro) {
-            alert("LIVRO JÁ ESTÁ SALVO NA LISTA");
+            toast.warn("Livro já está na lista de favoritos");
             return;
         }
 
 
         livrosSalvos.push(livro);
         localStorage.setItem("@livraria", JSON.stringify(livrosSalvos));
-        alert("LIVRO SALVO COM SUCESSO");
+        toast.success("Livro salvo com sucesso");
     }
 
     if(loading) {

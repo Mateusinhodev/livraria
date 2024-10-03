@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./favoritos.css"
+import { toast } from "react-toastify";
 
 function Favoritos() {
 
@@ -11,6 +12,17 @@ function Favoritos() {
         const meusLivros= localStorage.getItem("@livraria");
         setLivros(JSON.parse(meusLivros) || [])
     }, [])
+
+    function excluirLivro(id) {
+        let filtroLivros = livros.filter((livro) => {
+            return (livro.id !== id);
+        });
+
+        setLivros(filtroLivros);
+        localStorage.setItem("@livraria", JSON.stringify(filtroLivros));
+        toast.success("Livro removido com sucesso");
+
+    }
 
     return (
         <div className="meus-livros">
@@ -23,7 +35,7 @@ function Favoritos() {
                             <span>{livro.volumeInfo.title}</span>
                             <div>
                                 <Link to={`/livro/${livro.id}`}>Ver detalhes</Link>
-                                <button>Excluir</button>
+                                <button onClick={() => excluirLivro(livro.id)}>Remover</button>
                             </div>
                         </li>
                     )
