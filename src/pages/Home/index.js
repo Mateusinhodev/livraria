@@ -32,10 +32,10 @@ function Home() {
         <div className='container'>
             <div className='lista-livros'>
                 {livros.map((livro) => {
-                    let thumbnail = livro.volumeInfo.imageLinks && livro.volumeInfo.imageLinks.smallThumbnail;
+                    let thumbnail = livro.volumeInfo.imageLinks && livro.volumeInfo.imageLinks.smallThumbnail || "placeholder.jpg";
                     return(
                         <article className='card-livro' key={livro.id}>
-                            <strong>{livro.volumeInfo.title}</strong>
+                            <strong title={livro.volumeInfo.title}>{livro.volumeInfo.title}</strong>
                             <div>
                                 <img src={thumbnail}/>
                             </div>
