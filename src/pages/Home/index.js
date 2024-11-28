@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import api from '../../services/api'
 import { Link } from 'react-router-dom';
+
+import Main from '../../components/Main';
+
 import './home.css'
 
 // URL da API:  https://www.googleapis.com/books/v1/volumes?q=flowers&filter=free-ebooks&key=yourAPIKey
@@ -30,6 +33,7 @@ function Home() {
 
     return (
         <div className='container'>
+            <Main/>
             <div className='lista-livros'>
                 {livros.map((livro) => {
                     let thumbnail = livro.volumeInfo.imageLinks && livro.volumeInfo.imageLinks.smallThumbnail || "placeholder.jpg";

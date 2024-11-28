@@ -6,6 +6,8 @@ import Favoritos from './pages/Favoritos';
 
 import Header from './components/Header';
 
+import Main from './components/Main';
+
 import Erro from './pages/Erro';
 
 function RoutesApp() {
