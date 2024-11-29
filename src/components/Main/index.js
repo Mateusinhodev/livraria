@@ -5,9 +5,7 @@ function Main() {
     return(
         <>
             <div className='main'>
-                <div className='row1'>
-                    <h1>Um livro é uma porta aberta para mundos <br/> que só a imaginação pode alcançar</h1>
-                </div>
+                <div className='row1'></div>
                 <div className='row2'>
                     <h2>Encontre seu livro</h2>
                     <div className='search'>
