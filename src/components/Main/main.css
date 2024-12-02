@@ -26,7 +26,7 @@ html {
     width: 100%;
     height: 100%;
     background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url(./../../images/bg1.jpg);
-    clip-path: circle(85% at left 800px);
+    clip-path: circle(90% at left 800px);
     z-index: -1;
 }
 
@@ -79,3 +79,4 @@ html {
     color: #f8f9fa;
     font-weight: bold;
 }
+
