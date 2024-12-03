@@ -1,60 +1,128 @@
+/* Container principal */
 .livro-info {
-    margin: 0 auto;
-    margin-top: 18px;
-    display: flex;
-    flex-direction: column;
-    max-width: 800px;
-    padding: 0 8px;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
 }
 
 .livro-info h1 {
-    margin: 14px 0;
+    text-align: center;
+    font-size: 2.5rem;
+    color: #DC5F00;
+    margin-bottom: 20px;
 }
 
+/* Imagem do livro */
 .livro-info img {
+    max-width: 200px;
     border-radius: 8px;
-    width: 800px;
-    max-width: 100%;
-    max-height: 600px;
-    /* object-fit: cover; */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
+/* Sinopse */
 .livro-info h3 {
-    margin-top: 14px;
+    font-size: 1.6rem;
+    color: #333;
+    margin-top: 20px;
 }
 
 .livro-info span {
-    margin: 8px 0;
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-top: 10px;
+    display: block;
 }
 
+/* Autor */
+.livro-info strong {
+    font-size: 1.1rem;
+    color: #333;
+    margin-top: 20px;
+    display: block;
+}
+
+/* Área dos botões */
+.area-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* Botões */
 .area-buttons button {
-    margin-right: 12px;
-    margin-top: 14px;
-    margin-left: 0;
-    margin-bottom: 20px;
-    font-size: 20px;
-    border: 0;
-    outline: none;
-    padding: 12px;
-    border-radius: 4px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
-    transition: all 0.5s;
-}
-
-.area-buttons a {
-    text-decoration: none;
-    color: #000;
-    transition: all 0.5s;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .area-buttons button:hover {
+    transform: translateY(-4px);
+}
+
+.area-buttons button:first-child {
     background-color: #DC5F00;
-    color: #FFF;
+    color: #fff;
 }
 
-.area-buttons a:hover {
-    color: #FFF;
+.area-buttons button:first-child:hover {
+    background-color: #e2853e;
 }
 
+.area-buttons button a {
+    text-decoration: none;
+    color: #fff;
+}
 
+.area-buttons button:nth-child(2) {
+    background-color: #DC5F00;
+    color: #fff;
+}
 
+.area-buttons button:nth-child(2):hover {
+    background-color: #e2853e;
+}
+
+.area-buttons button a {
+    color: #fff;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .livro-info {
+        padding: 20px;
+    }
+
+    .livro-info h1 {
+        font-size: 2rem;
+    }
+
+    .livro-info img {
+        max-width: 150px;
+    }
+
+    .livro-info h3 {
+        font-size: 1.4rem;
+    }
+
+    .livro-info span {
+        font-size: 0.95rem;
+    }
+
+    .area-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

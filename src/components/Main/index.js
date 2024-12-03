@@ -1,26 +1,34 @@
 import './main.css';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { useState } from 'react';
 
-function Main() {
+function Main({ onSearch }) {
 
-    const [search, setSearch]=useState("");
-    const searchBook=(evt)=>{
-        if(evt.key==="Enter") {
-            console.log("Hello!");
+    const [search, setSearch]= useState("");
+
+    const handleSearch = (evt) => {
+        if(evt.key==="Enter" || evt.type === "click") {
+            onSearch(search); //Passa o valor da pesquisa para o componente pai Home
+            console.log(search)
         }
-    }
+    };
+
+    // const searchBook=(evt)=>{
+    //     if(evt.key==="Enter" || evt.type === "click") {
+    //         onSearch(search); //Passa o valor da pesquisa para o componente pai Home
+    //         console.log(search)
+    //     }
+    // }
+
     return(
         <>
-            <div className='main'>
+            <div className='banner'>
                 <div className='row1'></div>
                 <div className='row2'>
                     <h2>Encontre seu livro</h2>
                     <div className='search'>
-                        <input type='text' placeholder='Digite o nome do livro que procura...' value={search} onChange={e=>setSearch(e.target.value)} onKeyPress={searchBook}/>
+                        <input type='text' placeholder='Digite o nome do livro que procura...' value={search} onChange={e=>setSearch(e.target.value)} onKeyPress={handleSearch}/>
                         
-                        <button>Pesquisar</button>
+                        <button onClick={handleSearch}>Pesquisar</button>
                     </div>
                     <img src='./imagens/livrariavirtual.png'/>
                 </div>

@@ -1,82 +1,65 @@
-* {
-    padding: 0;
-    margin: 0;
-}
-
-html {
-    font-size: 75.5%;
-}
-
-.main {
-    width: 100%;
-    height: 500px;
-    color: #DC5F00;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    position: relative;
-}
-
-.main ::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url(./../../images/bg1.jpg);
-    clip-path: circle(90% at left 800px);
-    z-index: -1;
-}
-
-.row2 {
-    position: absolute;
-    top: 30px;
-    right: 150px;
+.banner {
+    background-color: #f4f4f4; /* Fundo neutro claro */
+    padding: 40px 20px;
+    margin-bottom: 20px;
     text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
-.row2 h2 {
-    font-size: 3rem;
+.banner .row2 {
     margin-top: 20px;
-    margin-bottom: 15px;
 }
 
-.row2 img {
-    margin-top: 30px;
-    width: 250px;
+.banner h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
 }
 
-.row1 h1 {
-    font-size: 3rem;
-    text-align: center;
-    margin-left: 35px
-}
-
-.search {
+.banner .search {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
-.search input {
-    outline: 0;
-    border: 0;
-    width: 350px;
-    height: 35px;
-    padding: 0 0.5rem;
-    font-size: 15px;
-    font-weight: bold;
+.banner .search input {
+    width: 300px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: border 0.3s ease, box-shadow 0.3s ease;
 }
 
-.search button {
+.banner .search input:focus {
+    border-color: #DC5F00;
+    box-shadow: 0 0 5px #d4894f;
     outline: none;
-    border: none;
-    height: 35px;
-    padding: 0 0.5rem;
-    background-color: #DC5F00;
-    color: #f8f9fa;
-    font-weight: bold;
 }
 
+.banner .search button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #DC5F00;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.banner .search button:hover {
+    background-color: #e2853e;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.banner img {
+    margin-top: 20px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
