@@ -1,71 +1,46 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import api from '../../services/api';
 
 import Banner from '../../components/Banner';
+import { buscarLivros, getMensagemErro } from '../../services/livros';
+import { getCapa, getAutores } from '../../utils/livros';
 
 import './home.css';
-
-// Retorna a capa do livro (a API às vezes envia em http, então forçamos https)
-function getCapa(livro) {
-    const imagens = livro.volumeInfo.imageLinks;
-    const url = imagens?.thumbnail || imagens?.smallThumbnail;
-    return url?.replace('http://', 'https://');
-}
-
-// Mantém só livros com capa e remove ids repetidos (a API às vezes duplica)
-function filtrarLivros(items) {
-    const vistos = new Set();
-    return items.filter((livro) => {
-        if (!getCapa(livro) || vistos.has(livro.id)) return false;
-        vistos.add(livro.id);
-        return true;
-    });
-}
 
 function Home() {
     const [livros, setLivros] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
-    const [erro, setErro] = useState(false);
+    const [erro, setErro] = useState('');
+    const [tentativa, setTentativa] = useState(0); // muda ao clicar em "Tentar novamente"
 
-    // Roda ao abrir a página e sempre que o termo de pesquisa muda
+    // Roda ao abrir a página, quando o termo muda ou ao tentar de novo
     useEffect(() => {
         const controller = new AbortController();
 
-        async function fetchLivros() {
+        async function carregar() {
             setLoading(true);
-            setErro(false);
+            setErro('');
 
             try {
-                const response = await api.get('volumes', {
-                    params: {
-                        q: searchQuery || 'livros',
-                        maxResults: 40,
-                        langRestrict: 'pt',
-                        printType: 'books',
-                    },
-                    signal: controller.signal,
-                });
-
-                // Quando não há resultados, a API não envia "items"
-                setLivros(filtrarLivros(response.data.items ?? []));
+                const resultado = await buscarLivros(searchQuery, { signal: controller.signal });
+                setLivros(resultado);
                 setLoading(false);
             } catch (error) {
                 // Busca cancelada porque o usuário pesquisou outra coisa: ignora
                 if (controller.signal.aborted) return;
 
                 console.error('Erro ao buscar livros', error);
-                setErro(true);
+                setErro(getMensagemErro(error));
                 setLivros([]);
                 setLoading(false);
             }
         }
 
-        fetchLivros();
+        carregar();
 
         return () => controller.abort();
-    }, [searchQuery]);
+    }, [searchQuery, tentativa]);
 
     return (
         <div className="home">
@@ -74,9 +49,16 @@ function Home() {
             {loading && <p className="home__aviso">Carregando livros...</p>}
 
             {!loading && erro && (
-                <p className="home__aviso">
-                    Não foi possível carregar os livros. Tente novamente mais tarde.
-                </p>
+                <div className="home__aviso">
+                    <p>{erro}</p>
+                    <button
+                        type="button"
+                        className="home__tentar"
+                        onClick={() => setTentativa((n) => n + 1)}
+                    >
+                        Tentar novamente
+                    </button>
+                </div>
             )}
 
             {!loading && !erro && livros.length === 0 && (
@@ -88,14 +70,15 @@ function Home() {
             {!loading && livros.length > 0 && (
                 <ul className="lista-livros">
                     {livros.map((livro) => {
-                        const { title, authors } = livro.volumeInfo;
+                        const { title } = livro.volumeInfo;
+                        const autores = getAutores(livro.volumeInfo);
 
                         return (
                             <li key={livro.id}>
                                 <article className="card-livro">
                                     <img
                                         className="card-livro__capa"
-                                        src={getCapa(livro)}
+                                        src={getCapa(livro.volumeInfo)}
                                         alt={`Capa do livro ${title}`}
                                         loading="lazy"
                                     />
@@ -104,9 +87,7 @@ function Home() {
                                         {title}
                                     </h3>
 
-                                    {authors && (
-                                        <p className="card-livro__autor">{authors.join(', ')}</p>
-                                    )}
+                                    {autores && <p className="card-livro__autor">{autores}</p>}
 
                                     <Link className="card-livro__botao" to={`/livro/${livro.id}`}>
                                         Ver detalhes

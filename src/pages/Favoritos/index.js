@@ -3,14 +3,9 @@ import { toast } from 'react-toastify';
 
 import useFavoritos from '../../hooks/useFavoritos';
 import { adicionarFavorito, removerFavorito } from '../../services/favoritos';
+import { getCapa, getAutores } from '../../utils/livros';
 
 import './favoritos.css';
-
-function getCapa(volumeInfo) {
-    const imagens = volumeInfo.imageLinks;
-    const url = imagens?.thumbnail || imagens?.smallThumbnail;
-    return url?.replace('http://', 'https://');
-}
 
 function Favoritos() {
     // A lista se atualiza sozinha quando um livro é removido
@@ -59,7 +54,8 @@ function Favoritos() {
 
             <ul className="meus-livros__lista">
                 {livros.map((livro) => {
-                    const { title, authors } = livro.volumeInfo;
+                    const { title } = livro.volumeInfo;
+                    const autores = getAutores(livro.volumeInfo);
                     const capa = getCapa(livro.volumeInfo);
 
                     return (
@@ -74,9 +70,7 @@ function Favoritos() {
                                 <Link className="item-favorito__titulo" to={`/livro/${livro.id}`}>
                                     {title}
                                 </Link>
-                                {authors && (
-                                    <span className="item-favorito__autor">{authors.join(', ')}</span>
-                                )}
+                                {autores && <span className="item-favorito__autor">{autores}</span>}
                             </div>
 
                             <div className="item-favorito__acoes">

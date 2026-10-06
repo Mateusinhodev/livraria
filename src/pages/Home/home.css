@@ -11,6 +11,28 @@
     color: #555;
 }
 
+.home__aviso p {
+    margin: 0;
+}
+
+.home__tentar {
+    margin-top: 16px;
+    padding: 10px 20px;
+    border: 2px solid var(--header-destaque, #DC5F00);
+    border-radius: 6px;
+    background-color: transparent;
+    color: var(--header-destaque, #DC5F00);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.home__tentar:hover {
+    background-color: var(--header-destaque, #DC5F00);
+    color: #FFF;
+}
+
 .lista-livros {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));

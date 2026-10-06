@@ -2,28 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import api from '../../services/api';
+import { buscarLivro, getMensagemErro } from '../../services/livros';
 import { isFavorito, adicionarFavorito, removerFavorito } from '../../services/favoritos';
+import { getCapa, getAutores, limparDescricao, forcarHttps } from '../../utils/livros';
 
 import './livro-info.css';
-
-// Pega a maior capa disponível (e força https)
-function getCapa(volumeInfo) {
-    const imagens = volumeInfo.imageLinks;
-    const url = imagens?.medium || imagens?.small || imagens?.thumbnail || imagens?.smallThumbnail;
-    return url?.replace('http://', 'https://');
-}
-
-// A sinopse vem da API com HTML (<p>, <b>, <br>...).
-// Convertemos para texto puro, mantendo as quebras de parágrafo.
-function limparDescricao(html) {
-    if (!html) return '';
-    const comQuebras = html
-        .replace(/<br\s*\/?>/gi, '\n')
-        .replace(/<\/p>/gi, '\n\n');
-    const doc = new DOMParser().parseFromString(comQuebras, 'text/html');
-    return doc.body.textContent.trim();
-}
 
 function Livro() {
     const { id } = useParams();
@@ -40,17 +23,23 @@ function Livro() {
             setLoading(true);
 
             try {
-                const response = await api.get(`volumes/${id}`, {
-                    signal: controller.signal,
-                });
+                const dados = await buscarLivro(id, { signal: controller.signal });
 
-                setLivro(response.data);
-                setSalvo(isFavorito(response.data.id));
+                setLivro(dados);
+                setSalvo(isFavorito(dados.id));
                 setLoading(false);
             } catch (error) {
                 if (controller.signal.aborted) return;
 
-                toast.error('Livro não encontrado');
+                // Limite de buscas ou sem internet: mostra o motivo real.
+                // Qualquer outro erro: o id não existe (a API não usa só 404 para isso).
+                const status = error.response?.status;
+                const mensagem =
+                    status === 429 || !error.response
+                        ? getMensagemErro(error)
+                        : 'Livro não encontrado.';
+
+                toast.error(mensagem);
                 navigate('/', { replace: true });
             }
         }
@@ -83,7 +72,6 @@ function Livro() {
     const {
         title,
         subtitle,
-        authors,
         description,
         publisher,
         publishedDate,
@@ -93,9 +81,10 @@ function Livro() {
         infoLink,
     } = livro.volumeInfo;
 
-    const capa = getCapa(livro.volumeInfo);
+    const capa = getCapa(livro.volumeInfo, { grande: true });
+    const autores = getAutores(livro.volumeInfo);
     const sinopse = limparDescricao(description);
-    const linkGoogle = (previewLink || infoLink)?.replace('http://', 'https://');
+    const linkGoogle = forcarHttps(previewLink || infoLink);
 
     return (
         <article className="livro-info">
@@ -113,7 +102,7 @@ function Livro() {
                 <div className="livro-info__detalhes">
                     <h1 className="livro-info__titulo">{title}</h1>
                     {subtitle && <p className="livro-info__subtitulo">{subtitle}</p>}
-                    {authors && <p className="livro-info__autor">por {authors.join(', ')}</p>}
+                    {autores && <p className="livro-info__autor">por {autores}</p>}
 
                     <dl className="livro-info__meta">
                         {publisher && (
