@@ -1,0 +1,187 @@
+.livro-info {
+    max-width: 960px;
+    margin: 32px auto;
+    padding: 32px;
+    background-color: #F9F9F9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.livro-info__carregando {
+    margin: 40px 0;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.livro-info__voltar {
+    margin-bottom: 24px;
+    padding: 6px 0;
+    border: none;
+    background: none;
+    color: #555;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.livro-info__voltar:hover {
+    color: var(--header-destaque, #DC5F00);
+}
+
+/* Capa à esquerda, detalhes à direita */
+.livro-info__conteudo {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 32px;
+    align-items: start;
+}
+
+.livro-info__capa {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+.livro-info__capa--vazia {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #DDD;
+    color: #777;
+    font-weight: 700;
+}
+
+.livro-info__titulo {
+    margin: 0;
+    font-size: 2rem;
+    line-height: 1.2;
+    color: #222;
+}
+
+.livro-info__subtitulo {
+    margin: 6px 0 0;
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.livro-info__autor {
+    margin: 12px 0 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--header-destaque, #DC5F00);
+}
+
+/* Editora, ano, páginas, categoria */
+.livro-info__meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+    margin: 24px 0 0;
+    padding: 16px 0;
+    border-top: 1px solid #E2E2E2;
+    border-bottom: 1px solid #E2E2E2;
+}
+
+.livro-info__meta dt {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+}
+
+.livro-info__meta dd {
+    margin: 4px 0 0;
+    color: #333;
+    font-weight: 600;
+}
+
+.livro-info__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.livro-info__botao {
+    display: inline-block;
+    padding: 12px 22px;
+    border: 2px solid var(--header-destaque, #DC5F00);
+    border-radius: 6px;
+    background-color: var(--header-destaque, #DC5F00);
+    color: #FFF;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+
+.livro-info__botao:hover {
+    background-color: var(--header-destaque-hover, #F06C0A);
+    border-color: var(--header-destaque-hover, #F06C0A);
+    color: #FFF;
+}
+
+.livro-info__botao:active {
+    transform: scale(0.97);
+}
+
+/* Versão vazada: "Ver no Google Livros" e "Remover dos favoritos" */
+.livro-info__botao--secundario {
+    background-color: transparent;
+    color: var(--header-destaque, #DC5F00);
+}
+
+.livro-info__botao:focus-visible,
+.livro-info__voltar:focus-visible {
+    outline: 2px solid #333;
+    outline-offset: 3px;
+}
+
+.livro-info__sinopse {
+    margin-top: 32px;
+}
+
+.livro-info__sinopse h2 {
+    margin: 0 0 12px;
+    font-size: 1.4rem;
+    color: #333;
+}
+
+.livro-info__sinopse p {
+    margin: 0;
+    color: #555;
+    line-height: 1.7;
+    white-space: pre-line; /* respeita as quebras de parágrafo da sinopse */
+}
+
+@media (max-width: 700px) {
+    .livro-info {
+        margin: 16px;
+        padding: 20px;
+    }
+
+    .livro-info__conteudo {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .livro-info__capa {
+        max-width: 180px;
+        margin: 0 auto;
+    }
+
+    .livro-info__titulo {
+        font-size: 1.5rem;
+    }
+
+    .livro-info__acoes {
+        flex-direction: column;
+    }
+
+    .livro-info__botao {
+        text-align: center;
+    }
+}

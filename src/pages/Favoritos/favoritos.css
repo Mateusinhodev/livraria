@@ -1,97 +1,207 @@
-/* Container principal */
 .meus-livros {
-    padding: 40px;
     max-width: 900px;
-    margin: 40px auto;
-    background-color: #f9f9f9;
-    border-radius: 8px;
+    margin: 32px auto;
+    padding: 32px;
+    background-color: #F9F9F9;
+    border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    font-family: 'Arial', sans-serif;
 }
 
-.meus-livros h1 {
-    text-align: center;
-    font-size: 2rem;
-    color: #DC5F00;
-    margin-bottom: 20px;
-}
-
-/* Lista de livros */
-.meus-livros ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.meus-livros li {
+.meus-livros__topo {
     display: flex;
+    align-items: baseline;
     justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    margin-bottom: 12px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    gap: 12px;
+    margin-bottom: 24px;
 }
 
-.meus-livros li:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+.meus-livros__topo h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #222;
 }
 
-.meus-livros li span {
-    font-size: 1.2rem;
-    color: #333;
-    font-weight: 500;
-    flex-grow: 1;
+.meus-livros__total {
+    color: #777;
+    font-weight: 600;
 }
 
-/* Links e botões */
-.meus-livros li div {
+.meus-livros__lista {
     display: flex;
-    gap: 15px;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Item da lista */
+.item-favorito {
+    display: flex;
     align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s ease;
 }
 
-.meus-livros li a {
-    text-decoration: none;
-    color: #DC5F00;
-    font-size: 1rem;
-    transition: color 0.3s ease;
+.item-favorito:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
-.meus-livros li a:hover {
-    color: #e2853e;
-}
-
-.meus-livros li button {
-    padding: 8px 15px;
-    background-color: #DC5F00;
-    color: #fff;
-    border: none;
+.item-favorito__capa {
+    flex-shrink: 0;
+    width: 56px;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
     border-radius: 4px;
+    background-color: #DDD;
+}
+
+.item-favorito__info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0; /* permite cortar o texto com "..." */
+}
+
+.item-favorito__titulo {
+    color: #222;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item-favorito__titulo:hover {
+    color: var(--header-destaque, #DC5F00);
+}
+
+.item-favorito__autor {
+    color: #777;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item-favorito__acoes {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.item-favorito__detalhes {
+    color: var(--header-destaque, #DC5F00);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.item-favorito__detalhes:hover {
+    text-decoration: underline;
+}
+
+.item-favorito__remover {
+    padding: 8px 14px;
+    border: 2px solid #C0392B;
+    border-radius: 6px;
+    background-color: transparent;
+    color: #C0392B;
+    font-size: 0.9rem;
+    font-weight: 700;
     cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.meus-livros li button:hover {
-    background-color: #e2853e;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+.item-favorito__remover:hover {
+    background-color: #C0392B;
+    color: #FFF;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
+.item-favorito__titulo:focus-visible,
+.item-favorito__detalhes:focus-visible,
+.item-favorito__remover:focus-visible,
+.meus-livros__explorar:focus-visible {
+    outline: 2px solid #333;
+    outline-offset: 3px;
+}
+
+/* Estado vazio */
+.meus-livros--vazio {
+    text-align: center;
+    padding: 56px 24px;
+}
+
+.meus-livros__icone {
+    font-size: 3rem;
+}
+
+.meus-livros--vazio h1 {
+    margin: 12px 0 8px;
+    font-size: 1.5rem;
+    color: #222;
+}
+
+.meus-livros--vazio p {
+    margin: 0 0 24px;
+    color: #666;
+}
+
+.meus-livros__explorar {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 6px;
+    background-color: var(--header-destaque, #DC5F00);
+    color: #FFF;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.meus-livros__explorar:hover {
+    background-color: var(--header-destaque-hover, #F06C0A);
+}
+
+/* Botão "Desfazer" dentro do toast */
+.toast-desfazer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.toast-desfazer button {
+    padding: 4px 10px;
+    border: 1px solid currentColor;
+    border-radius: 4px;
+    background: transparent;
+    color: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
     .meus-livros {
+        margin: 16px;
         padding: 20px;
     }
 
-    .meus-livros li {
-        flex-direction: column;
-        align-items: flex-start;
+    .meus-livros__topo h1 {
+        font-size: 1.5rem;
     }
 
-    .meus-livros li div {
-        margin-top: 10px;
+    .item-favorito {
+        flex-wrap: wrap;
+    }
+
+    .item-favorito__acoes {
+        width: 100%;
+        justify-content: flex-end;
     }
 }

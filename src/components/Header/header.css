@@ -1,26 +1,124 @@
-header {
+:root {
+    --header-bg: #373A40;
+    --header-texto: #FFFFFF;
+    --header-destaque: #DC5F00;
+    --header-destaque-hover: #F06C0A;
+    --header-altura: 64px;
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    height: var(--header-altura);
+    background-color: var(--header-bg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.header__container {
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    width: 100%;
-    height: 60px;
-    background-color: #373A40;
+    justify-content: space-between;
+    max-width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
 }
 
-.logo {
+.header__logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--header-texto);
+    font-size: 1.75rem;
+    font-weight: 700;
     text-decoration: none;
-    font-size: 30px;
-    cursor: pointer;
+    letter-spacing: 0.5px;
+}
+
+.header__logo-icon {
+    font-size: 1.5rem;
+}
+
+.header__favoritos {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border: 2px solid var(--header-destaque);
+    border-radius: 6px;
+    background-color: var(--header-destaque);
+    color: #F8F9FA;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.header__favoritos:hover {
+    background-color: var(--header-destaque-hover);
+    border-color: var(--header-destaque-hover);
+}
+
+.header__favoritos:active {
+    transform: scale(0.97);
+}
+
+/* Quando o usuário já está na página de favoritos */
+.header__favoritos--ativo {
+    background-color: transparent;
+    color: var(--header-destaque);
+}
+
+.header__favoritos--ativo:hover {
+    color: #F8F9FA;
+}
+
+/* Bolinha com a quantidade de favoritos */
+.header__contador {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background-color: #FFF;
+    color: var(--header-destaque);
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.header__favoritos--ativo .header__contador {
+    background-color: var(--header-destaque);
     color: #FFF;
-    font-weight: bold;
 }
 
-.favoritos {
-    text-decoration: none;
-    cursor: pointer;
-    background-color: #DC5F00;
-    padding: 5px 14px;
-    color: #f8f9fa;
-    font-weight: bold;
-    border-radius: 4px;
+.header__favoritos--ativo:hover .header__contador {
+    background-color: #FFF;
+    color: var(--header-destaque-hover);
+}
+
+.header__logo:focus-visible,
+.header__favoritos:focus-visible {
+    outline: 2px solid var(--header-texto);
+    outline-offset: 4px;
+    border-radius: 6px;
+}
+
+@media (max-width: 480px) {
+    .header__container {
+        padding: 0 16px;
+    }
+
+    .header__logo {
+        font-size: 1.4rem;
+    }
+
+    .header__favoritos {
+        gap: 6px;
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
 }

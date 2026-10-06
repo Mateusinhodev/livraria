@@ -1,82 +1,124 @@
 import { useEffect, useState } from 'react';
-import api from '../../services/api'
 import { Link } from 'react-router-dom';
+import api from '../../services/api';
 
-import Main from '../../components/Main'; // Importando o Componente Main
+import Banner from '../../components/Banner';
 
-import './home.css'
+import './home.css';
 
-// URL da API:  https://www.googleapis.com/books/v1/volumes?q=flowers&filter=free-ebooks&key=yourAPIKey
-// Configurada para o REACT: https://www.googleapis.com/books/v1/volumes?q=react&key=AIzaSyDXg_R6YQRMJGUi6SrSuettnTzj7WWxOFQ
+// Retorna a capa do livro (a API às vezes envia em http, então forçamos https)
+function getCapa(livro) {
+    const imagens = livro.volumeInfo.imageLinks;
+    const url = imagens?.thumbnail || imagens?.smallThumbnail;
+    return url?.replace('http://', 'https://');
+}
 
-// 'https://www.googleapis.com/books/v1/volumes'
+// Mantém só livros com capa e remove ids repetidos (a API às vezes duplica)
+function filtrarLivros(items) {
+    const vistos = new Set();
+    return items.filter((livro) => {
+        if (!getCapa(livro) || vistos.has(livro.id)) return false;
+        vistos.add(livro.id);
+        return true;
+    });
+}
+
 function Home() {
-    const [livros, setLivros] = useState([]); // Todos os livros
-    const [searchQuery, setSearchQuery] = useState (""); // Armazena o termo de pesquisa
+    const [livros, setLivros] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [erro, setErro] = useState(false);
 
-    const fetchLivros = async (query) =>  {
-        try {
-            const response = await api.get("https://www.googleapis.com/books/v1/volumes", {
-                params: {
-                    q: query || 'livros',
-                    maxResults: 40,
-                    language:"pt-BR",
-                    key: "AIzaSyDXg_R6YQRMJGUi6SrSuettnTzj7WWxOFQ" // Chave de API
-                }
+    // Roda ao abrir a página e sempre que o termo de pesquisa muda
+    useEffect(() => {
+        const controller = new AbortController();
+
+        async function fetchLivros() {
+            setLoading(true);
+            setErro(false);
+
+            try {
+                const response = await api.get('volumes', {
+                    params: {
+                        q: searchQuery || 'livros',
+                        maxResults: 40,
+                        langRestrict: 'pt',
+                        printType: 'books',
+                    },
+                    signal: controller.signal,
                 });
 
-            console.log(response.data.items.slice(0, 40))
+                // Quando não há resultados, a API não envia "items"
+                setLivros(filtrarLivros(response.data.items ?? []));
+                setLoading(false);
+            } catch (error) {
+                // Busca cancelada porque o usuário pesquisou outra coisa: ignora
+                if (controller.signal.aborted) return;
 
-            setLivros(response.data.items.slice(0, 40))
-                
-            // Filtrar livros com imagens
-            const booksWithImages = response.data.items.filter(
-                (book) => book.volumeInfo.imageLinks?.smallThumbnail
-            );
-        
-            setLivros(booksWithImages);
-            // setLivrosFiltrados(booksWithImages); // Exibe todos os livros inicialmente
-
-        } catch (error) {
-            console.log("Erro ao buscar livros", error);
-            setLivros([]); // Em caso de erro, limpa a lista
+                console.error('Erro ao buscar livros', error);
+                setErro(true);
+                setLivros([]);
+                setLoading(false);
+            }
         }
-    };
 
-    // Busca inicial ao carregar o componente
-    useEffect(() => {
-        fetchLivros(); // Busca geral de livros
-    }, []);
+        fetchLivros();
 
-    // Atualiza a lista de livros quando o termo de pesquisa muda
-    useEffect(() => {
-        fetchLivros(searchQuery); // Busca com base no termo digitado
-    }, [searchQuery]); // Dependência do termo de pesquisa
+        return () => controller.abort();
+    }, [searchQuery]);
 
     return (
-        <div className='container'>
-            {/* Passa a função de pesquisa para o componente Main */}
-            <Main onSearch={setSearchQuery}/>
+        <div className="home">
+            <Banner onSearch={setSearchQuery} />
 
-            {/* Exibição dos livros */}
-            <div className='lista-livros'>
-                {livros.map((livro) => {
-                    let thumbnail = livro.volumeInfo.imageLinks && livro.volumeInfo.imageLinks.smallThumbnail;
-                    //  || "https://via.placeholder.com/128x193.png?text=Sem+Imagem";
+            {loading && <p className="home__aviso">Carregando livros...</p>}
 
-                    return(
-                        <article className='card-livro' key={livro.id}>
-                            <strong title={livro.volumeInfo.title}>{livro.volumeInfo.title}</strong>
-                            <div>
-                                <img src={thumbnail} alt={livro.volumeInfo.title}/>
-                            </div>
-                            <Link to={`/livro/${livro.id}`}>Acessar</Link>
-                        </article>
-                    );
-                })}
-            </div>            
+            {!loading && erro && (
+                <p className="home__aviso">
+                    Não foi possível carregar os livros. Tente novamente mais tarde.
+                </p>
+            )}
+
+            {!loading && !erro && livros.length === 0 && (
+                <p className="home__aviso">
+                    Nenhum livro encontrado{searchQuery && ` para "${searchQuery}"`}.
+                </p>
+            )}
+
+            {!loading && livros.length > 0 && (
+                <ul className="lista-livros">
+                    {livros.map((livro) => {
+                        const { title, authors } = livro.volumeInfo;
+
+                        return (
+                            <li key={livro.id}>
+                                <article className="card-livro">
+                                    <img
+                                        className="card-livro__capa"
+                                        src={getCapa(livro)}
+                                        alt={`Capa do livro ${title}`}
+                                        loading="lazy"
+                                    />
+
+                                    <h3 className="card-livro__titulo" title={title}>
+                                        {title}
+                                    </h3>
+
+                                    {authors && (
+                                        <p className="card-livro__autor">{authors.join(', ')}</p>
+                                    )}
+
+                                    <Link className="card-livro__botao" to={`/livro/${livro.id}`}>
+                                        Ver detalhes
+                                    </Link>
+                                </article>
+                            </li>
+                        );
+                    })}
+                </ul>
+            )}
         </div>
-    )
+    );
 }
 
 export default Home;
