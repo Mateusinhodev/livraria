@@ -1,18 +1,85 @@
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+/* ==========================================================
+   Estilos globais da Livraria
+   Cores, fonte e reset usados por todos os componentes.
+   ========================================================== */
+
+:root {
+    /* Cores da marca */
+    --header-bg: #373A40;
+    --header-texto: #FFFFFF;
+    --header-destaque: #DC5F00;
+    --header-destaque-hover: #F06C0A;
+
+    /* Cores gerais */
+    --cor-fundo: #AFAFAF;
+    --cor-superficie: #F9F9F9;
+    --cor-texto: #222222;
+    --cor-texto-suave: #666666;
+    --cor-perigo: #C0392B;
+
+    /* Medidas */
+    --header-altura: 64px;
+    --largura-maxima: 1200px;
+    --raio: 12px;
+    --sombra: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    --fonte: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+/* Reset básico */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
 }
 
 body {
-  font-family: sans-serif;
-  background-color: #afafaf;
+    min-height: 100vh;
+    font-family: var(--fonte);
+    line-height: 1.5;
+    color: var(--cor-texto);
+    background-color: var(--cor-fundo);
+    -webkit-font-smoothing: antialiased;
 }
 
-.app {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* Botões e campos herdam a fonte do site (por padrão o navegador não faz isso) */
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+/* Esconde o texto na tela, mas mantém para leitores de tela */
+.visualmente-oculto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Respeita quem prefere menos animações (configuração do sistema) */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
 }

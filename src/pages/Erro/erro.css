@@ -1,20 +1,97 @@
-.not-found {
-    width: 100%;
-    height: calc(100vh - 60px);
+.erro {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 640px;
+    min-height: calc(100vh - var(--header-altura) - 64px);
+    margin: 32px auto;
+    padding: 48px 24px;
+    background-color: var(--cor-superficie);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+    text-align: center;
 }
 
-.not-found h1 {
-    font-size: 120px;
+.erro__icone {
+    font-size: 3rem;
 }
 
-.not-found a {
-    text-decoration: none;
-    background-color: #116FEB;
+.erro__codigo {
+    margin-top: 8px;
+    font-size: clamp(4.5rem, 18vw, 7.5rem);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--header-destaque);
+}
+
+.erro__titulo {
+    margin-top: 12px;
+    font-size: 1.6rem;
+    color: var(--cor-texto);
+}
+
+.erro__texto {
+    max-width: 440px;
+    margin-top: 12px;
+    color: var(--cor-texto-suave);
+}
+
+.erro__texto code {
+    padding: 2px 6px;
+    border-radius: 4px;
+    background-color: #E8E8E8;
+    font-size: 0.9em;
+    word-break: break-all;
+}
+
+.erro__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.erro__botao {
+    padding: 12px 24px;
+    border: 2px solid var(--header-destaque);
+    border-radius: 6px;
+    background-color: var(--header-destaque);
     color: #FFF;
-    padding: 10px;
-    margin-top: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.erro__botao:hover {
+    background-color: var(--header-destaque-hover);
+    border-color: var(--header-destaque-hover);
+    color: #FFF;
+}
+
+.erro__botao--secundario {
+    background-color: transparent;
+    color: var(--header-destaque);
+}
+
+.erro__botao:focus-visible {
+    outline: 2px solid #333;
+    outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+    .erro {
+        margin: 16px;
+        padding: 36px 20px;
+    }
+
+    .erro__titulo {
+        font-size: 1.3rem;
+    }
+
+    .erro__acoes {
+        flex-direction: column;
+        width: 100%;
+    }
 }

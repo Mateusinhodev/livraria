@@ -1,11 +1,3 @@
-:root {
-    --header-bg: #373A40;
-    --header-texto: #FFFFFF;
-    --header-destaque: #DC5F00;
-    --header-destaque-hover: #F06C0A;
-    --header-altura: 64px;
-}
-
 .header {
     position: sticky;
     top: 0;
