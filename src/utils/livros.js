@@ -6,16 +6,16 @@ export function forcarHttps(url) {
     return url?.replace(/^http:\/\//, 'https://');
 }
 
-// Retorna a URL da capa. Com { grande: true }, tenta a maior resolução disponível.
-export function getCapa(volumeInfo, { grande = false } = {}) {
+// Retorna a URL da capa.
+// Usamos sempre a "thumbnail": as versões maiores do Google Books às vezes
+// mostram a folha de rosto digitalizada em vez da capa.
+export function getCapa(volumeInfo) {
     const imagens = volumeInfo?.imageLinks;
-    if (!imagens) return undefined;
+    const url = imagens?.thumbnail || imagens?.smallThumbnail;
+    if (!url) return undefined;
 
-    const url = grande
-        ? imagens.medium || imagens.small || imagens.thumbnail || imagens.smallThumbnail
-        : imagens.thumbnail || imagens.smallThumbnail;
-
-    return forcarHttps(url);
+    // edge=curl desenha uma "orelha" dobrada no canto da imagem; removemos
+    return forcarHttps(url).replace('&edge=curl', '');
 }
 
 // ["Ana", "João"] → "Ana, João"

@@ -92,7 +92,50 @@
     color: var(--header-destaque-hover);
 }
 
+.header__nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header__usuario {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Nome do usuário: corta com "..." se for muito longo */
+.header__nome {
+    max-width: 160px;
+    overflow: hidden;
+    color: var(--header-texto);
+    font-weight: 600;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* "Sair" e "Entrar": botões discretos, para não competir com "Meus livros" */
+.header__sair,
+.header__entrar {
+    padding: 6px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 6px;
+    background: none;
+    color: var(--header-texto);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.header__sair:hover,
+.header__entrar:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
 .header__logo:focus-visible,
+.header__sair:focus-visible,
+.header__entrar:focus-visible,
 .header__favoritos:focus-visible {
     outline: 2px solid var(--header-texto);
     outline-offset: 4px;
@@ -112,5 +155,15 @@
         gap: 6px;
         padding: 6px 12px;
         font-size: 0.9rem;
+    }
+
+    .header__nav {
+        gap: 8px;
+    }
+
+    /* No celular: some o nome do usuário e o texto do logo (fica só o 📚) */
+    .header__nome,
+    .header__logo-texto {
+        display: none;
     }
 }

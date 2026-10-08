@@ -1,0 +1,229 @@
+.painel-leitura {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+    padding: 20px;
+    background-color: #FFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 10px;
+}
+
+/* Convite para quem não está logado */
+.painel-leitura--convite {
+    align-items: flex-start;
+    color: var(--cor-texto-suave);
+}
+
+.painel-leitura__entrar {
+    padding: 10px 20px;
+    border-radius: 6px;
+    background-color: var(--header-destaque);
+    color: #FFF;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.painel-leitura__entrar:hover {
+    background-color: var(--header-destaque-hover);
+}
+
+/* Linha com os botões de status e o favorito */
+.painel-leitura__linha {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+/* Botões de status "grudados" (segmented control) */
+.painel-leitura__status {
+    display: inline-flex;
+    overflow: hidden;
+    border: 2px solid var(--header-destaque);
+    border-radius: 8px;
+}
+
+.painel-leitura__status button {
+    padding: 9px 16px;
+    border: none;
+    background-color: transparent;
+    color: var(--header-destaque);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.painel-leitura__status button + button {
+    border-left: 2px solid var(--header-destaque);
+}
+
+.painel-leitura__status button:hover {
+    background-color: #FDEFE3;
+}
+
+.painel-leitura__status button.ativo {
+    background-color: var(--header-destaque);
+    color: #FFF;
+}
+
+.painel-leitura__favorito {
+    padding: 9px 16px;
+    border: 2px solid #D6D6D6;
+    border-radius: 8px;
+    background: none;
+    color: var(--cor-texto-suave);
+    font-weight: 700;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.painel-leitura__favorito:hover,
+.painel-leitura__favorito.ativo {
+    border-color: var(--cor-perigo);
+    color: var(--cor-perigo);
+}
+
+.painel-leitura__remover {
+    align-self: flex-start;
+    margin-top: -8px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--cor-texto-suave);
+    font-size: 0.85rem;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.painel-leitura__remover:hover {
+    color: var(--cor-perigo);
+}
+
+.painel-leitura__dica {
+    color: var(--cor-texto-suave);
+    font-size: 0.85rem;
+}
+
+/* Títulos das seções (Progresso, Sua nota) */
+.painel-leitura h3 {
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+}
+
+/* Cada seção é separada por uma linha fina */
+.painel-leitura__secao {
+    padding-top: 16px;
+    border-top: 1px solid #EEE;
+}
+
+.painel-leitura__progresso {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.painel-leitura__paginas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.painel-leitura__paginas label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.painel-leitura__paginas input {
+    width: 110px;
+    padding: 8px 10px;
+    border: 1px solid #CFCFCF;
+    border-radius: 6px;
+}
+
+.painel-leitura__paginas input:focus {
+    border-color: var(--header-destaque);
+    outline: none;
+}
+
+.painel-leitura__de {
+    padding-bottom: 9px;
+    color: var(--cor-texto-suave);
+}
+
+.painel-leitura__salvar {
+    padding: 9px 18px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--header-destaque);
+    color: #FFF;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.painel-leitura__salvar:hover:not(:disabled) {
+    background-color: var(--header-destaque-hover);
+}
+
+.painel-leitura__salvar:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.painel-leitura__concluido {
+    color: #1E6B39;
+    font-weight: 600;
+}
+
+.painel-leitura__rodape {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.painel-leitura__rodape small {
+    color: var(--cor-texto-suave);
+    font-size: 0.85rem;
+}
+
+.painel-leitura textarea {
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.painel-leitura button:focus-visible,
+.painel-leitura a:focus-visible {
+    outline: 2px solid #333;
+    outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+    .painel-leitura {
+        padding: 16px;
+    }
+
+    .painel-leitura__status {
+        width: 100%;
+    }
+
+    .painel-leitura__status button {
+        flex: 1;
+        padding: 9px 6px;
+    }
+
+    .painel-leitura__favorito {
+        width: 100%;
+    }
+}

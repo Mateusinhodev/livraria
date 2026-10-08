@@ -1,0 +1,48 @@
+.estrelas {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    line-height: 1;
+}
+
+.estrela {
+    color: #C9C9C9;
+}
+
+.estrela--cheia {
+    color: #F2A900;
+}
+
+.estrelas--pequeno .estrela {
+    font-size: 0.95rem;
+}
+
+.estrelas--medio .estrela {
+    font-size: 1.8rem;
+}
+
+/* No modo seletor, cada estrela é um botão sem aparência de botão */
+.estrelas--interativa button.estrela {
+    padding: 0 2px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.1s ease, color 0.1s ease;
+}
+
+.estrelas--interativa button.estrela:hover {
+    transform: scale(1.15);
+}
+
+.estrelas--interativa button.estrela:focus-visible {
+    outline: 2px solid #333;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.estrelas__texto {
+    margin-left: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--cor-texto-suave);
+}

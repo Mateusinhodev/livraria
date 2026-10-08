@@ -1,0 +1,109 @@
+.entrar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 440px;
+    margin: 48px auto;
+    padding: 40px 32px;
+    background-color: var(--cor-superficie);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+    text-align: center;
+}
+
+.entrar h1 {
+    font-size: 1.6rem;
+}
+
+.entrar__icone {
+    font-size: 2.5rem;
+}
+
+.entrar__texto {
+    margin-top: 8px;
+    color: var(--cor-texto-suave);
+}
+
+/* Alternador Entrar / Criar conta */
+.entrar__modos {
+    display: flex;
+    width: 100%;
+    margin-top: 24px;
+    padding: 4px;
+    border-radius: 8px;
+    background-color: #E8E8E8;
+}
+
+.entrar__modos button {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 6px;
+    background: none;
+    color: var(--cor-texto-suave);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.entrar__modos button.ativo {
+    background-color: #FFF;
+    color: var(--cor-texto);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.entrar__form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    margin-top: 24px;
+    text-align: left;
+}
+
+.entrar__erro {
+    padding: 10px 12px;
+    border-radius: 6px;
+    background-color: #FBE3E1;
+    color: #8E2219;
+    font-size: 0.9rem;
+}
+
+.entrar__botao {
+    margin-top: 8px;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--header-destaque);
+    color: #FFF;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+/* Botão "Ir para o login" da tela de confirmação */
+.entrar > .entrar__botao {
+    width: 100%;
+    margin-top: 24px;
+}
+
+.entrar__botao:hover:not(:disabled) {
+    background-color: var(--header-destaque-hover);
+}
+
+.entrar__botao:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+.entrar__modos button:focus-visible,
+.entrar__botao:focus-visible {
+    outline: 2px solid #333;
+    outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+    .entrar {
+        margin: 16px;
+        padding: 28px 20px;
+    }
+}

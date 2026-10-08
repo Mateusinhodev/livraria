@@ -74,6 +74,45 @@ textarea {
     border: 0;
 }
 
+/* Campo de formulário (reutilizável) */
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.campo span {
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.campo input,
+.campo textarea {
+    padding: 10px 12px;
+    border: 1px solid #CFCFCF;
+    border-radius: 6px;
+    background-color: #FFF;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+    border-color: var(--header-destaque);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(220, 95, 0, 0.2);
+}
+
+.campo small {
+    color: var(--cor-texto-suave);
+}
+
+/* Mensagem de carregamento usada em várias páginas */
+.aviso-carregando {
+    margin: 64px auto;
+    text-align: center;
+    color: #333;
+    font-weight: 600;
+}
+
 /* Respeita quem prefere menos animações (configuração do sistema) */
 @media (prefers-reduced-motion: reduce) {
     *,

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { buscarLivro, getMensagemErro } from '../../services/livros';
-import { isFavorito, adicionarFavorito, removerFavorito } from '../../services/favoritos';
+import PainelLeitura from '../../components/PainelLeitura';
 import { getCapa, getAutores, limparDescricao, forcarHttps } from '../../utils/livros';
 
 import './livro-info.css';
@@ -14,7 +14,7 @@ function Livro() {
 
     const [livro, setLivro] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [salvo, setSalvo] = useState(false);
+    // const [salvo, setSalvo] = useState(false);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -26,7 +26,7 @@ function Livro() {
                 const dados = await buscarLivro(id, { signal: controller.signal });
 
                 setLivro(dados);
-                setSalvo(isFavorito(dados.id));
+                // setSalvo(isFavorito(dados.id));
                 setLoading(false);
             } catch (error) {
                 if (controller.signal.aborted) return;
@@ -49,17 +49,17 @@ function Livro() {
         return () => controller.abort();
     }, [id, navigate]);
 
-    function alternarFavorito() {
-        if (salvo) {
-            removerFavorito(livro.id);
-            setSalvo(false);
-            toast.info('Livro removido dos favoritos');
-        } else {
-            adicionarFavorito(livro);
-            setSalvo(true);
-            toast.success('Livro salvo nos favoritos');
-        }
-    }
+    // function alternarFavorito() {
+    //     if (salvo) {
+    //         removerFavorito(livro.id);
+    //         setSalvo(false);
+    //         toast.info('Livro removido dos favoritos');
+    //     } else {
+    //         adicionarFavorito(livro);
+    //         setSalvo(true);
+    //         toast.success('Livro salvo nos favoritos');
+    //     }
+    // }
 
     if (loading) {
         return (
@@ -81,7 +81,7 @@ function Livro() {
         infoLink,
     } = livro.volumeInfo;
 
-    const capa = getCapa(livro.volumeInfo, { grande: true });
+    const capa = getCapa(livro.volumeInfo);
     const autores = getAutores(livro.volumeInfo);
     const sinopse = limparDescricao(description);
     const linkGoogle = forcarHttps(previewLink || infoLink);
@@ -132,15 +132,6 @@ function Livro() {
                     </dl>
 
                     <div className="livro-info__acoes">
-                        <button
-                            type="button"
-                            className={`livro-info__botao${salvo ? ' livro-info__botao--secundario' : ''}`}
-                            onClick={alternarFavorito}
-                            aria-pressed={salvo}
-                        >
-                            {salvo ? '★ Remover dos favoritos' : '☆ Salvar nos favoritos'}
-                        </button>
-
                         {linkGoogle && (
                             <a
                                 className="livro-info__botao livro-info__botao--secundario"
@@ -148,10 +139,11 @@ function Livro() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                Ver no Google Livros
+                                Prévia no Google Livros
                             </a>
                         )}
                     </div>
+                    <PainelLeitura livro={livro} />
                 </div>
             </div>
 
