@@ -28,8 +28,8 @@ function Erro() {
                 <Link className="erro__botao" to="/">
                     Explorar livros
                 </Link>
-                <Link className="erro__botao erro__botao--secundario" to="/favoritos">
-                    Meus livros
+                <Link className="erro__botao erro__botao--secundario" to="/estante">
+                    Minha estante
                 </Link>
             </div>
         </section>

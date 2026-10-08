@@ -1,0 +1,256 @@
+.estante {
+    max-width: 900px;
+    margin: 32px auto;
+    padding: 32px;
+    background-color: var(--cor-superficie);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+}
+
+.estante__topo {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.estante__saudacao {
+    color: var(--cor-texto-suave);
+    font-weight: 600;
+}
+
+.estante__topo h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+}
+
+.estante__total {
+    color: var(--cor-texto-suave);
+    font-weight: 600;
+}
+
+/* ── Abas ── */
+.estante__abas {
+    display: flex;
+    gap: 4px;
+    margin: 24px 0 20px;
+    overflow-x: auto; /* no celular, as abas rolam para o lado */
+    border-bottom: 2px solid #E2E2E2;
+}
+
+.estante__aba {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: -2px; /* a linha laranja fica por cima da linha cinza */
+    padding: 10px 16px;
+    border: none;
+    border-bottom: 3px solid transparent;
+    background: none;
+    color: var(--cor-texto-suave);
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.estante__aba:hover {
+    color: var(--cor-texto);
+}
+
+.estante__aba--ativa {
+    border-bottom-color: var(--header-destaque);
+    color: var(--header-destaque);
+}
+
+.estante__aba:focus-visible {
+    outline: 2px solid #333;
+    outline-offset: -2px;
+}
+
+.estante__contador {
+    min-width: 22px;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background-color: #E8E8E8;
+    color: var(--cor-texto-suave);
+    font-size: 0.75rem;
+    text-align: center;
+}
+
+.estante__aba--ativa .estante__contador {
+    background-color: var(--header-destaque);
+    color: #FFF;
+}
+
+/* ── Estados de carregando e vazio ── */
+.estante__aviso {
+    padding: 32px 0;
+    text-align: center;
+    color: var(--cor-texto-suave);
+}
+
+.estante__vazia {
+    padding: 40px 16px;
+    text-align: center;
+    color: var(--cor-texto-suave);
+}
+
+.estante__explorar {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 10px 22px;
+    border-radius: 6px;
+    background-color: var(--header-destaque);
+    color: #FFF;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.estante__explorar:hover {
+    background-color: var(--header-destaque-hover);
+}
+
+/* ── Lista de livros ── */
+.estante__lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style: none;
+}
+
+.item-estante {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s ease;
+}
+
+.item-estante:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.item-estante__capa-link {
+    flex-shrink: 0;
+}
+
+.item-estante__capa {
+    width: 64px;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 4px;
+    background-color: #DDD;
+}
+
+.item-estante__info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0; /* permite cortar textos longos com "..." */
+}
+
+.item-estante__titulo {
+    overflow: hidden;
+    color: var(--cor-texto);
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.item-estante__titulo:hover {
+    color: var(--header-destaque);
+}
+
+.item-estante__autor {
+    overflow: hidden;
+    color: var(--cor-texto-suave);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.item-estante__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 2px;
+}
+
+.item-estante__resenha {
+    color: var(--cor-texto-suave);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.item-estante__progresso {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+    color: var(--cor-texto-suave);
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.item-estante__progresso .barra-progresso {
+    max-width: 240px;
+}
+
+/* Coração de favorito */
+.item-estante__favorito {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: #B5B5B5;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.item-estante__favorito:hover {
+    background-color: #F3F3F3;
+}
+
+.item-estante__favorito--ativo {
+    color: var(--cor-perigo);
+}
+
+.item-estante__favorito:focus-visible,
+.item-estante__titulo:focus-visible {
+    outline: 2px solid #333;
+    outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+    .estante {
+        margin: 16px;
+        padding: 20px;
+    }
+
+    .estante__topo h1 {
+        font-size: 1.5rem;
+    }
+
+    .item-estante {
+        gap: 12px;
+        padding: 10px 12px;
+    }
+
+    .item-estante__capa {
+        width: 52px;
+    }
+
+    .item-estante__progresso .barra-progresso {
+        max-width: none;
+    }
+}

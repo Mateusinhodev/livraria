@@ -1,17 +1,16 @@
 import './header.css';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
-import useFavoritos from '../../hooks/useFavoritos';
+import { useEstante } from '../../contexts/EstanteContext';
 import { getNomeUsuario, useAuth } from '../../contexts/AuthContext';
 
 function Header() {
-    const favoritos = useFavoritos();
-    const { usuario, sair } = useAuth(); // ← lendo o "quadro de avisos"
+    const { usuario, sair } = useAuth();
+    const { itens } = useEstante();
     const navigate = useNavigate();
 
-    const total = favoritos.length;
-    const descricao = total === 1 ? '1 livro salvo' : `${total} livros salvos`;
+    const total = itens.length;
+    const descricao = total === 1 ? '1 livro' : `${total} livros`;
 
     async function handleSair() {
         await sair();
@@ -29,13 +28,13 @@ function Header() {
 
                 <nav className="header__nav" aria-label="Navegação principal">
                     <NavLink
-                        to="/favoritos"
-                        aria-label={`Meus livros, ${descricao}`}
+                        to="/estante"
+                        aria-label={usuario ? `Minha estante, ${descricao}` : 'Minha estante'}
                         className={({ isActive }) =>
                             `header__favoritos${isActive ? ' header__favoritos--ativo' : ''}`
                         }
                     >
-                        Meus livros
+                        Minha estante
                         {total > 0 && (
                             <span className="header__contador" aria-hidden="true">
                                 {total}

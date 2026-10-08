@@ -113,6 +113,29 @@ textarea {
     font-weight: 600;
 }
 
+/* Selo de status (estante e outras telas) */
+.selo {
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.selo--lendo {
+    background-color: #FDE6D2;
+    color: #A54600;
+}
+
+.selo--para_ler {
+    background-color: #E1ECFB;
+    color: #1F4F8F;
+}
+
+.selo--lido {
+    background-color: #DDF2E3;
+    color: #1E6B39;
+}
+
 /* Respeita quem prefere menos animações (configuração do sistema) */
 @media (prefers-reduced-motion: reduce) {
     *,
