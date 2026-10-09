@@ -28,6 +28,12 @@ function Header() {
 
                 <nav className="header__nav" aria-label="Navegação principal">
                     <NavLink
+                        to="/classicos"
+                        className={({ isActive }) => `header__link${isActive ? ' header__link--ativo' : ''}`}
+                    >
+                        Clássicos
+                    </NavLink>
+                    <NavLink
                         to="/estante"
                         aria-label={usuario ? `Minha estante, ${descricao}` : 'Minha estante'}
                         className={({ isActive }) =>

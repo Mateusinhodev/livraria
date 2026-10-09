@@ -133,10 +133,26 @@
     background-color: rgba(255, 255, 255, 0.12);
 }
 
+/* Link de texto simples no Header (ex.: Clássicos) */
+.header__link {
+    padding: 6px 4px;
+    border-bottom: 2px solid transparent;
+    color: var(--header-texto);
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color 0.2s ease;
+}
+
+.header__link:hover,
+.header__link--ativo {
+    border-bottom-color: var(--header-destaque);
+}
+
 .header__logo:focus-visible,
 .header__sair:focus-visible,
 .header__entrar:focus-visible,
-.header__favoritos:focus-visible {
+.header__favoritos:focus-visible,
+.header__link:focus-visible {
     outline: 2px solid var(--header-texto);
     outline-offset: 4px;
     border-radius: 6px;
