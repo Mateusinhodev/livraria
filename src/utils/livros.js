@@ -46,3 +46,20 @@ export function limparDescricao(html) {
     const doc = new DOMParser().parseFromString(comQuebras, 'text/html');
     return doc.body.textContent.trim();
 }
+
+// ISBN do livro (prefere o de 13 dígitos, que é o padrão atual)
+export function getIsbn(volumeInfo) {
+    const identificadores = volumeInfo?.industryIdentifiers ?? [];
+    const isbn =
+        identificadores.find((item) => item.type === 'ISBN_13') ??
+        identificadores.find((item) => item.type === 'ISBN_10');
+    return isbn?.identifier ?? null;
+}
+
+// Capa da Open Library pelo ISBN (S = pequena, M = média, L = grande)
+export function getCapaOpenLibrary(volumeInfo, tamanho = 'L') {
+    const isbn = getIsbn(volumeInfo);
+    if (!isbn) return null;
+    // default=false: sem capa, a Open Library responde 404 (em vez de uma imagem em branco)
+    return `https://covers.openlibrary.org/b/isbn/${isbn}-${tamanho}.jpg?default=false`;
+}

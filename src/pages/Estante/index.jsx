@@ -5,7 +5,7 @@ import BarraProgresso from '../../components/BarraProgresso';
 import Estrelas from '../../components/Estrelas';
 import { getNomeUsuario, useAuth } from '../../contexts/AuthContext';
 import { useEstante } from '../../contexts/EstanteContext';
-import { getProgresso, STATUS } from '../../services/estante';
+import { getLinkLivro, getProgresso, STATUS } from '../../services/estante';
 
 import './estante.css';
 
@@ -98,16 +98,24 @@ function Estante() {
 
                             return (
                                 <li key={item.livro_id} className="item-estante">
-                                    <Link to={`/livro/${item.livro_id}`} className="item-estante__capa-link" tabIndex={-1}>
+                                    <Link to={getLinkLivro(item)} className="item-estante__capa-link" tabIndex={-1}>
                                         {item.capa ? (
-                                            <img className="item-estante__capa" src={item.capa} alt="" loading="lazy" />
+                                            <img
+                                                className="item-estante__capa"
+                                                src={item.capa}
+                                                alt=""
+                                                loading="lazy"
+                                                onError={(evt) => {
+                                                    evt.currentTarget.style.visibility = 'hidden';
+                                                }}
+                                            />
                                         ) : (
                                             <div className="item-estante__capa item-estante__capa--vazia" />
                                         )}
                                     </Link>
 
                                     <div className="item-estante__info">
-                                        <Link className="item-estante__titulo" to={`/livro/${item.livro_id}`}>
+                                        <Link className="item-estante__titulo" to={getLinkLivro(item)}>
                                             {item.titulo}
                                         </Link>
                                         {item.autores && <span className="item-estante__autor">{item.autores}</span>}

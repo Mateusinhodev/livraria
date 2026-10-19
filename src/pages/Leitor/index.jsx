@@ -1,6 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 
+import { toast } from 'react-toastify';
+
+import { useAuth } from '../../contexts/AuthContext';
+import { useEstante } from '../../contexts/EstanteContext';
+import { classicoParaItem, progressoNoLeitor } from '../../services/estante';
+
 import BarraProgresso from '../../components/BarraProgresso';
 import { baixarTexto, dividirEmPaginas, prepararLivro } from '../../services/leitor';
 
@@ -19,7 +25,19 @@ function lerFonteSalva() {
 }
 
 // Capa do livro: a imagem do Gutenberg ou, se não existir, uma capa gerada
-function CapaLivro({ id, titulo, autor, totalPaginas, onComecar }) {
+// Capa do livro: a imagem do Gutenberg (ou uma capa gerada) e as ações de leitura
+function CapaLivro({
+    id,
+    titulo,
+    autor,
+    totalPaginas,
+    logado,
+    naEstante,
+    continuarPagina,
+    onComecar,
+    onContinuar,
+    onQueroLer,
+}) {
     const [semImagem, setSemImagem] = useState(false);
     const urlCapa = `https://www.gutenberg.org/cache/epub/${id}/pg${id}.cover.medium.jpg`;
 
@@ -43,9 +61,37 @@ function CapaLivro({ id, titulo, autor, totalPaginas, onComecar }) {
             {autor && <p className="leitor__capa-autor">{autor}</p>}
             <p className="leitor__capa-info">{totalPaginas} páginas · Domínio público · Project Gutenberg</p>
 
-            <button type="button" className="leitor__comecar" onClick={onComecar}>
-                Começar a ler
-            </button>
+            <div className="leitor__capa-acoes">
+                {continuarPagina ? (
+                    <>
+                        <button type="button" className="leitor__comecar" onClick={onContinuar}>
+                            Continuar da página {continuarPagina}
+                        </button>
+                        <button type="button" className="leitor__secundario" onClick={onComecar}>
+                            Começar do início
+                        </button>
+                    </>
+                ) : (
+                    <button type="button" className="leitor__comecar" onClick={onComecar}>
+                        Começar a ler
+                    </button>
+                )}
+
+                {logado && !naEstante && (
+                    <button type="button" className="leitor__secundario" onClick={onQueroLer}>
+                        Quero ler depois
+                    </button>
+                )}
+            </div>
+
+            {!logado && (
+                <p className="leitor__capa-dica">
+                    <Link to="/entrar" state={{ de: `/ler/${id}` }}>
+                        Entre na sua conta
+                    </Link>{' '}
+                    para salvar seu progresso e continuar de onde parou.
+                </p>
+            )}
         </section>
     );
 }
@@ -76,6 +122,10 @@ function Leitor() {
     const [tentativa, setTentativa] = useState(0);
     const [fonte, setFonte] = useState(lerFonteSalva); // inicialização preguiçosa
     const topoRef = useRef(null);
+
+    const { usuario } = useAuth();
+    const { getItem, salvar } = useEstante();
+    const itemEstante = getItem(`gutenberg-${id}`);
 
     // 1. Baixa e prepara o livro
     useEffect(() => {
@@ -149,6 +199,40 @@ function Leitor() {
         };
     }, [livro]);
 
+        // 6. Salva o progresso na estante (1 segundo depois de parar numa página)
+    useEffect(() => {
+        if (!usuario || !livro || total === 0) return;
+
+        const mudancas = progressoNoLeitor(itemEstante, pagina);
+        if (!mudancas) return;
+
+        const primeiraVez = itemEstante?.status !== 'lendo';
+
+        const cronometro = setTimeout(() => {
+            salvar(classicoParaItem(id, livro, total), mudancas)
+                .then((salvo) => {
+                    if (salvo?.status === 'lido') {
+                        toast.success('Leitura concluída! 🎉 O livro foi para "Lidos".');
+                    } else if (primeiraVez) {
+                        toast.info('📚 Livro adicionado à sua estante, em "Lendo".');
+                    }
+                })
+                .catch((error) => console.error('Erro ao salvar o progresso', error));
+        }, 1000);
+
+        // Mudou de página antes de 1 segundo? Cancela e recomeça a contagem
+        return () => clearTimeout(cronometro);
+    }, [pagina, usuario, livro, total, itemEstante?.status, itemEstante?.pagina_atual]);
+
+    async function guardarParaDepois() {
+        try {
+            await salvar(classicoParaItem(id, livro, total), { status: 'para_ler' });
+            toast.success('Guardado em "Quero ler" na sua estante.');
+        } catch {
+            toast.error('Não foi possível salvar. Tente novamente.');
+        }
+    }
+
     if (loading) {
         return (
             <p className="aviso-carregando">
@@ -218,7 +302,16 @@ function Leitor() {
                         titulo={livro.titulo}
                         autor={livro.autor}
                         totalPaginas={total}
+                        logado={Boolean(usuario)}
+                        naEstante={Boolean(itemEstante?.status)}
+                        continuarPagina={
+                            itemEstante?.status === 'lendo' && itemEstante.pagina_atual > 1
+                                ? itemEstante.pagina_atual
+                                : null
+                        }
                         onComecar={() => irPara(1)}
+                        onContinuar={() => irPara(itemEstante.pagina_atual)}
+                        onQueroLer={guardarParaDepois}
                     />
                 ) : (
                     <article className="leitor__texto" style={{ fontSize: `${fonte}px` }}>

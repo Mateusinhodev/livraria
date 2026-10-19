@@ -128,3 +128,41 @@ export async function removerItem(livroId) {
     const { error } = await supabase.from('estante').delete().eq('livro_id', livroId);
     if (error) throw error;
 }
+
+// ------------------------------------------------------------
+// Clássicos (Project Gutenberg)
+// ------------------------------------------------------------
+const PREFIXO_GUTENBERG = 'gutenberg-';
+
+// Converte um livro do leitor nos dados básicos da estante
+export function classicoParaItem(id, livro, totalPaginas) {
+    return {
+        livro_id: `${PREFIXO_GUTENBERG}${id}`,
+        titulo: livro.titulo,
+        autores: livro.autor || null,
+        capa: `https://www.gutenberg.org/cache/epub/${id}/pg${id}.cover.medium.jpg`,
+        total_paginas: totalPaginas || null,
+    };
+}
+
+// Para onde levar quem clica num livro da estante
+export function getLinkLivro(item) {
+    return item.livro_id.startsWith(PREFIXO_GUTENBERG)
+        ? `/ler/${item.livro_id.slice(PREFIXO_GUTENBERG.length)}`
+        : `/livro/${item.livro_id}`;
+}
+
+// O que salvar quando a pessoa está na página `pagina` do leitor.
+// Devolve as mudanças, ou null se não há nada a salvar.
+export function progressoNoLeitor(item, pagina) {
+    if (pagina < 1) return null;                // na capa: nada a salvar
+    if (item?.status === 'lido') return null;   // releitura: não mexe em quem já terminou
+
+    if (item?.status === 'lendo') {
+        if (item.pagina_atual === pagina) return null; // já está salvo
+        return { pagina_atual: pagina };
+    }
+
+    // Ainda não estava lendo (fora da estante, "Quero ler" ou só favorito)
+    return { status: 'lendo', pagina_atual: pagina };
+}

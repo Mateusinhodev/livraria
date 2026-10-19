@@ -4,7 +4,8 @@ import { toast } from 'react-toastify';
 
 import { buscarLivro, getMensagemErro } from '../../services/livros';
 import PainelLeitura from '../../components/PainelLeitura';
-import { getCapa, getAutores, limparDescricao, forcarHttps } from '../../utils/livros';
+import Capa from '../../components/Capa';
+import { getCapa, getCapaOpenLibrary, getAutores, limparDescricao, forcarHttps } from '../../utils/livros';
 
 import './livro-info.css';
 
@@ -81,7 +82,7 @@ function Livro() {
         infoLink,
     } = livro.volumeInfo;
 
-    const capa = getCapa(livro.volumeInfo);
+    // const capa = getCapa(livro.volumeInfo);
     const autores = getAutores(livro.volumeInfo);
     const sinopse = limparDescricao(description);
     const linkGoogle = forcarHttps(previewLink || infoLink);
@@ -93,11 +94,12 @@ function Livro() {
             </button>
 
             <div className="livro-info__conteudo">
-                {capa ? (
-                    <img className="livro-info__capa" src={capa} alt={`Capa do livro ${title}`} />
-                ) : (
-                    <div className="livro-info__capa livro-info__capa--vazia">Sem capa</div>
-                )}
+                <Capa
+                    key={livro.id}
+                    className="livro-info__capa"
+                    alt={`Capa do livro ${title}`}
+                    fontes={[getCapaOpenLibrary(livro.volumeInfo), getCapa(livro.volumeInfo)]}
+                />
 
                 <div className="livro-info__detalhes">
                     <h1 className="livro-info__titulo">{title}</h1>
