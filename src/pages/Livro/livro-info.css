@@ -157,6 +157,16 @@
     white-space: pre-line; /* respeita as quebras de parágrafo da sinopse */
 }
 
+.livro-info__previa {
+    margin-top: 32px;
+}
+
+.livro-info__previa h2 {
+    margin-bottom: 12px;
+    font-size: 1.4rem;
+    color: #333;
+}
+
 @media (max-width: 700px) {
     .livro-info {
         margin: 16px;

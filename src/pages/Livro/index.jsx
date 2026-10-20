@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 
 import PainelLeitura from '../../components/PainelLeitura';
 import Capa from '../../components/Capa';
+import PreviaGoogle from '../../components/PreviaGoogle';
 
 import { buscarLivro, getMensagemErro } from '../../services/livros';
 import { buscarCapaAlta } from '../../services/capas';
@@ -18,12 +19,14 @@ function Livro() {
     const [livro, setLivro] = useState(null);
     const [loading, setLoading] = useState(true);
     const [capaAlta, setCapaAlta] = useState(null);
+    const [mostrarPrevia, setMostrarPrevia] = useState(false);
 
     useEffect(() => {
         const controller = new AbortController();
 
         async function loadLivro() {
             setLoading(true);
+            setMostrarPrevia(false);
 
             try {
                 const dados = await buscarLivro(id, { signal: controller.signal });
@@ -93,6 +96,9 @@ function Livro() {
     const sinopse = limparDescricao(description);
     const linkGoogle = forcarHttps(previewLink || infoLink);
 
+    // O Google só permite embutir livros autorizados pelo editor
+    const podeEmbutir = livro.accessInfo?.embeddable && livro.accessInfo?.viewability !== 'NO_PAGES';
+
     return (
         <article className="livro-info">
             <button type="button" className="livro-info__voltar" onClick={() => navigate(-1)}>
@@ -140,6 +146,17 @@ function Livro() {
                     </dl>
 
                     <div className="livro-info__acoes">
+                        {podeEmbutir && (
+                            <button
+                                type="button"
+                                className="livro-info__botao"
+                                onClick={() => setMostrarPrevia((aberta) => !aberta)}
+                                aria-expanded={mostrarPrevia}
+                            >
+                                {mostrarPrevia ? 'Fechar prévia' : '📖 Ler prévia aqui'}
+                            </button>
+                        )}
+
                         {linkGoogle && (
                             <a
                                 className="livro-info__botao livro-info__botao--secundario"
@@ -147,13 +164,20 @@ function Livro() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                Prévia no Google Livros
+                                Abrir no Google Livros
                             </a>
                         )}
                     </div>
                     <PainelLeitura livro={livro} />
                 </div>
             </div>
+
+            {mostrarPrevia && (
+                <section className="livro-info__previa">
+                    <h2>Prévia</h2>
+                    <PreviaGoogle livroId={livro.id} titulo={title} linkGoogle={linkGoogle}/>
+                </section>
+            )}
 
             <section className="livro-info__sinopse">
                 <h2>Sinopse</h2>

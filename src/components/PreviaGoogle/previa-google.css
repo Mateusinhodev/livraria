@@ -1,0 +1,27 @@
+.previa {
+    margin-top: 12px;
+}
+
+.previa__aviso {
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #F1F1F1;
+    color: var(--cor-texto-suave);
+    text-align: center;
+}
+
+/* O Google desenha o visualizador aqui: ele precisa de largura e altura definidas */
+.previa__visualizador {
+    width: 100%;
+    height: 640px;
+    overflow: hidden;
+    border: 1px solid #E2E2E2;
+    border-radius: 8px;
+    background-color: #FFF;
+}
+
+@media (max-width: 600px) {
+    .previa__visualizador {
+        height: 480px;
+    }
+}
