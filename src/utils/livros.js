@@ -56,10 +56,10 @@ export function getIsbn(volumeInfo) {
     return isbn?.identifier ?? null;
 }
 
-// Capa da Open Library pelo ISBN (S = pequena, M = média, L = grande)
-export function getCapaOpenLibrary(volumeInfo, tamanho = 'L') {
-    const isbn = getIsbn(volumeInfo);
-    if (!isbn) return null;
-    // default=false: sem capa, a Open Library responde 404 (em vez de uma imagem em branco)
-    return `https://covers.openlibrary.org/b/isbn/${isbn}-${tamanho}.jpg?default=false`;
-}
+// // Capa da Open Library pelo ISBN (S = pequena, M = média, L = grande)
+// export function getCapaOpenLibrary(volumeInfo, tamanho = 'L') {
+//     const isbn = getIsbn(volumeInfo);
+//     if (!isbn) return null;
+//     // default=false: sem capa, a Open Library responde 404 (em vez de uma imagem em branco)
+//     return `https://covers.openlibrary.org/b/isbn/${isbn}-${tamanho}.jpg?default=false`;
+// }

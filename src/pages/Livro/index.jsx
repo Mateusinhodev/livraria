@@ -2,20 +2,22 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { buscarLivro, getMensagemErro } from '../../services/livros';
 import PainelLeitura from '../../components/PainelLeitura';
 import Capa from '../../components/Capa';
-import { getCapa, getCapaOpenLibrary, getAutores, limparDescricao, forcarHttps } from '../../utils/livros';
+
+import { buscarLivro, getMensagemErro } from '../../services/livros';
+import { buscarCapaAlta } from '../../services/capas';
+
+import { getCapa, getAutores, limparDescricao, forcarHttps } from '../../utils/livros';
 
 import './livro-info.css';
 
 function Livro() {
     const { id } = useParams();
     const navigate = useNavigate();
-
     const [livro, setLivro] = useState(null);
     const [loading, setLoading] = useState(true);
-    // const [salvo, setSalvo] = useState(false);
+    const [capaAlta, setCapaAlta] = useState(null);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -50,17 +52,21 @@ function Livro() {
         return () => controller.abort();
     }, [id, navigate]);
 
-    // function alternarFavorito() {
-    //     if (salvo) {
-    //         removerFavorito(livro.id);
-    //         setSalvo(false);
-    //         toast.info('Livro removido dos favoritos');
-    //     } else {
-    //         adicionarFavorito(livro);
-    //         setSalvo(true);
-    //         toast.success('Livro salvo nos favoritos');
-    //     }
-    // }
+        // Melhoria progressiva: mostra a capa do Google e troca pela da Open Library quando chegar
+    useEffect(() => {
+        if (!livro) return;
+
+        let cancelado = false;
+        setCapaAlta(null);
+
+        buscarCapaAlta(livro.volumeInfo).then((url) => {
+            if (!cancelado) setCapaAlta(url);
+        });
+
+        return () => {
+            cancelado = true;
+        };
+    }, [livro]);
 
     if (loading) {
         return (
@@ -95,10 +101,10 @@ function Livro() {
 
             <div className="livro-info__conteudo">
                 <Capa
-                    key={livro.id}
+                    key={`${livro.id}-${capaAlta ?? 'google'}`}
                     className="livro-info__capa"
                     alt={`Capa do livro ${title}`}
-                    fontes={[getCapaOpenLibrary(livro.volumeInfo), getCapa(livro.volumeInfo)]}
+                    fontes={[capaAlta, getCapa(livro.volumeInfo)]}
                 />
 
                 <div className="livro-info__detalhes">
