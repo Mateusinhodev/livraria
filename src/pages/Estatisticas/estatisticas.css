@@ -1,0 +1,218 @@
+.estatisticas {
+    max-width: 900px;
+    margin: 32px auto;
+    padding: 32px;
+    background-color: var(--cor-superficie);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+}
+
+.estatisticas__topo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.estatisticas__voltar {
+    color: var(--cor-texto-suave);
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.estatisticas__voltar:hover {
+    color: var(--header-destaque);
+}
+
+.estatisticas__topo h1 {
+    margin-top: 4px;
+    font-size: 2rem;
+    line-height: 1.2;
+}
+
+/* Seletor de ano: ← 2026 → */
+.estatisticas__ano {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.estatisticas__ano strong {
+    min-width: 56px;
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.estatisticas__ano button {
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--header-destaque);
+    border-radius: 50%;
+    background: none;
+    color: var(--header-destaque);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.estatisticas__ano button:hover:not(:disabled) {
+    background-color: var(--header-destaque);
+    color: #FFF;
+}
+
+.estatisticas__ano button:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.estatisticas__aviso,
+.estatisticas__vazio {
+    margin: 40px 0;
+    color: var(--cor-texto-suave);
+    text-align: center;
+}
+
+.estatisticas__explorar {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 10px 22px;
+    border-radius: 6px;
+    background-color: var(--header-destaque);
+    color: #FFF;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* Cartões de números */
+.estatisticas__cartoes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-top: 28px;
+}
+
+.cartao-numero {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 20px;
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.cartao-numero__valor {
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--header-destaque);
+}
+
+.cartao-numero__legenda {
+    color: var(--cor-texto-suave);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Destaques: melhor livro e autores */
+.estatisticas__destaques {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.destaque {
+    padding: 20px;
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.destaque h2 {
+    margin-bottom: 14px;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #888;
+}
+
+.destaque__livro {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--cor-texto);
+    text-decoration: none;
+}
+
+.destaque__livro:hover strong {
+    color: var(--header-destaque);
+}
+
+.destaque__livro div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.destaque__autor {
+    color: var(--cor-texto-suave);
+    font-size: 0.9rem;
+}
+
+.destaque__capa {
+    flex-shrink: 0;
+    width: 64px;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.destaque__autores {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 20px;
+}
+
+.destaque__autores li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.destaque__autores strong {
+    color: var(--cor-texto-suave);
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.estatisticas__nota {
+    margin-top: 20px;
+    color: var(--cor-texto-suave);
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.estatisticas__ano button:focus-visible,
+.estatisticas__voltar:focus-visible,
+.destaque__livro:focus-visible {
+    outline: 2px solid #333;
+    outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+    .estatisticas {
+        margin: 16px;
+        padding: 20px;
+    }
+
+    .estatisticas__topo h1 {
+        font-size: 1.5rem;
+    }
+
+    .cartao-numero__valor {
+        font-size: 1.8rem;
+    }
+}

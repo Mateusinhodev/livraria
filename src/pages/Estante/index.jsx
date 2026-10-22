@@ -51,9 +51,14 @@ function Estante() {
                     <p className="estante__saudacao">Olá, {getNomeUsuario(usuario)}</p>
                     <h1>Minha estante</h1>
                 </div>
-                <span className="estante__total">
-                    {itens.length === 1 ? '1 livro' : `${itens.length} livros`}
-                </span>
+                <div className="estante__acoes-topo">
+                    <span className="estante__total">
+                        {itens.length === 1 ? '1 livro' : `${itens.length} livros`}
+                    </span>
+                    <Link className="estante__estatisticas" to="/estatisticas">
+                        📊 Meu ano de leitura
+                    </Link>
+                </div>
             </div>
 
             {/* As abas */}

@@ -29,6 +29,24 @@
     font-weight: 600;
 }
 
+.estante__acoes-topo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.estante__estatisticas {
+    color: var(--header-destaque);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.estante__estatisticas:hover {
+    text-decoration: underline;
+}
+
 /* ── Abas ── */
 .estante__abas {
     display: flex;

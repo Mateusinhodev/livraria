@@ -9,6 +9,7 @@ import Entrar from './pages/Entrar';
 import Estante from './pages/Estante';
 import Classicos from './pages/Classicos';
 import Leitor from './pages/Leitor';
+import Estatisticas from './pages/Estatisticas';
 import Erro from './pages/Erro';
 
 function RoutesApp() {
@@ -26,6 +27,14 @@ function RoutesApp() {
                         element={
                             <RotaPrivada>
                                 <Estante />
+                            </RotaPrivada>
+                        }
+                    />
+                    <Route
+                        path="/estatisticas"
+                        element={
+                            <RotaPrivada>
+                                <Estatisticas />
                             </RotaPrivada>
                         }
                     />
