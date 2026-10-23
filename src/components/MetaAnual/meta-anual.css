@@ -1,0 +1,169 @@
+.meta-anual {
+    margin-top: 28px;
+    padding: 20px;
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.meta-anual h2 {
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #888;
+}
+
+.meta-anual__topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Convite */
+.meta-anual--convite {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--cor-texto-suave);
+}
+
+/* Números e barra */
+.meta-anual__numeros {
+    margin: 10px 0;
+    color: var(--cor-texto-suave);
+}
+
+.meta-anual__numeros strong {
+    font-size: 1.8rem;
+    color: var(--header-destaque);
+}
+
+.meta-anual__barra {
+    position: relative;
+    height: 14px;
+    background-color: #EEE;
+    border-radius: 7px;
+}
+
+.meta-anual__preenchido {
+    height: 100%;
+    background-color: var(--header-destaque);
+    border-radius: 7px;
+    transition: width 0.4s ease;
+}
+
+/* A marquinha de "onde você deveria estar hoje" */
+.meta-anual__hoje {
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    width: 3px;
+    margin-left: -1.5px;
+    background-color: #333;
+    border-radius: 2px;
+}
+
+.meta-anual__situacao {
+    margin-top: 12px;
+    font-weight: 700;
+}
+
+.meta-anual__dica {
+    margin-top: 4px;
+    color: var(--cor-texto-suave);
+    font-size: 0.9rem;
+}
+
+/* Cores por situação */
+.meta-anual--adiantado .meta-anual__situacao,
+.meta-anual--concluida .meta-anual__situacao {
+    color: #1E6B39;
+}
+
+.meta-anual--atrasado .meta-anual__situacao {
+    color: var(--cor-perigo);
+}
+
+.meta-anual--concluida .meta-anual__preenchido {
+    background-color: #2E9E57;
+}
+
+/* Formulário */
+.meta-anual__form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 12px;
+}
+
+.meta-anual__form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-weight: 600;
+}
+
+.meta-anual__form input {
+    width: 120px;
+    padding: 8px 10px;
+    border: 1px solid #CFCFCF;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.meta-anual__form input:focus {
+    border-color: var(--header-destaque);
+    outline: none;
+}
+
+.meta-anual__botoes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+}
+
+.meta-anual__botao {
+    padding: 9px 18px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--header-destaque);
+    color: #FFF;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.meta-anual__botao:hover:not(:disabled) {
+    background-color: var(--header-destaque-hover);
+}
+
+.meta-anual__botao:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.meta-anual__link {
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--cor-texto-suave);
+    font-size: 0.9rem;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.meta-anual__link:hover:not(:disabled) {
+    color: var(--header-destaque);
+}
+
+.meta-anual__link--perigo:hover:not(:disabled) {
+    color: var(--cor-perigo);
+}
+
+.meta-anual button:focus-visible,
+.meta-anual input:focus-visible {
+    outline: 2px solid #333;
+    outline-offset: 2px;
+}

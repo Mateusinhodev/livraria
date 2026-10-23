@@ -1,0 +1,63 @@
+.sequencia {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 16px;
+    padding: 16px 20px;
+    background-color: #FFF4EB;
+    border: 1px solid #F6D3B5;
+    border-radius: 10px;
+}
+
+.sequencia__chama {
+    font-size: 2.4rem;
+    line-height: 1;
+    transition: filter 0.3s ease;
+}
+
+/* Ainda não leu hoje: a chama fica "apagada" */
+.sequencia--pendente .sequencia__chama {
+    filter: grayscale(1);
+    opacity: 0.6;
+}
+
+.sequencia__texto {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sequencia__texto strong {
+    font-size: 1.2rem;
+    color: var(--header-destaque);
+}
+
+.sequencia__texto span,
+.sequencia__recorde span {
+    color: var(--cor-texto-suave);
+    font-size: 0.9rem;
+}
+
+.sequencia__recorde {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-left: 16px;
+    border-left: 1px solid #F6D3B5;
+}
+
+@media (max-width: 480px) {
+    .sequencia {
+        flex-wrap: wrap;
+    }
+
+    .sequencia__recorde {
+        flex-direction: row;
+        gap: 6px;
+        width: 100%;
+        padding: 10px 0 0;
+        border-left: none;
+        border-top: 1px solid #F6D3B5;
+    }
+}

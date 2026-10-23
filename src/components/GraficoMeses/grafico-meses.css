@@ -1,0 +1,17 @@
+/* Gráfico de livros por mês */
+.grafico-meses {
+    margin-top: 16px;
+    padding: 20px;
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.grafico-meses figcaption {
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #888;
+}

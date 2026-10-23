@@ -1,10 +1,26 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 
 import Estrelas from '../../components/Estrelas';
+import GraficoMeses from '../../components/GraficoMeses';
+import MetaAnual from '../../components/MetaAnual';
+import SequenciaLeitura from '../../components/SequenciaLeitura';
+
 import { useEstante } from '../../contexts/EstanteContext';
+import { useAuth } from '../../contexts/AuthContext';
+
 import { getLinkLivro } from '../../services/estante';
-import { listarHistorico, resumoDoAno } from '../../services/estatisticas';
+import {
+    buscarMeta,
+    listarDiasDeLeitura,
+    listarHistorico,
+    removerMeta,
+    resumoDoAno,
+    salvarMeta,
+    sequenciaDeLeitura,
+} from '../../services/estatisticas';
 
 import './estatisticas.css';
 
@@ -23,6 +39,7 @@ function Cartao({ valor, legenda, children }) {
 
 function Estatisticas() {
     const { itens, carregando: carregandoEstante } = useEstante();
+    const { usuario } = useAuth();
     const [params, setParams] = useSearchParams();
 
     // Ano da URL; se for inválido ou futuro, usa o ano atual
@@ -32,6 +49,8 @@ function Estatisticas() {
     const [historico, setHistorico] = useState([]);
     const [carregando, setCarregando] = useState(true);
     const [erro, setErro] = useState(false);
+    const [meta, setMeta] = useState(null);
+    const [dias, setDias] = useState(null);
 
     // Busca o diário sempre que o ano muda
     useEffect(() => {
@@ -39,9 +58,11 @@ function Estatisticas() {
         setCarregando(true);
         setErro(false);
 
-        listarHistorico(ano)
-            .then((linhas) => {
-                if (!cancelado) setHistorico(linhas);
+        Promise.all([listarHistorico(ano), buscarMeta(ano)])
+            .then(([linhas, metaDoAno]) => {
+                if (cancelado) return;
+                setHistorico(linhas);
+                setMeta(metaDoAno);
             })
             .catch((error) => {
                 console.error('Erro ao buscar o histórico', error);
@@ -56,8 +77,52 @@ function Estatisticas() {
         };
     }, [ano]);
 
+        // A sequência não depende do ano: busca uma vez quando a página abre
+    useEffect(() => {
+        let cancelado = false;
+
+        listarDiasDeLeitura()
+            .then((lista) => {
+                if (!cancelado) setDias(lista);
+            })
+            .catch((error) => {
+                // Não é essencial: se falhar, a página funciona sem a sequência
+                console.error('Erro ao buscar os dias de leitura', error);
+            });
+
+        return () => {
+            cancelado = true;
+        };
+    }, []);
+
+    const sequencia = useMemo(() => (dias ? sequenciaDeLeitura(dias) : null), [dias]);
+
     // Os números do ano (só recalcula quando algo muda)
     const resumo = useMemo(() => resumoDoAno(itens, historico, ano), [itens, historico, ano]);
+
+    async function handleSalvarMeta(livros) {
+        try {
+            await salvarMeta(usuario.id, ano, livros);
+            setMeta(livros);
+            toast.success('Meta salva!');
+        } catch (error) {
+            console.error('Erro ao salvar a meta', error);
+            toast.error('Não foi possível salvar a meta');
+            throw error; // avisa o componente para manter o formulário aberto
+        }
+    }
+
+    async function handleRemoverMeta() {
+        try {
+            await removerMeta(ano);
+            setMeta(null);
+            toast.info('Meta removida');
+        } catch (error) {
+            console.error('Erro ao remover a meta', error);
+            toast.error('Não foi possível remover a meta');
+            throw error;
+        }
+    }
 
     function mudarAno(novoAno) {
         setParams(novoAno === ANO_ATUAL ? {} : { ano: String(novoAno) }, { replace: true });
@@ -98,6 +163,19 @@ function Estatisticas() {
                 <p className="estatisticas__aviso">Não foi possível carregar o seu histórico. Tente novamente.</p>
             )}
 
+            {!carregando && !carregandoEstante && !erro && (
+                <MetaAnual
+                    key={ano}
+                    ano={ano}
+                    meta={meta}
+                    lidos={resumo.livrosLidos}
+                    onSalvar={handleSalvarMeta}
+                    onRemover={handleRemoverMeta}
+                />
+            )}
+
+            {ano === ANO_ATUAL && sequencia && <SequenciaLeitura {...sequencia} />}
+
             {!carregando && !erro && semDados && (
                 <div className="estatisticas__vazio">
                     <p>Nenhuma leitura registrada em {ano}.</p>
@@ -126,6 +204,8 @@ function Estatisticas() {
                             )}
                         </Cartao>
                     </div>
+
+                    <GraficoMeses porMes={resumo.porMes} ano={ano} />
 
                     <div className="estatisticas__destaques">
                         {resumo.melhorLivro && (

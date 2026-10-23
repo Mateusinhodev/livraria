@@ -86,3 +86,123 @@ export function resumoDoAno(itens, historico, ano) {
         autoresFavoritos: autoresFavoritos(lidos),
     };
 }
+
+// ---------- Meta anual ----------
+
+// A meta do ano (ou null se não houver).
+// Não filtramos por usuário: a RLS já devolve só as linhas da pessoa logada.
+export async function buscarMeta(ano) {
+    const { data, error } = await supabase
+        .from('metas_leitura')
+        .select('livros')
+        .eq('ano', ano)
+        .maybeSingle();
+
+    if (error) throw error;
+    return data?.livros ?? null;
+}
+
+// Cria ou atualiza (upsert) a meta do ano
+export async function salvarMeta(userId, ano, livros) {
+    const { error } = await supabase
+        .from('metas_leitura')
+        .upsert(
+            { user_id: userId, ano, livros, atualizado_em: new Date().toISOString() },
+            { onConflict: 'user_id,ano' }
+        );
+
+    if (error) throw error;
+}
+
+export async function removerMeta(ano) {
+    const { error } = await supabase.from('metas_leitura').delete().eq('ano', ano);
+    if (error) throw error;
+}
+
+const DIA = 24 * 60 * 60 * 1000; // um dia em milissegundos
+
+// Compara o que foi lido com o que a meta "pede" até hoje.
+// "hoje" é um parâmetro para podermos testar com qualquer data.
+export function ritmoDaMeta(meta, lidos, ano, hoje = new Date()) {
+    const anoAtual = hoje.getFullYear();
+
+    // Date.UTC conta dias "puros", sem fuso nem horário de verão
+    const inicio = Date.UTC(ano, 0, 1);
+    const fim = Date.UTC(ano + 1, 0, 1);
+    const totalDias = (fim - inicio) / DIA; // 365 ou 366
+
+    let diasPassados; // contando hoje
+    if (ano < anoAtual) diasPassados = totalDias;
+    else if (ano > anoAtual) diasPassados = 0;
+    else diasPassados = (Date.UTC(ano, hoje.getMonth(), hoje.getDate()) - inicio) / DIA + 1;
+
+    const fracaoAno = diasPassados / totalDias;
+    const esperado = Math.floor(meta * fracaoAno);
+    const faltam = Math.max(meta - lidos, 0);
+    const diasRestantes = ano < anoAtual ? 0 : totalDias - diasPassados + 1; // hoje ainda conta
+
+    let situacao;
+    if (lidos >= meta) situacao = 'concluida';
+    else if (diasRestantes === 0) situacao = 'encerrada';
+    else if (lidos > esperado) situacao = 'adiantado';
+    else if (lidos === esperado) situacao = 'no-ritmo';
+    else situacao = 'atrasado';
+
+    return {
+        meta,
+        lidos,
+        percentual: Math.min(lidos / meta, 1),
+        fracaoAno,
+        esperado,
+        diferenca: lidos - esperado,
+        faltam,
+        diasRestantes,
+        situacao,
+    };
+}
+
+// ---------- Sequência de leitura ----------
+
+// Todos os dias em que houve leitura, do mais recente para o mais antigo
+export async function listarDiasDeLeitura() {
+    const { data, error } = await supabase
+        .from('dias_leitura')
+        .select('lido_em')
+        .order('lido_em', { ascending: false })
+        .limit(1000);
+
+    if (error) throw error;
+    return data.map((linha) => linha.lido_em);
+}
+
+// 'AAAA-MM-DD' → número do dia (dias consecutivos viram números consecutivos)
+function numeroDoDia(texto) {
+    const [ano, mes, dia] = texto.split('-').map(Number);
+    return Date.UTC(ano, mes - 1, dia) / DIA;
+}
+
+export function sequenciaDeLeitura(dias, hoje = new Date()) {
+    const numeros = new Set(dias.map(numeroDoDia));
+    const hojeN = Date.UTC(hoje.getFullYear(), hoje.getMonth(), hoje.getDate()) / DIA;
+
+    // Sequência atual: conta para trás a partir de hoje.
+    // Se ainda não leu hoje, a sequência não quebrou: o dia não acabou. Conta a partir de ontem.
+    const leuHoje = numeros.has(hojeN);
+    let dia = leuHoje ? hojeN : hojeN - 1;
+    let atual = 0;
+    while (numeros.has(dia)) {
+        atual++;
+        dia--;
+    }
+
+    // Recorde: a maior "corrida" de dias seguidos em todo o diário
+    let recorde = 0;
+    for (const n of numeros) {
+        if (numeros.has(n - 1)) continue; // não é o começo de uma corrida
+        let tamanho = 1;
+        while (numeros.has(n + tamanho)) tamanho++;
+        recorde = Math.max(recorde, tamanho);
+    }
+
+    return { atual, recorde, leuHoje };
+}
