@@ -90,7 +90,7 @@ function MetaAnual({ ano, meta, lidos, onSalvar, onRemover }) {
                     </label>
 
                     <div className="meta-anual__botoes">
-                        <button type="submit" className="meta-anual__botao" disabled={!valido || salvando}>
+                        <button type="submit" className="botao botao--primario" disabled={!valido || salvando}>
                             {salvando ? 'Salvando...' : 'Salvar meta'}
                         </button>
                         <button
@@ -124,7 +124,7 @@ function MetaAnual({ ano, meta, lidos, onSalvar, onRemover }) {
         return (
             <section className="meta-anual meta-anual--convite">
                 <p>Que tal definir uma meta de leitura para {ano}?</p>
-                <button type="button" className="meta-anual__botao" onClick={abrirEdicao}>
+                <button type="button" className="botao botao--primario" onClick={abrirEdicao}>
                     Definir meta
                 </button>
             </section>

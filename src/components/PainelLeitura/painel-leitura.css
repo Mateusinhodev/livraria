@@ -15,18 +15,6 @@
     color: var(--cor-texto-suave);
 }
 
-.painel-leitura__entrar {
-    padding: 10px 20px;
-    border-radius: 6px;
-    background-color: var(--header-destaque);
-    color: #FFF;
-    font-weight: 700;
-    text-decoration: none;
-}
-
-.painel-leitura__entrar:hover {
-    background-color: var(--header-destaque-hover);
-}
 
 /* Linha com os botões de status e o favorito */
 .painel-leitura__linha {
@@ -68,18 +56,7 @@
     color: #FFF;
 }
 
-.painel-leitura__favorito {
-    padding: 9px 16px;
-    border: 2px solid #D6D6D6;
-    border-radius: 8px;
-    background: none;
-    color: var(--cor-texto-suave);
-    font-weight: 700;
-    cursor: pointer;
-    transition: border-color 0.2s ease, color 0.2s ease;
-}
-
-.painel-leitura__favorito:hover,
+.painel-leitura__favorito:hover:not(:disabled),
 .painel-leitura__favorito.ativo {
     border-color: var(--cor-perigo);
     color: var(--cor-perigo);
@@ -158,25 +135,6 @@
 .painel-leitura__de {
     padding-bottom: 9px;
     color: var(--cor-texto-suave);
-}
-
-.painel-leitura__salvar {
-    padding: 9px 18px;
-    border: none;
-    border-radius: 6px;
-    background-color: var(--header-destaque);
-    color: #FFF;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.painel-leitura__salvar:hover:not(:disabled) {
-    background-color: var(--header-destaque-hover);
-}
-
-.painel-leitura__salvar:disabled {
-    opacity: 0.5;
-    cursor: default;
 }
 
 .painel-leitura__concluido {

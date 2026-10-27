@@ -179,9 +179,7 @@ function Estatisticas() {
             {!carregando && !erro && semDados && (
                 <div className="estatisticas__vazio">
                     <p>Nenhuma leitura registrada em {ano}.</p>
-                    <Link className="estatisticas__explorar" to="/classicos">
-                        Começar a ler um clássico
-                    </Link>
+                    <Link className="botao botao--primario estatisticas__explorar" to="/classicos"></Link>
                 </div>
             )}
 

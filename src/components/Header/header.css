@@ -2,184 +2,206 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    width: 100%;
-    height: var(--header-altura);
-    background-color: var(--header-bg);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    background-color: var(--cor-superficie);
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+/* "Vidro fosco" só nos navegadores que suportam; os outros ficam com o fundo sólido */
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .header {
+        background-color: var(--cor-vidro);
+        -webkit-backdrop-filter: saturate(180%) blur(12px);
+        backdrop-filter: saturate(180%) blur(12px);
+    }
 }
 
 .header__container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    max-width: 1200px;
-    height: 100%;
+    gap: var(--espaco-6);
+    max-width: var(--largura-maxima);
+    height: var(--header-altura);
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 var(--espaco-6);
 }
 
+/* Logo */
 .header__logo {
     display: flex;
     align-items: center;
-    gap: 8px;
-    color: var(--header-texto);
-    font-size: 1.75rem;
-    font-weight: 700;
+    gap: var(--espaco-2);
+    color: var(--cor-texto);
+    font-size: var(--texto-lg);
+    font-weight: 750;
+    letter-spacing: -0.02em;
     text-decoration: none;
-    letter-spacing: 0.5px;
 }
 
-.header__logo-icon {
-    font-size: 1.5rem;
-}
-
-.header__favoritos {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 18px;
-    border: 2px solid var(--header-destaque);
-    border-radius: 6px;
-    background-color: var(--header-destaque);
-    color: #F8F9FA;
-    font-weight: 700;
-    text-decoration: none;
-    transition: background-color 0.2s, transform 0.1s;
-}
-
-.header__favoritos:hover {
-    background-color: var(--header-destaque-hover);
-    border-color: var(--header-destaque-hover);
-}
-
-.header__favoritos:active {
-    transform: scale(0.97);
-}
-
-/* Quando o usuário já está na página de favoritos */
-.header__favoritos--ativo {
-    background-color: transparent;
-    color: var(--header-destaque);
-}
-
-.header__favoritos--ativo:hover {
-    color: #F8F9FA;
-}
-
-/* Bolinha com a quantidade de favoritos */
-.header__contador {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 22px;
-    height: 22px;
-    padding: 0 6px;
-    border-radius: 999px;
-    background-color: #FFF;
-    color: var(--header-destaque);
-    font-size: 0.75rem;
-    font-weight: 700;
+.header__logo-icone {
+    font-size: 1.4rem;
     line-height: 1;
 }
 
-.header__favoritos--ativo .header__contador {
-    background-color: var(--header-destaque);
-    color: #FFF;
-}
-
-.header__favoritos--ativo:hover .header__contador {
-    background-color: #FFF;
-    color: var(--header-destaque-hover);
-}
-
+/* Navegação */
 .header__nav {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: var(--espaco-1);
+    margin-right: auto; /* empurra o menu da conta para a direita */
 }
 
-.header__usuario {
-    display: flex;
+.header__link {
+    display: inline-flex;
     align-items: center;
-    gap: 12px;
-}
-
-/* Nome do usuário: corta com "..." se for muito longo */
-.header__nome {
-    max-width: 160px;
-    overflow: hidden;
-    color: var(--header-texto);
-    font-weight: 600;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-/* "Sair" e "Entrar": botões discretos, para não competir com "Meus livros" */
-.header__sair,
-.header__entrar {
+    gap: var(--espaco-2);
     padding: 6px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 6px;
+    border-radius: var(--raio-pilula);
+    color: var(--cor-texto-suave);
+    font-size: var(--texto-sm);
+    font-weight: 550;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color var(--transicao), color var(--transicao);
+}
+
+.header__link:hover {
+    color: var(--cor-texto);
+    background-color: var(--cor-superficie-suave);
+}
+
+.header__link--ativo {
+    color: var(--cor-texto);
+    background-color: var(--cor-superficie-suave);
+    font-weight: 650;
+}
+
+.header__contador {
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: var(--raio-pilula);
+    background-color: var(--cor-destaque);
+    color: var(--cor-sobre-destaque);
+    font-size: var(--texto-xs);
+    font-weight: 700;
+    line-height: 20px;
+    text-align: center;
+}
+
+.header__so-celular {
+    display: none;
+}
+
+/* Menu da conta */
+.header__menu {
+    position: relative;
+}
+
+.header__avatar {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--cor-destaque-suave);
+    box-shadow: inset 0 0 0 1px var(--cor-destaque-borda);
+    color: var(--cor-destaque);
+    font-size: var(--texto-sm);
+    font-weight: 700;
+    cursor: pointer;
+    transition: box-shadow var(--transicao);
+}
+
+.header__avatar:hover,
+.header__avatar[aria-expanded='true'] {
+    box-shadow: inset 0 0 0 2px var(--cor-destaque);
+}
+
+.header__dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+    padding: var(--espaco-2);
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra-lg);
+    animation: dropdown-entrar 120ms ease-out;
+}
+
+@keyframes dropdown-entrar {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.header__dropdown-topo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--espaco-1);
+    padding: var(--espaco-2) var(--espaco-3) var(--espaco-3);
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.header__dropdown-topo strong {
+    font-size: var(--texto-sm);
+}
+
+.header__dropdown-topo span {
+    overflow: hidden;
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-xs);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.header__dropdown a,
+.header__sair {
+    padding: 8px 12px;
+    border: none;
+    border-radius: var(--raio-sm);
     background: none;
-    color: var(--header-texto);
-    font-weight: 600;
+    color: var(--cor-texto);
+    font-size: var(--texto-sm);
+    text-align: left;
     text-decoration: none;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background-color var(--transicao);
 }
 
-.header__sair:hover,
-.header__entrar:hover {
-    background-color: rgba(255, 255, 255, 0.12);
+.header__dropdown a:hover,
+.header__sair:hover {
+    background-color: var(--cor-superficie-suave);
 }
 
-/* Link de texto simples no Header (ex.: Clássicos) */
-.header__link {
-    padding: 6px 4px;
-    border-bottom: 2px solid transparent;
-    color: var(--header-texto);
-    font-weight: 600;
-    text-decoration: none;
-    transition: border-color 0.2s ease;
+.header__sair {
+    color: var(--cor-perigo);
 }
 
-.header__link:hover,
-.header__link--ativo {
-    border-bottom-color: var(--header-destaque);
-}
-
-.header__logo:focus-visible,
-.header__sair:focus-visible,
-.header__entrar:focus-visible,
-.header__favoritos:focus-visible,
-.header__link:focus-visible {
-    outline: 2px solid var(--header-texto);
-    outline-offset: 4px;
-    border-radius: 6px;
-}
-
-@media (max-width: 480px) {
+/* Celular: tudo numa linha só (a altura do header não muda) */
+@media (max-width: 640px) {
     .header__container {
-        padding: 0 16px;
+        gap: var(--espaco-2);
+        padding: 0 var(--espaco-3);
     }
 
-    .header__logo {
-        font-size: 1.4rem;
-    }
-
-    .header__favoritos {
-        gap: 6px;
-        padding: 6px 12px;
-        font-size: 0.9rem;
-    }
-
-    .header__nav {
-        gap: 8px;
-    }
-
-    /* No celular: some o nome do usuário e o texto do logo (fica só o 📚) */
-    .header__nome,
-    .header__logo-texto {
+    .header__logo-texto,
+    .header__so-computador {
         display: none;
+    }
+
+    .header__so-celular {
+        display: inline;
+    }
+
+    .header__link {
+        padding: 6px 8px;
     }
 }

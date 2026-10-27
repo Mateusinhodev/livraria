@@ -41,9 +41,7 @@ function PainelLeitura({ livro }) {
         return (
             <div className="painel-leitura painel-leitura--convite">
                 <p>Entre na sua conta para adicionar este livro à estante, acompanhar a leitura e escrever uma resenha.</p>
-                <Link className="painel-leitura__entrar" to="/entrar" state={{ de: location.pathname }}>
-                    Entrar ou criar conta
-                </Link>
+                <Link className="botao botao--primario" to="/entrar" state={{ de: location.pathname }}></Link>
             </div>
         );
     }
@@ -118,7 +116,7 @@ function PainelLeitura({ livro }) {
 
                 <button
                     type="button"
-                    className={`painel-leitura__favorito${item?.favorito ? ' ativo' : ''}`}
+                    className={`botao botao--secundario painel-leitura__favorito${item?.favorito ? ' ativo' : ''}`}
                     aria-pressed={Boolean(item?.favorito)}
                     onClick={() =>
                         atualizar(
@@ -169,7 +167,7 @@ function PainelLeitura({ livro }) {
                                 placeholder="?"
                             />
                         </label>
-                        <button type="submit" className="painel-leitura__salvar">
+                        <button type="submit" className="botao botao--primario">
                             Salvar
                         </button>
                     </div>
@@ -218,7 +216,7 @@ function PainelLeitura({ livro }) {
                             {resenha.length.toLocaleString('pt-BR')}/{LIMITE_RESENHA.toLocaleString('pt-BR')} · visível só
                             para você
                         </small>
-                        <button type="submit" className="painel-leitura__salvar" disabled={!resenhaAlterada}>
+                        <button type="submit" className="botao botao--primario" disabled={!resenhaAlterada}>
                             Salvar resenha
                         </button>
                     </div>

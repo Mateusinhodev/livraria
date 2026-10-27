@@ -4,26 +4,103 @@
    ========================================================== */
 
 :root {
-    /* Cores da marca */
-    --header-bg: #373A40;
-    --header-texto: #FFFFFF;
-    --header-destaque: #DC5F00;
-    --header-destaque-hover: #F06C0A;
+    /* ---------- Camada 1: paleta ---------- */
 
-    /* Cores gerais */
-    --cor-fundo: #AFAFAF;
-    --cor-superficie: #F9F9F9;
-    --cor-texto: #222222;
-    --cor-texto-suave: #666666;
-    --cor-perigo: #C0392B;
+    /* Neutros quentes ("papel") */
+    --cinza-50: #FAFAF9;
+    --cinza-100: #F5F5F4;
+    --cinza-200: #E7E5E4;
+    --cinza-300: #D6D3D1;
+    --cinza-400: #A8A29E;
+    --cinza-500: #78716C;
+    --cinza-600: #57534E;
+    --cinza-700: #44403C;
+    --cinza-800: #292524;
+    --cinza-900: #1C1917;
 
-    /* Medidas */
+    /* Laranja da marca */
+    --laranja-50: #FFF7ED;
+    --laranja-100: #FFEDD5;
+    --laranja-200: #FED7AA;
+    --laranja-600: #EA580C;
+    --laranja-700: #C2410C;
+    --laranja-800: #9A3412;
+
+    /* ---------- Camada 2: papéis (é isto que os componentes usam) ---------- */
+
+    --cor-fundo: var(--cinza-50);
+    --cor-superficie: #FFFFFF;
+    --cor-superficie-suave: var(--cinza-100);
+    --cor-borda: var(--cinza-200);
+    --cor-borda-forte: var(--cinza-300);
+
+    --cor-texto: var(--cinza-900);
+    --cor-texto-suave: var(--cinza-600);
+    --cor-texto-fraco: var(--cinza-500);
+
+    --cor-destaque: var(--laranja-700);
+    --cor-destaque-hover: var(--laranja-800);
+    --cor-destaque-suave: var(--laranja-50);
+    --cor-destaque-borda: var(--laranja-200);
+    --cor-sobre-destaque: #FFFFFF; /* texto em cima do laranja */
+
+    --cor-sucesso: #15803D;
+    --cor-perigo: #B91C1C;
+    --cor-perigo-suave: #FEF2F2;
+    
+    --cor-vidro: rgba(255, 255, 255, 0.75); /* fundo translúcido do header */
+
+    /* ---------- Tipografia ---------- */
+
+    --fonte: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+
+    --texto-xs: 0.75rem;   /* 12px */
+    --texto-sm: 0.875rem;  /* 14px */
+    --texto-base: 1rem;    /* 16px */
+    --texto-lg: 1.125rem;  /* 18px */
+    --texto-xl: 1.25rem;   /* 20px */
+    --texto-2xl: 1.5rem;   /* 24px */
+    --texto-3xl: 2rem;     /* 32px */
+    --texto-4xl: 2.5rem;   /* 40px */
+
+    /* ---------- Espaçamento (múltiplos de 4px) ---------- */
+
+    --espaco-1: 4px;
+    --espaco-2: 8px;
+    --espaco-3: 12px;
+    --espaco-4: 16px;
+    --espaco-5: 20px;
+    --espaco-6: 24px;
+    --espaco-8: 32px;
+    --espaco-10: 40px;
+    --espaco-12: 48px;
+    --espaco-16: 64px;
+
+    /* ---------- Formas e profundidade ---------- */
+
+    --raio-sm: 6px;
+    --raio: 10px;
+    --raio-lg: 16px;
+    --raio-pilula: 999px;
+
+    --sombra-sm: 0 1px 2px rgba(28, 25, 23, 0.06);
+    --sombra: 0 1px 3px rgba(28, 25, 23, 0.08), 0 4px 12px rgba(28, 25, 23, 0.04);
+    --sombra-lg: 0 12px 32px rgba(28, 25, 23, 0.12);
+
+    --transicao: 150ms ease;
+
+    /* ---------- Medidas ---------- */
+
     --header-altura: 64px;
     --largura-maxima: 1200px;
-    --raio: 12px;
-    --sombra: 0 4px 12px rgba(0, 0, 0, 0.1);
 
-    --fonte: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    /* ---------- Nomes antigos (apontam para os novos) ----------
+       Mantidos para nada quebrar hoje. Vamos trocá-los tela por tela
+       nas próximas aulas e, no fim, apagar este bloco. */
+    --header-bg: var(--cinza-900);
+    --header-texto: #FFFFFF;
+    --header-destaque: var(--cor-destaque);
+    --header-destaque-hover: var(--cor-destaque-hover);
 }
 
 /* Reset básico */
@@ -39,13 +116,45 @@ html {
     -webkit-text-size-adjust: 100%;
 }
 
+/* Rolagens automáticas (scrollIntoView, âncoras) param abaixo do header fixo */
+html {
+    scroll-padding-top: calc(var(--header-altura) + var(--espaco-4));
+}
+
 body {
     min-height: 100vh;
     font-family: var(--fonte);
-    line-height: 1.5;
+    font-size: var(--texto-base);
+    line-height: 1.6;
     color: var(--cor-texto);
     background-color: var(--cor-fundo);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+/* Títulos: mais "apertados" e pesados, como nos sites modernos */
+h1,
+h2,
+h3 {
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--cor-texto);
+}
+
+h1 {
+    font-weight: 750;
+}
+
+/* Cor do texto selecionado com o mouse */
+::selection {
+    background-color: var(--laranja-100);
+    color: var(--laranja-800);
+}
+
+/* Foco visível padrão para todo o site (navegação pelo teclado) */
+:focus-visible {
+    outline: 2px solid var(--cor-destaque);
+    outline-offset: 2px;
 }
 
 img {
@@ -89,20 +198,21 @@ textarea {
 .campo input,
 .campo textarea {
     padding: 10px 12px;
-    border: 1px solid #CFCFCF;
-    border-radius: 6px;
-    background-color: #FFF;
+    border: 1px solid var(--cor-borda-forte);
+    border-radius: var(--raio-sm);
+    background-color: var(--cor-superficie);
+    transition: border-color var(--transicao), box-shadow var(--transicao);
 }
 
 .campo input:focus,
 .campo textarea:focus {
-    border-color: var(--header-destaque);
+    border-color: var(--cor-destaque);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(220, 95, 0, 0.2);
+    box-shadow: 0 0 0 3px var(--laranja-100);
 }
 
 .campo small {
-    color: var(--cor-texto-suave);
+    color: var(--cor-texto-fraco);
 }
 
 /* Mensagem de carregamento usada em várias páginas */

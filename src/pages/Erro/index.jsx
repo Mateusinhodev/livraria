@@ -25,10 +25,10 @@ function Erro() {
             </p>
 
             <div className="erro__acoes">
-                <Link className="erro__botao" to="/">
+                <Link className="botao botao--primario botao--grande" to="/">
                     Explorar livros
                 </Link>
-                <Link className="erro__botao erro__botao--secundario" to="/estante">
+                <Link className="botao botao--secundario botao--grande" to="/estante">
                     Minha estante
                 </Link>
             </div>
