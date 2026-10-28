@@ -1,40 +1,50 @@
-import './banner.css';
 import { useState } from 'react';
+import CampoBusca from '../CampoBusca';
+
+import './banner.css';
+
+const SUGESTOES = ['Machado de Assis', 'Clarice Lispector', 'Ficção científica', 'Romance policial'];
 
 function Banner({ onSearch }) {
     const [search, setSearch] = useState('');
 
-    const handleSubmit = (evt) => {
-        evt.preventDefault(); // evita o recarregamento da página
-        onSearch(search.trim()); // envia o termo para o componente pai (Home)
-    };
+    function buscar(termo) {
+        setSearch(termo); // o campo mostra o termo (útil nas sugestões)
+        onSearch(termo.trim());
+    }
+
+    function handleSubmit(evt) {
+        evt.preventDefault();
+        buscar(search);
+    }
 
     return (
         <section className="banner">
-            <h2 className="banner__titulo">Encontre seu livro</h2>
+            <p className="banner__selo">Sua estante digital</p>
+            <h1 className="banner__titulo">Encontre seu próximo livro</h1>
+            <p className="banner__subtitulo">
+                Pesquise livros, acompanhe suas leituras e leia clássicos de graça.
+            </p>
 
-            <form className="banner__busca" role="search" onSubmit={handleSubmit}>
-                <label htmlFor="busca-livro" className="visualmente-oculto">
-                    Nome do livro
-                </label>
-                <input
+            <div className="banner__busca">
+                <CampoBusca
                     id="busca-livro"
-                    type="search"
-                    className="banner__input"
-                    placeholder="Digite o nome do livro que procura..."
+                    rotulo="Título, autor ou assunto"
+                    placeholder="Título, autor ou assunto..."
                     value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={setSearch}
+                    onSubmit={handleSubmit}
                 />
-                <button type="submit" className="banner__botao">
-                    Pesquisar
-                </button>
-            </form>
+            </div>
 
-            <img
-                className="banner__imagem"
-                src="/imagens/livrariavirtual.png"
-                alt="Ilustração de uma livraria virtual"
-            />
+            <div className="banner__sugestoes">
+                <span>Experimente:</span>
+                {SUGESTOES.map((termo) => (
+                    <button key={termo} type="button" className="banner__sugestao" onClick={() => buscar(termo)}>
+                        {termo}
+                    </button>
+                ))}
+            </div>
         </section>
     );
 }

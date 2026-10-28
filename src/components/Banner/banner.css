@@ -1,86 +1,76 @@
 .banner {
-    max-width: 1200px;
-    margin: 24px auto;
-    padding: 40px 20px;
-    background-color: #F4F4F4;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: var(--espaco-16) var(--espaco-4) var(--espaco-12);
     text-align: center;
+    /* Um brilho laranja bem suave no topo */
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, var(--cor-destaque-suave), transparent);
+}
+
+.banner__selo {
+    display: inline-block;
+    margin-bottom: var(--espaco-4);
+    padding: 4px 12px;
+    border: 1px solid var(--cor-destaque-borda);
+    border-radius: var(--raio-pilula);
+    background-color: var(--cor-superficie);
+    color: var(--cor-destaque);
+    font-size: var(--texto-xs);
+    font-weight: 650;
 }
 
 .banner__titulo {
-    margin: 0 0 20px;
-    font-size: 2rem;
-    color: #333;
+    font-size: var(--texto-4xl);
+}
+
+.banner__subtitulo {
+    max-width: 480px;
+    margin: var(--espaco-3) auto 0;
+    color: var(--cor-texto-suave);
+    font-size: var(--texto-lg);
 }
 
 .banner__busca {
+    max-width: 620px;
+    margin: var(--espaco-8) auto 0;
+}
+
+/* Sugestões */
+.banner__sugestoes {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
-    gap: 10px;
-    max-width: 500px;
-    margin: 0 auto;
+    gap: var(--espaco-2);
+    margin-top: var(--espaco-4);
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-sm);
 }
 
-.banner__input {
-    flex: 1;
-    min-width: 0;
-    padding: 10px 12px;
-    font-size: 1rem;
-    border: 1px solid #DDD;
-    border-radius: 4px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.banner__input:focus {
-    border-color: var(--header-destaque);
-    box-shadow: 0 0 0 3px rgba(220, 95, 0, 0.25);
-    outline: none;
-}
-
-.banner__botao {
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: 700;
-    color: #FFF;
-    background-color: var(--header-destaque);
-    border: none;
-    border-radius: 4px;
+.banner__sugestao {
+    padding: 4px 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-pilula);
+    background-color: var(--cor-superficie);
+    color: var(--cor-texto-suave);
+    font-size: var(--texto-sm);
     cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color var(--transicao), color var(--transicao);
 }
 
-.banner__botao:hover {
-    background-color: var(--header-destaque-hover);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+.banner__sugestao:hover {
+    border-color: var(--cor-destaque-borda);
+    color: var(--cor-destaque);
 }
 
-.banner__botao:focus-visible {
-    outline: 2px solid #333;
-    outline-offset: 3px;
-}
-
-.banner__imagem {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    margin: 24px auto 0;
-    border-radius: 8px;
-}
-
-@media (max-width: 480px) {
+@media (max-width: 600px) {
     .banner {
-        margin: 16px;
-        padding: 28px 16px;
+        padding-top: var(--espaco-10);
     }
 
     .banner__titulo {
-        font-size: 1.5rem;
+        font-size: var(--texto-3xl);
     }
 
-    .banner__busca {
-        flex-direction: column;
+    .banner__subtitulo {
+        font-size: var(--texto-base);
     }
 }

@@ -63,3 +63,30 @@ export function getIsbn(volumeInfo) {
 //     // default=false: sem capa, a Open Library responde 404 (em vez de uma imagem em branco)
 //     return `https://covers.openlibrary.org/b/isbn/${isbn}-${tamanho}.jpg?default=false`;
 // }
+
+// Divide um bloco em parágrafos de até "porParagrafo" frases.
+// Uma frase termina em . ! ? ou … seguido de espaço e letra maiúscula.
+function agruparFrases(bloco, porParagrafo = 3) {
+    const frases = bloco.split(/(?<=[.!?…])\s+(?=[A-ZÀ-Ý])/);
+    const paragrafos = [];
+
+    for (let i = 0; i < frases.length; i += porParagrafo) {
+        paragrafos.push(frases.slice(i, i + porParagrafo).join(' '));
+    }
+
+    return paragrafos;
+}
+
+// Sinopses sem quebras de linha viram um "paredão" de texto.
+// Criamos parágrafos depois de estrelas, antes de citações e a cada 3 frases.
+export function separarParagrafos(texto) {
+    if (!texto || texto.includes('\n')) return texto; // já tem parágrafos: respeita
+
+    return texto
+        .replace(/((?:⭐\uFE0F?|★)+)\s*/g, '$1\n') // quebra depois de uma fileira de estrelas
+        .replace(/\s+(?=“)/g, '\n') // quebra antes de abrir aspas
+        .split('\n')
+        .flatMap((bloco) => agruparFrases(bloco.trim()))
+        .filter(Boolean)
+        .join('\n\n');
+}

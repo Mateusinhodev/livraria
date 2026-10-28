@@ -1,0 +1,45 @@
+.campo-busca {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-2);
+    padding: 6px 6px 6px var(--espaco-4);
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda-forte);
+    border-radius: var(--raio-lg);
+    box-shadow: var(--sombra);
+    transition: border-color var(--transicao), box-shadow var(--transicao);
+}
+
+.campo-busca:focus-within {
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 0 4px var(--laranja-100);
+}
+
+.campo-busca__lupa {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: var(--cor-texto-fraco);
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+.campo-busca__input {
+    flex: 1;
+    min-width: 0;
+    height: 44px;
+    border: none;
+    background: transparent;
+    color: var(--cor-texto);
+    font-size: var(--texto-base);
+}
+
+/* O foco aparece na cápsula (focus-within) */
+.campo-busca__input:focus {
+    outline: none;
+}
+
+.campo-busca__input::placeholder {
+    color: var(--cor-texto-fraco);
+}

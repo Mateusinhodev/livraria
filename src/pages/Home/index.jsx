@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import Banner from '../../components/Banner';
+import CardLivro from '../../components/CardLivro';
+
+import { useEstante } from '../../contexts/EstanteContext';
+
 import { buscarLivros, getMensagemErro } from '../../services/livros';
-import { getCapa, getAutores } from '../../utils/livros';
+import { getAutores, getCapa } from '../../utils/livros';
 
 import './home.css';
 
 function Home() {
+    const { getItem } = useEstante();
+
     const [livros, setLivros] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
@@ -42,62 +47,61 @@ function Home() {
         return () => controller.abort();
     }, [searchQuery, tentativa]);
 
+    const vazio = !loading && !erro && livros.length === 0;
+
     return (
         <div className="home">
             <Banner onSearch={setSearchQuery} />
 
-            {loading && <p className="home__aviso">Carregando livros...</p>}
-
-            {!loading && erro && (
-                <div className="home__aviso">
-                    <p>{erro}</p>
-                    <button
-                        type="button"
-                        className="home__tentar"
-                        onClick={() => setTentativa((n) => n + 1)}
-                    >
-                        Tentar novamente
-                    </button>
+            <section className="home__resultados">
+                <div className="home__cabecalho">
+                    <h2>{searchQuery ? `Resultados para “${searchQuery}”` : 'Em destaque'}</h2>
+                    {!loading && livros.length > 0 && (
+                        <span>{livros.length === 1 ? '1 livro' : `${livros.length} livros`}</span>
+                    )}
                 </div>
-            )}
 
-            {!loading && !erro && livros.length === 0 && (
-                <p className="home__aviso">
-                    Nenhum livro encontrado{searchQuery && ` para "${searchQuery}"`}.
-                </p>
-            )}
+                {loading && <p className="home__aviso">Carregando livros...</p>}
 
-            {!loading && livros.length > 0 && (
-                <ul className="lista-livros">
-                    {livros.map((livro) => {
-                        const { title } = livro.volumeInfo;
-                        const autores = getAutores(livro.volumeInfo);
+                {!loading && erro && (
+                    <div className="home__aviso">
+                        <p>{erro}</p>
+                        <button
+                            type="button"
+                            className="botao botao--secundario"
+                            onClick={() => setTentativa((n) => n + 1)}
+                        >
+                            Tentar novamente
+                        </button>
+                    </div>
+                )}
 
-                        return (
+                {vazio && (
+                    <div className="home__vazio">
+                        <img src="/imagens/livrariavirtual.png" alt="" />
+                        <p>
+                            <strong>Nenhum livro encontrado{searchQuery && ` para “${searchQuery}”`}.</strong>
+                        </p>
+                        <p>Tente outro título, o nome do autor ou um assunto.</p>
+                    </div>
+                )}
+
+                {!loading && livros.length > 0 && (
+                    <ul className="grade-livros">
+                        {livros.map((livro) => (
                             <li key={livro.id}>
-                                <article className="card-livro">
-                                    <img
-                                        className="card-livro__capa"
-                                        src={getCapa(livro.volumeInfo)}
-                                        alt={`Capa do livro ${title}`}
-                                        loading="lazy"
-                                    />
-
-                                    <h3 className="card-livro__titulo" title={title}>
-                                        {title}
-                                    </h3>
-
-                                    {autores && <p className="card-livro__autor">{autores}</p>}
-
-                                    <Link className="card-livro__botao" to={`/livro/${livro.id}`}>
-                                        Ver detalhes
-                                    </Link>
-                                </article>
+                                <CardLivro
+                                    to={`/livro/${livro.id}`}
+                                    capa={getCapa(livro.volumeInfo)}
+                                    titulo={livro.volumeInfo.title}
+                                    autores={getAutores(livro.volumeInfo)}
+                                    status={getItem(livro.id)?.status}
+                                />
                             </li>
-                        );
-                    })}
-                </ul>
-            )}
+                        ))}
+                    </ul>
+                )}
+            </section>
         </div>
     );
 }

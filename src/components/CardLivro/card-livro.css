@@ -1,0 +1,97 @@
+/* A grade de cards (usada pela Home e pelos Clássicos) */
+.grade-livros {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--espaco-8) var(--espaco-6);
+    list-style: none;
+}
+
+.card-livro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-1);
+    color: inherit;
+    text-decoration: none;
+    border-radius: var(--raio-sm);
+}
+
+/* A capa: proporção de livro, cantos arredondados, sombra suave */
+.card-livro__capa-area {
+    position: relative;
+    aspect-ratio: 2 / 3;
+    margin-bottom: var(--espaco-2);
+    overflow: hidden;
+    border-radius: var(--raio-sm);
+    background-color: var(--cor-superficie-suave);
+    box-shadow: var(--sombra);
+    transition: transform var(--transicao), box-shadow var(--transicao);
+}
+
+.card-livro__capa {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Sem capa: o título no lugar da imagem */
+.card-livro__sem-capa {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: var(--espaco-3);
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-sm);
+    font-weight: 600;
+    text-align: center;
+}
+
+.card-livro__selo {
+    position: absolute;
+    top: var(--espaco-2);
+    left: var(--espaco-2);
+    box-shadow: var(--sombra-sm);
+}
+
+/* Título em no máximo 2 linhas, com "..." no final */
+.card-livro__titulo {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    font-size: var(--texto-sm);
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    transition: color var(--transicao);
+}
+
+.card-livro__autor {
+    overflow: hidden;
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-xs);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Hover: a capa "levanta" e o título ganha a cor de destaque */
+.card-livro:hover .card-livro__capa-area {
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-lg);
+}
+
+.card-livro:hover .card-livro__titulo {
+    color: var(--cor-destaque);
+}
+
+.card-livro:focus-visible {
+    outline-offset: 6px;
+}
+
+@media (max-width: 480px) {
+    .grade-livros {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: var(--espaco-6) var(--espaco-4);
+    }
+}
