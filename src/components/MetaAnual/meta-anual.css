@@ -1,22 +1,8 @@
-.meta-anual {
-    margin-top: 28px;
-    padding: 20px;
-    background-color: #FFF;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-}
-
-.meta-anual h2 {
-    font-size: 0.8rem;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    color: #888;
-}
-
 .meta-anual__topo {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: var(--espaco-1);
 }
 
 /* Convite */
@@ -37,7 +23,7 @@
 
 .meta-anual__numeros strong {
     font-size: 1.8rem;
-    color: var(--header-destaque);
+    color: var(--cor-texto);
 }
 
 .meta-anual__barra {
@@ -79,7 +65,7 @@
 /* Cores por situação */
 .meta-anual--adiantado .meta-anual__situacao,
 .meta-anual--concluida .meta-anual__situacao {
-    color: #1E6B39;
+    color: var(--cor-sucesso);
 }
 
 .meta-anual--atrasado .meta-anual__situacao {
@@ -87,7 +73,7 @@
 }
 
 .meta-anual--concluida .meta-anual__preenchido {
-    background-color: #2E9E57;
+    background-color: var(--cor-sucesso);
 }
 
 /* Formulário */

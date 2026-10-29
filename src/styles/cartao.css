@@ -1,0 +1,21 @@
+/* ==========================================================
+   Superfícies e rótulos reutilizáveis
+   ========================================================== */
+
+/* Cartão: a superfície padrão do site (fundo branco, borda fina) */
+.cartao {
+    padding: var(--espaco-5);
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-lg);
+}
+
+/* Rótulo: o título pequeno em maiúsculas das seções */
+.rotulo {
+    margin-bottom: var(--espaco-3);
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-xs);
+    font-weight: 650;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}

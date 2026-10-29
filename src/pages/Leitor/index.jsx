@@ -1,13 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
-
 import { toast } from 'react-toastify';
 
+import BarraProgresso from '../../components/BarraProgresso';
 import { useAuth } from '../../contexts/AuthContext';
 import { useEstante } from '../../contexts/EstanteContext';
 import { classicoParaItem, progressoNoLeitor } from '../../services/estante';
-
-import BarraProgresso from '../../components/BarraProgresso';
 import { baixarTexto, dividirEmPaginas, prepararLivro } from '../../services/leitor';
 
 import './leitor.css';
@@ -24,7 +22,6 @@ function lerFonteSalva() {
     }
 }
 
-// Capa do livro: a imagem do Gutenberg ou, se não existir, uma capa gerada
 // Capa do livro: a imagem do Gutenberg (ou uma capa gerada) e as ações de leitura
 function CapaLivro({
     id,
@@ -64,21 +61,21 @@ function CapaLivro({
             <div className="leitor__capa-acoes">
                 {continuarPagina ? (
                     <>
-                        <button type="button" className="leitor__comecar" onClick={onContinuar}>
+                        <button type="button" className="botao botao--primario botao--grande" onClick={onContinuar}>
                             Continuar da página {continuarPagina}
                         </button>
-                        <button type="button" className="leitor__secundario" onClick={onComecar}>
+                        <button type="button" className="botao botao--secundario botao--grande" onClick={onComecar}>
                             Começar do início
                         </button>
                     </>
                 ) : (
-                    <button type="button" className="leitor__comecar" onClick={onComecar}>
+                    <button type="button" className="botao botao--primario botao--grande" onClick={onComecar}>
                         Começar a ler
                     </button>
                 )}
 
                 {logado && !naEstante && (
-                    <button type="button" className="leitor__secundario" onClick={onQueroLer}>
+                    <button type="button" className="botao botao--secundario botao--grande" onClick={onQueroLer}>
                         Quero ler depois
                     </button>
                 )}
@@ -160,9 +157,7 @@ function Leitor() {
     const total = paginas.length;
 
     // 0 = capa; de 1 até o total = páginas do texto
-    const pagina = params.has('pagina')
-        ? Math.min(Math.max(1, Number(params.get('pagina')) || 1), total)
-        : 0;
+    const pagina = params.has('pagina') ? Math.min(Math.max(1, Number(params.get('pagina')) || 1), total) : 0;
 
     function irPara(numero) {
         if (numero < 0 || numero > total) return;
@@ -199,7 +194,7 @@ function Leitor() {
         };
     }, [livro]);
 
-        // 6. Salva o progresso na estante (1 segundo depois de parar numa página)
+    // 6. Salva o progresso na estante (1 segundo depois de parar numa página)
     useEffect(() => {
         if (!usuario || !livro || total === 0) return;
 
@@ -234,22 +229,20 @@ function Leitor() {
     }
 
     if (loading) {
-        return (
-            <p className="aviso-carregando">
-                Baixando o livro... Livros grandes podem levar alguns segundos.
-            </p>
-        );
+        return <p className="aviso-carregando">Baixando o livro... Livros grandes podem levar alguns segundos.</p>;
     }
 
     if (erro) {
         return (
-            <div className="leitor-aviso">
+            <div className="cartao leitor-aviso">
                 <p>{erro}</p>
                 <div className="leitor-aviso__acoes">
-                    <button type="button" onClick={() => setTentativa((n) => n + 1)}>
+                    <button type="button" className="botao botao--primario" onClick={() => setTentativa((n) => n + 1)}>
                         Tentar novamente
                     </button>
-                    <Link to="/classicos">Voltar aos clássicos</Link>
+                    <Link className="botao botao--secundario" to="/classicos">
+                        Voltar aos clássicos
+                    </Link>
                 </div>
             </div>
         );
@@ -260,9 +253,9 @@ function Leitor() {
 
     return (
         <div className="leitor" ref={topoRef}>
-            {/* Barra de ferramentas (fica presa no topo ao rolar) */}
+            {/* Barra de ferramentas (fica presa logo abaixo do header ao rolar) */}
             <div className="leitor__barra">
-                <Link className="leitor__voltar" to="/classicos" aria-label="Voltar aos clássicos">
+                <Link className="botao botao--discreto leitor__voltar" to="/classicos" aria-label="Voltar aos clássicos">
                     ←
                 </Link>
 
@@ -274,6 +267,7 @@ function Leitor() {
                 <div className="leitor__fonte" role="group" aria-label="Tamanho da letra">
                     <button
                         type="button"
+                        className="botao botao--discreto botao--pequeno"
                         onClick={() => setFonte(TAMANHOS[indiceFonte - 1])}
                         disabled={indiceFonte === 0}
                         aria-label="Diminuir letra"
@@ -282,6 +276,7 @@ function Leitor() {
                     </button>
                     <button
                         type="button"
+                        className="botao botao--discreto botao--pequeno"
                         onClick={() => setFonte(TAMANHOS[indiceFonte + 1])}
                         disabled={indiceFonte === TAMANHOS.length - 1}
                         aria-label="Aumentar letra"
@@ -293,44 +288,48 @@ function Leitor() {
 
             <BarraProgresso valor={progresso} rotulo="Posição no livro" />
 
-            {/* O texto da página */}
-            <article className="leitor__texto" style={{ fontSize: `${fonte}px` }}>
-                {pagina === 0 ? (
-                    <CapaLivro
-                        key={id}
-                        id={id}
-                        titulo={livro.titulo}
-                        autor={livro.autor}
-                        totalPaginas={total}
-                        logado={Boolean(usuario)}
-                        naEstante={Boolean(itemEstante?.status)}
-                        continuarPagina={
-                            itemEstante?.status === 'lendo' && itemEstante.pagina_atual > 1
-                                ? itemEstante.pagina_atual
-                                : null
-                        }
-                        onComecar={() => irPara(1)}
-                        onContinuar={() => irPara(itemEstante.pagina_atual)}
-                        onQueroLer={guardarParaDepois}
-                    />
-                ) : (
-                    <article className="leitor__texto" style={{ fontSize: `${fonte}px` }}>
-                        {paginas[pagina - 1].map((paragrafo, indice) => (
-                            <Paragrafo key={indice} texto={paragrafo} />
-                        ))}
-                    </article>
-                )}
-            </article>
+            {/* A capa ou o texto da página (um só article, sem aninhar) */}
+            {pagina === 0 ? (
+                <CapaLivro
+                    key={id}
+                    id={id}
+                    titulo={livro.titulo}
+                    autor={livro.autor}
+                    totalPaginas={total}
+                    logado={Boolean(usuario)}
+                    naEstante={Boolean(itemEstante?.status)}
+                    continuarPagina={
+                        itemEstante?.status === 'lendo' && itemEstante.pagina_atual > 1 ? itemEstante.pagina_atual : null
+                    }
+                    onComecar={() => irPara(1)}
+                    onContinuar={() => irPara(itemEstante.pagina_atual)}
+                    onQueroLer={guardarParaDepois}
+                />
+            ) : (
+                <article className="leitor__texto" style={{ fontSize: `${fonte}px` }}>
+                    {paginas[pagina - 1].map((paragrafo, indice) => (
+                        <Paragrafo key={indice} texto={paragrafo} />
+                    ))}
+                </article>
+            )}
 
             {/* Navegação */}
             <nav className="leitor__navegacao" aria-label="Páginas do livro">
-                <button type="button" onClick={() => irPara(pagina - 1)} disabled={pagina <= 0}>
+                <button
+                    type="button"
+                    className="botao botao--secundario botao--pequeno"
+                    onClick={() => irPara(pagina - 1)}
+                    disabled={pagina <= 0}
+                >
                     ← Anterior
                 </button>
-                <span>
-                    {pagina === 0 ? `Capa · ${total} páginas` : `Página ${pagina} de ${total} · ${progresso}%`}
-                </span>
-                <button type="button" onClick={() => irPara(pagina + 1)} disabled={pagina >= total}>
+                <span>{pagina === 0 ? `Capa · ${total} páginas` : `Página ${pagina} de ${total} · ${progresso}%`}</span>
+                <button
+                    type="button"
+                    className="botao botao--secundario botao--pequeno"
+                    onClick={() => irPara(pagina + 1)}
+                    disabled={pagina >= total}
+                >
                     Próxima →
                 </button>
             </nav>

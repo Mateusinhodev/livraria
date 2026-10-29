@@ -29,7 +29,7 @@ const ANO_ATUAL = new Date().getFullYear();
 // Um número em destaque com a sua legenda
 function Cartao({ valor, legenda, children }) {
     return (
-        <div className="cartao-numero">
+        <div className="cartao cartao-numero">
             <strong className="cartao-numero__valor">{valor}</strong>
             <span className="cartao-numero__legenda">{legenda}</span>
             {children}
@@ -142,7 +142,12 @@ function Estatisticas() {
                 </div>
 
                 <div className="estatisticas__ano" role="group" aria-label="Escolher o ano">
-                    <button type="button" onClick={() => mudarAno(ano - 1)} aria-label="Ano anterior">
+                    <button 
+                        type="button" 
+                        className="botao botao--secundario estatisticas__seta"
+                        onClick={() => mudarAno(ano - 1)} 
+                        aria-label="Ano anterior"
+                    >
                         ←
                     </button>
                     <strong aria-live="polite">{ano}</strong>
@@ -207,8 +212,8 @@ function Estatisticas() {
 
                     <div className="estatisticas__destaques">
                         {resumo.melhorLivro && (
-                            <section className="destaque">
-                                <h2>Melhor leitura do ano</h2>
+                            <section className="cartao destaque">
+                                <h2 className='rotulo'>Melhor leitura do ano</h2>
                                 <Link className="destaque__livro" to={getLinkLivro(resumo.melhorLivro)}>
                                     {resumo.melhorLivro.capa && (
                                         <img className="destaque__capa" src={resumo.melhorLivro.capa} alt="" />
@@ -223,8 +228,8 @@ function Estatisticas() {
                         )}
 
                         {resumo.autoresFavoritos.length > 0 && (
-                            <section className="destaque">
-                                <h2>Autores mais lidos</h2>
+                            <section className="cartao destaque">
+                                <h2 className='rotulo'>Autores mais lidos</h2>
                                 <ol className="destaque__autores">
                                     {resumo.autoresFavoritos.map((autor) => (
                                         <li key={autor.nome}>

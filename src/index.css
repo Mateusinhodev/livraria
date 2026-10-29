@@ -51,9 +51,14 @@
     
     --cor-vidro: rgba(255, 255, 255, 0.75); /* fundo translúcido do header */
 
+    --cor-papel: #FBF7EF;
+    --cor-papel-escuro: #F3ECDD;
+    --cor-papel-borda: #E4DAC4;
+
     /* ---------- Tipografia ---------- */
 
     --fonte: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    --fonte-leitura: 'Literata Variable', Georgia, 'Times New Roman', serif;
 
     --texto-xs: 0.75rem;   /* 12px */
     --texto-sm: 0.875rem;  /* 14px */

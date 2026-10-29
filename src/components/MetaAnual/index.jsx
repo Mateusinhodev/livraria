@@ -72,7 +72,7 @@ function MetaAnual({ ano, meta, lidos, onSalvar, onRemover }) {
     // Modo 1: formulário
     if (editando) {
         return (
-            <section className="meta-anual">
+            <section className="cartao meta-anual">
                 <h2>Meta de {ano}</h2>
 
                 <form className="meta-anual__form" onSubmit={handleSubmit}>
@@ -122,7 +122,7 @@ function MetaAnual({ ano, meta, lidos, onSalvar, onRemover }) {
         if (ano < anoAtual) return null;
 
         return (
-            <section className="meta-anual meta-anual--convite">
+            <section className="cartao meta-anual meta-anual--convite">
                 <p>Que tal definir uma meta de leitura para {ano}?</p>
                 <button type="button" className="botao botao--primario" onClick={abrirEdicao}>
                     Definir meta
@@ -137,9 +137,9 @@ function MetaAnual({ ano, meta, lidos, onSalvar, onRemover }) {
     const mostrarMarcador = ritmo.fracaoAno < 1 && ritmo.situacao !== 'concluida';
 
     return (
-        <section className={`meta-anual meta-anual--${ritmo.situacao}`}>
+        <section className={`cartao meta-anual meta-anual--${ritmo.situacao}`}>
             <div className="meta-anual__topo">
-                <h2>Meta de {ano}</h2>
+                <h2 className="rotulo">Meta de {ano}</h2>
                 <button type="button" className="meta-anual__link" onClick={abrirEdicao}>
                     Alterar
                 </button>
