@@ -1,0 +1,29 @@
+/* Bloco de carregamento com um brilho que passa da direita para a esquerda */
+.esqueleto {
+    background-color: var(--cor-superficie-suave);
+    background-image: linear-gradient(
+        90deg,
+        var(--cor-superficie-suave) 25%,
+        var(--cinza-200) 37%,
+        var(--cor-superficie-suave) 63%
+    );
+    background-size: 400% 100%;
+    border-radius: var(--raio-sm);
+    animation: esqueleto-brilho 1.4s ease infinite;
+}
+
+@keyframes esqueleto-brilho {
+    from {
+        background-position: 100% 50%;
+    }
+    to {
+        background-position: 0 50%;
+    }
+}
+
+/* Quem prefere menos movimento vê o bloco parado */
+@media (prefers-reduced-motion: reduce) {
+    .esqueleto {
+        animation: none;
+    }
+}

@@ -35,7 +35,7 @@
 
 .meta-anual__preenchido {
     height: 100%;
-    background-color: var(--header-destaque);
+    background-color: var(--cor-destaque);
     border-radius: 7px;
     transition: width 0.4s ease;
 }
@@ -100,7 +100,7 @@
 }
 
 .meta-anual__form input:focus {
-    border-color: var(--header-destaque);
+    border-color: var(--cor-destaque);
     outline: none;
 }
 
@@ -115,14 +115,14 @@
     padding: 9px 18px;
     border: none;
     border-radius: 6px;
-    background-color: var(--header-destaque);
+    background-color: var(--cor-destaque);
     color: #FFF;
     font-weight: 700;
     cursor: pointer;
 }
 
 .meta-anual__botao:hover:not(:disabled) {
-    background-color: var(--header-destaque-hover);
+    background-color: var(--cor-destaque-hover);
 }
 
 .meta-anual__botao:disabled {
@@ -141,7 +141,7 @@
 }
 
 .meta-anual__link:hover:not(:disabled) {
-    color: var(--header-destaque);
+    color: var(--cor-destaque);
 }
 
 .meta-anual__link--perigo:hover:not(:disabled) {

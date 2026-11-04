@@ -100,13 +100,7 @@
     --header-altura: 64px;
     --largura-maxima: 1200px;
 
-    /* ---------- Nomes antigos (apontam para os novos) ----------
-       Mantidos para nada quebrar hoje. Vamos trocá-los tela por tela
-       nas próximas aulas e, no fim, apagar este bloco. */
-    --header-bg: var(--cinza-900);
-    --header-texto: #FFFFFF;
-    --header-destaque: var(--cor-destaque);
-    --header-destaque-hover: var(--cor-destaque-hover);
+   
 }
 
 /* Reset básico */

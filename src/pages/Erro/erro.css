@@ -22,7 +22,7 @@
     font-size: clamp(4.5rem, 18vw, 7.5rem);
     font-weight: 800;
     line-height: 1;
-    color: var(--header-destaque);
+    color: var(--cor-destaque);
 }
 
 .erro__titulo {
@@ -55,9 +55,9 @@
 
 .erro__botao {
     padding: 12px 24px;
-    border: 2px solid var(--header-destaque);
+    border: 2px solid var(--cor-destaque);
     border-radius: 6px;
-    background-color: var(--header-destaque);
+    background-color: var(--cor-destaque);
     color: #FFF;
     font-weight: 700;
     text-decoration: none;
@@ -65,14 +65,14 @@
 }
 
 .erro__botao:hover {
-    background-color: var(--header-destaque-hover);
-    border-color: var(--header-destaque-hover);
+    background-color: var(--cor-destaque-hover);
+    border-color: var(--cor-destaque-hover);
     color: #FFF;
 }
 
 .erro__botao--secundario {
     background-color: transparent;
-    color: var(--header-destaque);
+    color: var(--cor-destaque);
 }
 
 .erro__botao:focus-visible {

@@ -73,7 +73,7 @@
     padding: 12px;
     border: none;
     border-radius: 6px;
-    background-color: var(--header-destaque);
+    background-color: var(--cor-destaque);
     color: #FFF;
     font-weight: 700;
     cursor: pointer;
@@ -87,7 +87,7 @@
 }
 
 .entrar__botao:hover:not(:disabled) {
-    background-color: var(--header-destaque-hover);
+    background-color: var(--cor-destaque-hover);
 }
 
 .entrar__botao:disabled {

@@ -9,6 +9,6 @@
 .barra-progresso__preenchimento {
     height: 100%;
     border-radius: inherit;
-    background-color: var(--header-destaque);
+    background-color: var(--cor-destaque);
     transition: width 0.3s ease;
 }

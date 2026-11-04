@@ -8,6 +8,8 @@ import { useEstante } from '../../contexts/EstanteContext';
 import { buscarLivros, getMensagemErro } from '../../services/livros';
 import { getAutores, getCapa } from '../../utils/livros';
 
+import GradeEsqueleto from '../../components/CardLivro/GradeEsqueleto';
+
 import './home.css';
 
 function Home() {
@@ -61,7 +63,14 @@ function Home() {
                     )}
                 </div>
 
-                {loading && <p className="home__aviso">Carregando livros...</p>}
+                {loading && (
+                    <>
+                        <p className="visualmente-oculto" role="status">
+                            Carregando livros...
+                        </p>
+                        <GradeEsqueleto />
+                    </>
+                )}
 
                 {!loading && erro && (
                     <div className="home__aviso">

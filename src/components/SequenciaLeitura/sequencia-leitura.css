@@ -30,7 +30,7 @@
 
 .sequencia__texto strong {
     font-size: 1.2rem;
-    color: var(--header-destaque);
+    color: var(--cor-destaque);
 }
 
 .sequencia__texto span,

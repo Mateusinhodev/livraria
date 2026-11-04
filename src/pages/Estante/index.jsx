@@ -36,6 +36,9 @@ function Estante() {
     // Dado derivado: calculado a cada renderização, nunca guardado
     const livros = itens.filter(abaAtual.filtro);
 
+    // Só nos Favoritos os status se misturam; nas outras abas, o selo repetiria o nome da aba
+    const mostrarSelo = abaAtual.id === 'favoritos';
+
     async function alternarFavorito(item) {
         try {
             await salvar(item, { favorito: !item.favorito });
@@ -51,12 +54,11 @@ function Estante() {
                     <p className="estante__saudacao">Olá, {getNomeUsuario(usuario)}</p>
                     <h1>Minha estante</h1>
                 </div>
+
                 <div className="estante__acoes-topo">
-                    <span className="estante__total">
-                        {itens.length === 1 ? '1 livro' : `${itens.length} livros`}
-                    </span>
-                    <Link className="estante__estatisticas" to="/estatisticas">
-                        📊 Meu ano de leitura
+                    <span className="estante__total">{itens.length === 1 ? '1 livro' : `${itens.length} livros`}</span>
+                    <Link className="botao botao--secundario botao--pequeno" to="/estatisticas">
+                        Meu ano de leitura
                     </Link>
                 </div>
             </div>
@@ -90,7 +92,7 @@ function Estante() {
                 {!carregando && livros.length === 0 && (
                     <div className="estante__vazia">
                         <p>{VAZIO[abaAtual.id]}</p>
-                        <Link className="estante__explorar" to="/">
+                        <Link className="botao botao--primario" to="/">
                             Explorar livros
                         </Link>
                     </div>
@@ -102,7 +104,7 @@ function Estante() {
                             const progresso = getProgresso(item);
 
                             return (
-                                <li key={item.livro_id} className="item-estante">
+                                <li key={item.livro_id} className="cartao item-estante">
                                     <Link to={getLinkLivro(item)} className="item-estante__capa-link" tabIndex={-1}>
                                         {item.capa ? (
                                             <img
@@ -115,7 +117,7 @@ function Estante() {
                                                 }}
                                             />
                                         ) : (
-                                            <div className="item-estante__capa item-estante__capa--vazia" />
+                                            <div className="item-estante__capa" />
                                         )}
                                     </Link>
 
@@ -126,7 +128,7 @@ function Estante() {
                                         {item.autores && <span className="item-estante__autor">{item.autores}</span>}
 
                                         <div className="item-estante__meta">
-                                            {item.status && (
+                                            {mostrarSelo && item.status && (
                                                 <span className={`selo selo--${item.status}`}>{STATUS[item.status]}</span>
                                             )}
                                             {item.nota && <Estrelas valor={item.nota} tamanho="pequeno" />}
@@ -147,10 +149,14 @@ function Estante() {
 
                                     <button
                                         type="button"
-                                        className={`item-estante__favorito${item.favorito ? ' item-estante__favorito--ativo' : ''}`}
+                                        className={`botao botao--discreto item-estante__favorito${
+                                            item.favorito ? ' item-estante__favorito--ativo' : ''
+                                        }`}
                                         onClick={() => alternarFavorito(item)}
                                         aria-pressed={item.favorito}
-                                        aria-label={item.favorito ? `Remover ${item.titulo} dos favoritos` : `Favoritar ${item.titulo}`}
+                                        aria-label={
+                                            item.favorito ? `Remover ${item.titulo} dos favoritos` : `Favoritar ${item.titulo}`
+                                        }
                                     >
                                         {item.favorito ? '♥' : '♡'}
                                     </button>

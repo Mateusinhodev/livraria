@@ -1,74 +1,72 @@
 .estante {
     max-width: 900px;
-    margin: 32px auto;
-    padding: 32px;
-    background-color: var(--cor-superficie);
-    border-radius: var(--raio);
-    box-shadow: var(--sombra);
+    margin: 0 auto;
+    padding: var(--espaco-8) var(--espaco-6) var(--espaco-16);
 }
 
+/* Topo */
 .estante__topo {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 12px;
+    gap: var(--espaco-4);
 }
 
 .estante__saudacao {
-    color: var(--cor-texto-suave);
-    font-weight: 600;
+    margin-bottom: var(--espaco-1);
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-sm);
 }
 
 .estante__topo h1 {
-    font-size: 2rem;
-    line-height: 1.2;
-}
-
-.estante__total {
-    color: var(--cor-texto-suave);
-    font-weight: 600;
+    font-size: var(--texto-3xl);
 }
 
 .estante__acoes-topo {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 6px;
+    align-items: center;
+    gap: var(--espaco-3);
 }
 
-.estante__estatisticas {
-    color: var(--header-destaque);
-    font-size: 0.9rem;
-    font-weight: 700;
-    text-decoration: none;
+.estante__total {
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-sm);
+    font-variant-numeric: tabular-nums;
 }
 
-.estante__estatisticas:hover {
-    text-decoration: underline;
-}
-
-/* ── Abas ── */
+/* ── Abas: controle segmentado ── */
 .estante__abas {
     display: flex;
-    gap: 4px;
-    margin: 24px 0 20px;
+    gap: 2px;
+    width: fit-content; /* a trilha tem o tamanho das abas, não a largura toda */
+    max-width: 100%;
+    margin: var(--espaco-6) 0 var(--espaco-5);
+    padding: 4px;
     overflow-x: auto; /* no celular, as abas rolam para o lado */
-    border-bottom: 2px solid #E2E2E2;
+    background-color: var(--cor-superficie-suave);
+    border-radius: var(--raio);
+    scrollbar-width: none; /* esconde a barra de rolagem (Firefox) */
+}
+
+.estante__abas::-webkit-scrollbar {
+    display: none; /* esconde a barra de rolagem (Chrome, Edge, Safari) */
 }
 
 .estante__aba {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: -2px; /* a linha laranja fica por cima da linha cinza */
-    padding: 10px 16px;
+    gap: var(--espaco-2);
+    padding: 8px 14px;
     border: none;
-    border-bottom: 3px solid transparent;
-    background: none;
+    border-radius: var(--raio-sm);
+    background-color: transparent;
     color: var(--cor-texto-suave);
-    font-weight: 700;
+    font-size: var(--texto-sm);
+    font-weight: 600;
     white-space: nowrap;
     cursor: pointer;
+    transition: background-color var(--transicao), color var(--transicao), box-shadow var(--transicao);
 }
 
 .estante__aba:hover {
@@ -76,79 +74,75 @@
 }
 
 .estante__aba--ativa {
-    border-bottom-color: var(--header-destaque);
-    color: var(--header-destaque);
+    background-color: var(--cor-superficie);
+    color: var(--cor-texto);
+    box-shadow: var(--sombra-sm);
 }
 
+/* Dentro de um container que rola, o contorno de fora seria cortado: desenhamos por dentro */
 .estante__aba:focus-visible {
-    outline: 2px solid #333;
     outline-offset: -2px;
 }
 
 .estante__contador {
-    min-width: 22px;
-    padding: 1px 7px;
-    border-radius: 999px;
-    background-color: #E8E8E8;
+    min-width: 20px;
+    padding: 0 6px;
+    border-radius: var(--raio-pilula);
+    background-color: var(--cinza-200);
     color: var(--cor-texto-suave);
-    font-size: 0.75rem;
+    font-size: var(--texto-xs);
+    line-height: 20px;
     text-align: center;
+    font-variant-numeric: tabular-nums;
 }
 
 .estante__aba--ativa .estante__contador {
-    background-color: var(--header-destaque);
-    color: #FFF;
+    background-color: var(--cor-destaque);
+    color: var(--cor-sobre-destaque);
 }
 
-/* ── Estados de carregando e vazio ── */
+/* ── Carregando e vazio ── */
 .estante__aviso {
-    padding: 32px 0;
-    text-align: center;
+    padding: var(--espaco-12) 0;
     color: var(--cor-texto-suave);
+    text-align: center;
 }
 
+/* A moldura tracejada: "aqui cabe alguma coisa" */
 .estante__vazia {
-    padding: 40px 16px;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--espaco-4);
+    padding: var(--espaco-12) var(--espaco-4);
+    border: 1px dashed var(--cor-borda-forte);
+    border-radius: var(--raio-lg);
     color: var(--cor-texto-suave);
+    text-align: center;
 }
 
-.estante__explorar {
-    display: inline-block;
-    margin-top: 16px;
-    padding: 10px 22px;
-    border-radius: 6px;
-    background-color: var(--header-destaque);
-    color: #FFF;
-    font-weight: 700;
-    text-decoration: none;
+.estante__vazia p {
+    max-width: 380px;
 }
 
-.estante__explorar:hover {
-    background-color: var(--header-destaque-hover);
-}
-
-/* ── Lista de livros ── */
+/* ── Lista de livros (o cartão vem do global) ── */
 .estante__lista {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: var(--espaco-3);
     list-style: none;
 }
 
 .item-estante {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 12px 16px;
-    background-color: #FFF;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-    transition: box-shadow 0.2s ease;
+    gap: var(--espaco-4);
+    padding: var(--espaco-3) var(--espaco-4);
+    transition: border-color var(--transicao);
 }
 
 .item-estante:hover {
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    border-color: var(--cor-borda-forte);
 }
 
 .item-estante__capa-link {
@@ -156,39 +150,40 @@
 }
 
 .item-estante__capa {
-    width: 64px;
+    width: 56px;
     aspect-ratio: 2 / 3;
     object-fit: cover;
     border-radius: 4px;
-    background-color: #DDD;
+    background-color: var(--cor-superficie-suave);
+    box-shadow: var(--sombra);
 }
 
 .item-estante__info {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
     flex: 1;
+    flex-direction: column;
+    gap: 2px;
     min-width: 0; /* permite cortar textos longos com "..." */
 }
 
 .item-estante__titulo {
     overflow: hidden;
     color: var(--cor-texto);
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-weight: 600;
     text-decoration: none;
     white-space: nowrap;
     text-overflow: ellipsis;
+    transition: color var(--transicao);
 }
 
 .item-estante__titulo:hover {
-    color: var(--header-destaque);
+    color: var(--cor-destaque);
 }
 
 .item-estante__autor {
     overflow: hidden;
-    color: var(--cor-texto-suave);
-    font-size: 0.9rem;
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-sm);
     white-space: nowrap;
     text-overflow: ellipsis;
 }
@@ -197,75 +192,68 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 10px;
-    margin-top: 2px;
+    gap: var(--espaco-2);
+    margin-top: var(--espaco-1);
+}
+
+/* Sem selo, nota nem resenha: a linha some e não deixa um buraco */
+.item-estante__meta:empty {
+    display: none;
 }
 
 .item-estante__resenha {
-    color: var(--cor-texto-suave);
-    font-size: 0.8rem;
-    font-weight: 600;
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-xs);
+    font-weight: 500;
 }
 
 .item-estante__progresso {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-top: 6px;
-    color: var(--cor-texto-suave);
-    font-size: 0.8rem;
+    gap: var(--espaco-3);
+    margin-top: var(--espaco-2);
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-xs);
     white-space: nowrap;
+    font-variant-numeric: tabular-nums;
 }
 
 .item-estante__progresso .barra-progresso {
-    max-width: 240px;
+    max-width: 220px;
 }
 
-/* Coração de favorito */
+/* Coração: um botão discreto e redondo */
 .item-estante__favorito {
     flex-shrink: 0;
     width: 40px;
-    height: 40px;
-    border: none;
+    min-height: 40px;
+    padding: 0;
     border-radius: 50%;
-    background: none;
-    color: #B5B5B5;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    color: var(--cinza-400);
+    font-size: 1.25rem;
 }
 
-.item-estante__favorito:hover {
-    background-color: #F3F3F3;
-}
-
-.item-estante__favorito--ativo {
+.item-estante__favorito--ativo,
+.item-estante__favorito--ativo:hover:not(:disabled) {
     color: var(--cor-perigo);
-}
-
-.item-estante__favorito:focus-visible,
-.item-estante__titulo:focus-visible {
-    outline: 2px solid #333;
-    outline-offset: 2px;
 }
 
 @media (max-width: 600px) {
     .estante {
-        margin: 16px;
-        padding: 20px;
+        padding: var(--espaco-6) var(--espaco-4) var(--espaco-12);
     }
 
     .estante__topo h1 {
-        font-size: 1.5rem;
+        font-size: var(--texto-2xl);
     }
 
     .item-estante {
-        gap: 12px;
-        padding: 10px 12px;
+        gap: var(--espaco-3);
+        padding: var(--espaco-3);
     }
 
     .item-estante__capa {
-        width: 52px;
+        width: 48px;
     }
 
     .item-estante__progresso .barra-progresso {

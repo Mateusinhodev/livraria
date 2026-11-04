@@ -5,6 +5,7 @@ import { getMensagemErroClassicos, listarClassicos, POR_PAGINA } from '../../ser
 
 import CampoBusca from '../../components/CampoBusca';
 import CardLivro from '../../components/CardLivro';
+import GradeEsqueleto from '../../components/CardLivro/GradeEsqueleto.jsx';
 import { useEstante } from '../../contexts/EstanteContext';
 
 import './classicos.css';
@@ -89,7 +90,12 @@ function Classicos() {
             </section>
 
             {loading && (
-                <p className="classicos__aviso">Carregando clássicos... O catálogo pode levar alguns segundos.</p>
+                <>
+                    <p className="visualmente-oculto" role="status">
+                        Carregando clássicos...
+                    </p>
+                    <GradeEsqueleto quantidade={12} />
+                </>
             )}
 
             {!loading && erro && (
