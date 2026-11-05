@@ -3,7 +3,7 @@
     height: 8px;
     overflow: hidden;
     border-radius: 999px;
-    background-color: #E2E2E2;
+    background-color: var(--cor-superficie-forte);
 }
 
 .barra-progresso__preenchimento {

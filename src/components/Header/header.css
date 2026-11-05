@@ -185,6 +185,12 @@
     color: var(--cor-perigo);
 }
 
+.header__direita {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-2);
+}
+
 /* Celular: tudo numa linha só (a altura do header não muda) */
 @media (max-width: 640px) {
     .header__container {
@@ -203,5 +209,10 @@
 
     .header__link {
         padding: 6px 8px;
+    }
+
+    /* No celular, o 📚 do logo já leva ao início: o "Explorar" sai para caber o botão de tema */
+    .header__explorar {
+        display: none;
     }
 }

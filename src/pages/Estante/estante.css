@@ -88,7 +88,7 @@
     min-width: 20px;
     padding: 0 6px;
     border-radius: var(--raio-pilula);
-    background-color: var(--cinza-200);
+    background-color: var(--cor-superficie-forte);
     color: var(--cor-texto-suave);
     font-size: var(--texto-xs);
     line-height: 20px;
@@ -229,7 +229,7 @@
     min-height: 40px;
     padding: 0;
     border-radius: 50%;
-    color: var(--cinza-400);
+    color: var(--cor-texto-fraco);
     font-size: 1.25rem;
 }
 

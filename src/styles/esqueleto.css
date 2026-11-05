@@ -4,7 +4,7 @@
     background-image: linear-gradient(
         90deg,
         var(--cor-superficie-suave) 25%,
-        var(--cinza-200) 37%,
+        var(--cor-superficie-forte) 37%,
         var(--cor-superficie-suave) 63%
     );
     background-size: 400% 100%;

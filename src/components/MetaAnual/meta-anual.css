@@ -29,7 +29,7 @@
 .meta-anual__barra {
     position: relative;
     height: 14px;
-    background-color: #EEE;
+    background-color: var(--cor-superficie-forte);
     border-radius: 7px;
 }
 
@@ -47,7 +47,7 @@
     bottom: -4px;
     width: 3px;
     margin-left: -1.5px;
-    background-color: #333;
+    background-color: var(--cor-texto);
     border-radius: 2px;
 }
 
@@ -94,7 +94,9 @@
 .meta-anual__form input {
     width: 120px;
     padding: 8px 10px;
-    border: 1px solid #CFCFCF;
+    border: 1px solid var(--cor-borda-forte);
+    background-color: var(--cor-superficie);
+    color: var(--cor-texto);
     border-radius: 6px;
     font-size: 1rem;
 }
@@ -109,25 +111,6 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 16px;
-}
-
-.meta-anual__botao {
-    padding: 9px 18px;
-    border: none;
-    border-radius: 6px;
-    background-color: var(--cor-destaque);
-    color: #FFF;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.meta-anual__botao:hover:not(:disabled) {
-    background-color: var(--cor-destaque-hover);
-}
-
-.meta-anual__botao:disabled {
-    opacity: 0.5;
-    cursor: default;
 }
 
 .meta-anual__link {
@@ -150,6 +133,5 @@
 
 .meta-anual button:focus-visible,
 .meta-anual input:focus-visible {
-    outline: 2px solid #333;
     outline-offset: 2px;
 }

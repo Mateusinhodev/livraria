@@ -1,0 +1,17 @@
+/* Botão redondo só com ícone */
+.botao-tema {
+    width: 36px;
+    min-height: 36px;
+    padding: 0;
+    border-radius: 50%;
+}
+
+.botao-tema svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}

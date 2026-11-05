@@ -55,6 +55,21 @@
     --cor-papel-escuro: #F3ECDD;
     --cor-papel-borda: #E4DAC4;
 
+    --cor-superficie-forte: var(--cinza-200); /* trilhos, contadores, esqueletos */
+    --cor-anel-foco: var(--laranja-100); /* halo em volta de campos com foco */
+    --cor-selecao-fundo: var(--laranja-100);
+    --cor-selecao-texto: var(--laranja-800);
+
+    --cor-estrela: #F2A900;
+
+    /* Selos de status */
+    --selo-lendo-fundo: #FDE6D2;
+    --selo-lendo-texto: #A54600;
+    --selo-para-ler-fundo: #E1ECFB;
+    --selo-para-ler-texto: #1F4F8F;
+    --selo-lido-fundo: #DDF2E3;
+    --selo-lido-texto: #1E6B39;
+
     /* ---------- Tipografia ---------- */
 
     --fonte: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
@@ -147,8 +162,8 @@ h1 {
 
 /* Cor do texto selecionado com o mouse */
 ::selection {
-    background-color: var(--laranja-100);
-    color: var(--laranja-800);
+    background-color: var(--cor-selecao-fundo);
+    color: var(--cor-selecao-texto);
 }
 
 /* Foco visível padrão para todo o site (navegação pelo teclado) */
@@ -208,7 +223,7 @@ textarea {
 .campo textarea:focus {
     border-color: var(--cor-destaque);
     outline: none;
-    box-shadow: 0 0 0 3px var(--laranja-100);
+    box-shadow: 0 0 0 3px var(--cor-anel-foco);
 }
 
 .campo small {
@@ -219,7 +234,7 @@ textarea {
 .aviso-carregando {
     margin: 64px auto;
     text-align: center;
-    color: #333;
+    color: var(--cor-texto-suave);
     font-weight: 600;
 }
 
@@ -232,18 +247,18 @@ textarea {
 }
 
 .selo--lendo {
-    background-color: #FDE6D2;
-    color: #A54600;
+    background-color: var(--selo-lendo-fundo);
+    color: var(--selo-lendo-texto);
 }
 
 .selo--para_ler {
-    background-color: #E1ECFB;
-    color: #1F4F8F;
+    background-color: var(--selo-para-ler-fundo);
+    color: var(--selo-para-ler-texto);
 }
 
 .selo--lido {
-    background-color: #DDF2E3;
-    color: #1E6B39;
+    background-color: var(--selo-lido-fundo);
+    color: var(--selo-lido-texto);
 }
 
 /* Respeita quem prefere menos animações (configuração do sistema) */
@@ -254,4 +269,57 @@ textarea {
         transition-duration: 0.01ms !important;
         animation-duration: 0.01ms !important;
     }
+}
+
+/* ==========================================================
+   Tema escuro: ativo quando o <html> tem data-tema="escuro".
+   Quem decide é o useTema (e o script do index.html).
+   ========================================================== */
+:root[data-tema='escuro'] {
+    color-scheme: dark; /* barras de rolagem e campos nativos também ficam escuros */
+
+    --cor-fundo: #0F0E0D;
+    --cor-superficie: #1C1917;
+    --cor-superficie-suave: #292524;
+    --cor-superficie-forte: #44403C;
+    --cor-borda: #36312D;
+    --cor-borda-forte: #4A443F;
+
+    --cor-texto: #F5F5F4;
+    --cor-texto-suave: #D6D3D1;
+    --cor-texto-fraco: #A8A29E;
+
+    /* No escuro, o laranja fica mais claro, e o texto em cima dele, escuro */
+    --cor-destaque: #FB923C;
+    --cor-destaque-hover: #FDBA74;
+    --cor-destaque-suave: rgba(251, 146, 60, 0.12);
+    --cor-destaque-borda: rgba(251, 146, 60, 0.35);
+    --cor-sobre-destaque: #1C1917;
+    --cor-anel-foco: rgba(251, 146, 60, 0.35);
+
+    --cor-sucesso: #4ADE80;
+    --cor-sucesso-suave: rgba(74, 222, 128, 0.12);
+    --cor-perigo: #F87171;
+    --cor-perigo-suave: rgba(248, 113, 113, 0.12);
+
+    --cor-vidro: rgba(28, 25, 23, 0.75);
+    --cor-selecao-fundo: rgba(251, 146, 60, 0.3);
+    --cor-selecao-texto: #FFF7ED;
+
+    --selo-lendo-fundo: #3B2414;
+    --selo-lendo-texto: #FDBA74;
+    --selo-para-ler-fundo: #172A45;
+    --selo-para-ler-texto: #93C5FD;
+    --selo-lido-fundo: #14301F;
+    --selo-lido-texto: #86EFAC;
+
+    /* Papel do leitor: sépia escuro */
+    --cor-papel: #1F1B16;
+    --cor-papel-escuro: #27221C;
+    --cor-papel-borda: #3A332A;
+
+    /* Sombras: no escuro, precisam ser mais fortes para aparecer */
+    --sombra-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --sombra: 0 1px 3px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
+    --sombra-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
 }

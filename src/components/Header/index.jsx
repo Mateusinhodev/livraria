@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import { getNomeUsuario, useAuth } from '../../contexts/AuthContext';
 import { useEstante } from '../../contexts/EstanteContext';
 
+import BotaoTema from '../BotaoTema';
+
 import './header.css';
 
 // "Mateus Dev" → "MD"; "mateus" → "M"
@@ -78,7 +80,7 @@ function Header() {
                 </Link>
 
                 <nav className="header__nav" aria-label="Navegação principal">
-                    <NavLink to="/" end className={classeLink}>
+                    <NavLink to="/" end className={(estado) => `${classeLink(estado)} header__explorar`}>
                         Explorar
                     </NavLink>
                     <NavLink to="/classicos" className={classeLink}>
@@ -99,43 +101,49 @@ function Header() {
                     </NavLink>
                 </nav>
 
-                {usuario ? (
-                    <div className="header__menu" ref={menuRef}>
-                        <button
-                            ref={botaoRef}
-                            type="button"
-                            className="header__avatar"
-                            aria-expanded={menuAberto}
-                            aria-controls="menu-usuario"
-                            aria-label={`Menu da conta de ${nome}`}
-                            onClick={() => setMenuAberto((aberto) => !aberto)}
-                        >
-                            {getIniciais(nome)}
-                        </button>
+                <div className="header__direita">
+                    <BotaoTema />
 
-                        {menuAberto && (
-                            <div id="menu-usuario" className="header__dropdown">
-                                <div className="header__dropdown-topo">
-                                    <strong>{nome}</strong>
-                                    <span>{usuario.email}</span>
+                    {usuario ? (
+                        <div className="header__menu" ref={menuRef}>
+                            <button
+                                ref={botaoRef}
+                                type="button"
+                                className="header__avatar"
+                                aria-expanded={menuAberto}
+                                aria-controls="menu-usuario"
+                                aria-label={`Menu da conta de ${nome}`}
+                                onClick={() => setMenuAberto((aberto) => !aberto)}
+                            >
+                                {getIniciais(nome)}
+                            </button>
+
+                            {menuAberto && (
+                                <div id="menu-usuario" className="header__dropdown">
+                                    <div className="header__dropdown-topo">
+                                        <strong>{nome}</strong>
+                                        <span>{usuario.email}</span>
+                                    </div>
+
+                                    <Link to="/estante" onClick={fecharMenu}>
+                                        Minha estante
+                                    </Link>
+                                    <Link to="/estatisticas" onClick={fecharMenu}>
+                                        Meu ano de leitura
+                                    </Link>
+
+                                    <button type="button" className="header__sair" onClick={handleSair}>
+                                        Sair
+                                    </button>
                                 </div>
-
-                                <Link to="/estante" onClick={fecharMenu}>
-                                    Minha estante
-                                </Link>
-                                <Link to="/estatisticas" onClick={fecharMenu}>
-                                    Meu ano de leitura
-                                </Link>
-
-                                <button type="button" className="header__sair" onClick={handleSair}>
-                                    Sair
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                ) : (
-                    <Link className="botao botao--primario" to="/entrar"></Link>
-                )}
+                            )}
+                        </div>
+                    ) : (
+                        <Link className="botao botao--primario" to="/entrar">
+                            Entrar
+                        </Link>
+                    )}
+                </div>
             </div>
         </header>
     );

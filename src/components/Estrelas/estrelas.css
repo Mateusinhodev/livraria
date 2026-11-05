@@ -6,11 +6,11 @@
 }
 
 .estrela {
-    color: #C9C9C9;
+    color: var(--cor-borda-forte);
 }
 
 .estrela--cheia {
-    color: #F2A900;
+    color: var(--cor-estrela);
 }
 
 .estrelas--pequeno .estrela {
@@ -35,7 +35,6 @@
 }
 
 .estrelas--interativa button.estrela:focus-visible {
-    outline: 2px solid #333;
     outline-offset: 2px;
     border-radius: 4px;
 }

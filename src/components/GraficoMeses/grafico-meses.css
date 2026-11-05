@@ -1,3 +1,39 @@
 .grafico-meses {
     margin-top: var(--espaco-4);
 }
+
+/* As cores do gráfico vêm dos tokens: o CSS vence os atributos do SVG */
+.grafico-meses .recharts-cartesian-grid line {
+    stroke: var(--cor-borda);
+}
+
+.grafico-meses .recharts-cartesian-axis-tick-value {
+    fill: var(--cor-texto-fraco);
+}
+
+.grafico-meses .recharts-bar-rectangle path {
+    fill: var(--cor-destaque);
+}
+
+.grafico-meses .recharts-label-list text {
+    fill: var(--cor-texto);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.grafico-meses .recharts-tooltip-cursor {
+    fill: var(--cor-destaque-suave);
+}
+
+/* O balão do tooltip é HTML com estilo inline: só o !important passa por cima */
+.grafico-meses .recharts-default-tooltip {
+    background-color: var(--cor-superficie) !important;
+    border-color: var(--cor-borda) !important;
+    border-radius: var(--raio) !important;
+    font-size: var(--texto-sm);
+}
+
+.grafico-meses .recharts-tooltip-label {
+    color: var(--cor-texto);
+    font-weight: 600;
+}

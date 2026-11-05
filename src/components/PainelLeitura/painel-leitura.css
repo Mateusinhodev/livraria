@@ -142,7 +142,7 @@
 .painel-leitura__paginas input:focus {
     border-color: var(--cor-destaque);
     outline: none;
-    box-shadow: 0 0 0 3px var(--laranja-100);
+    box-shadow: 0 0 0 3px var(--cor-anel-foco);
 }
 
 .painel-leitura__de {

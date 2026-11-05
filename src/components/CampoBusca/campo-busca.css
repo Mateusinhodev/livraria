@@ -12,7 +12,7 @@
 
 .campo-busca:focus-within {
     border-color: var(--cor-destaque);
-    box-shadow: 0 0 0 4px var(--laranja-100);
+    box-shadow: 0 0 0 4px var(--cor-anel-foco);
 }
 
 .campo-busca__lupa {

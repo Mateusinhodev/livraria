@@ -5,7 +5,7 @@
 .previa__aviso {
     padding: 16px;
     border-radius: 8px;
-    background-color: #F1F1F1;
+    background-color: var(--cor-superficie-suave);
     color: var(--cor-texto-suave);
     text-align: center;
 }
@@ -15,9 +15,9 @@
     width: 100%;
     height: 640px;
     overflow: hidden;
-    border: 1px solid #E2E2E2;
+    border: 1px solid var(--cor-borda);
     border-radius: 8px;
-    background-color: #FFF;
+    background-color: var(--cor-superficie);
 }
 
 @media (max-width: 600px) {

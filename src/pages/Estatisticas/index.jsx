@@ -153,6 +153,7 @@ function Estatisticas() {
                     <strong aria-live="polite">{ano}</strong>
                     <button
                         type="button"
+                        className="botao botao--secundario estatisticas__seta"
                         onClick={() => mudarAno(ano + 1)}
                         disabled={ano >= ANO_ATUAL}
                         aria-label="Próximo ano"

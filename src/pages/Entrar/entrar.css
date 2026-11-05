@@ -31,7 +31,7 @@
     margin-top: 24px;
     padding: 4px;
     border-radius: 8px;
-    background-color: #E8E8E8;
+    background-color: var(--cor-superficie-suave);
 }
 
 .entrar__modos button {
@@ -46,9 +46,9 @@
 }
 
 .entrar__modos button.ativo {
-    background-color: #FFF;
+    background-color: var(--cor-superficie);
     color: var(--cor-texto);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--sombra-sm);
 }
 
 .entrar__form {
@@ -63,8 +63,8 @@
 .entrar__erro {
     padding: 10px 12px;
     border-radius: 6px;
-    background-color: #FBE3E1;
-    color: #8E2219;
+    background-color: var(--cor-perigo-suave);
+    color: var(--cor-perigo);
     font-size: 0.9rem;
 }
 
@@ -74,7 +74,7 @@
     border: none;
     border-radius: 6px;
     background-color: var(--cor-destaque);
-    color: #FFF;
+    color: var(--cor-sobre-destaque);
     font-weight: 700;
     cursor: pointer;
     transition: background-color 0.2s ease;
@@ -97,7 +97,6 @@
 
 .entrar__modos button:focus-visible,
 .entrar__botao:focus-visible {
-    outline: 2px solid #333;
     outline-offset: 2px;
 }
 
