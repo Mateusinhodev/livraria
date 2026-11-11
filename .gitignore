@@ -10,6 +10,7 @@
 
 # production
 /build
+/dist
 
 # environment variables (chaves e dados sensíveis)
 .env
