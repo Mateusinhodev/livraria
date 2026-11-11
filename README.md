@@ -2,7 +2,7 @@
 
 Um gerenciador de leituras: encontre livros, organize sua estante, acompanhe o progresso e leia clássicos em domínio público direto no site.
 
-> 🔗 **Site no ar:** em breve
+> 🔗 **Site no ar:** [livraria-virtual.netlify.app](https://livraria-virtual.netlify.app/)
 
 ![Página inicial da Livraria](docs/imagens/home.png)
 
