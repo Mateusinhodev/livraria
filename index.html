@@ -3,12 +3,26 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="theme-color" content="#373A40" />
+        <meta name="theme-color" content="#FFFFFF" />
         <meta name="description" content="Livraria digital: encontre livros, veja detalhes e salve seus favoritos." />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/logo192.png" />
         <link rel="manifest" href="/manifest.json" />
         <title>Livraria</title>
+        <!-- Aplica o tema antes do primeiro desenho da página (evita o "clarão").
+             Mantenha esta lógica igual à do src/hooks/useTema.js -->
+        <script>
+            (function () {
+                var preferencia = 'sistema';
+                try {
+                    preferencia = localStorage.getItem('livraria:tema') || 'sistema';
+                } catch (e) {}
+                var escuro =
+                    preferencia === 'escuro' ||
+                    (preferencia === 'sistema' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                document.documentElement.dataset.tema = escuro ? 'escuro' : 'claro';
+            })();
+        </script>
     </head>
     <body>
         <noscript>Ative o JavaScript para usar a Livraria.</noscript>

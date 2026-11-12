@@ -1,0 +1,262 @@
+.estante {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--espaco-8) var(--espaco-6) var(--espaco-16);
+}
+
+/* Topo */
+.estante__topo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--espaco-4);
+}
+
+.estante__saudacao {
+    margin-bottom: var(--espaco-1);
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-sm);
+}
+
+.estante__topo h1 {
+    font-size: var(--texto-3xl);
+}
+
+.estante__acoes-topo {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-3);
+}
+
+.estante__total {
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-sm);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ── Abas: controle segmentado ── */
+.estante__abas {
+    display: flex;
+    gap: 2px;
+    width: fit-content; /* a trilha tem o tamanho das abas, não a largura toda */
+    max-width: 100%;
+    margin: var(--espaco-6) 0 var(--espaco-5);
+    padding: 4px;
+    overflow-x: auto; /* no celular, as abas rolam para o lado */
+    background-color: var(--cor-superficie-suave);
+    border-radius: var(--raio);
+    scrollbar-width: none; /* esconde a barra de rolagem (Firefox) */
+}
+
+.estante__abas::-webkit-scrollbar {
+    display: none; /* esconde a barra de rolagem (Chrome, Edge, Safari) */
+}
+
+.estante__aba {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espaco-2);
+    padding: 8px 14px;
+    border: none;
+    border-radius: var(--raio-sm);
+    background-color: transparent;
+    color: var(--cor-texto-suave);
+    font-size: var(--texto-sm);
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color var(--transicao), color var(--transicao), box-shadow var(--transicao);
+}
+
+.estante__aba:hover {
+    color: var(--cor-texto);
+}
+
+.estante__aba--ativa {
+    background-color: var(--cor-superficie);
+    color: var(--cor-texto);
+    box-shadow: var(--sombra-sm);
+}
+
+/* Dentro de um container que rola, o contorno de fora seria cortado: desenhamos por dentro */
+.estante__aba:focus-visible {
+    outline-offset: -2px;
+}
+
+.estante__contador {
+    min-width: 20px;
+    padding: 0 6px;
+    border-radius: var(--raio-pilula);
+    background-color: var(--cor-superficie-forte);
+    color: var(--cor-texto-suave);
+    font-size: var(--texto-xs);
+    line-height: 20px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.estante__aba--ativa .estante__contador {
+    background-color: var(--cor-destaque);
+    color: var(--cor-sobre-destaque);
+}
+
+/* ── Carregando e vazio ── */
+.estante__aviso {
+    padding: var(--espaco-12) 0;
+    color: var(--cor-texto-suave);
+    text-align: center;
+}
+
+/* A moldura tracejada: "aqui cabe alguma coisa" */
+.estante__vazia {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--espaco-4);
+    padding: var(--espaco-12) var(--espaco-4);
+    border: 1px dashed var(--cor-borda-forte);
+    border-radius: var(--raio-lg);
+    color: var(--cor-texto-suave);
+    text-align: center;
+}
+
+.estante__vazia p {
+    max-width: 380px;
+}
+
+/* ── Lista de livros (o cartão vem do global) ── */
+.estante__lista {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-3);
+    list-style: none;
+}
+
+.item-estante {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-4);
+    padding: var(--espaco-3) var(--espaco-4);
+    transition: border-color var(--transicao);
+}
+
+.item-estante:hover {
+    border-color: var(--cor-borda-forte);
+}
+
+.item-estante__capa-link {
+    flex-shrink: 0;
+}
+
+.item-estante__capa {
+    width: 56px;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 4px;
+    background-color: var(--cor-superficie-suave);
+    box-shadow: var(--sombra);
+}
+
+.item-estante__info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0; /* permite cortar textos longos com "..." */
+}
+
+.item-estante__titulo {
+    overflow: hidden;
+    color: var(--cor-texto);
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: color var(--transicao);
+}
+
+.item-estante__titulo:hover {
+    color: var(--cor-destaque);
+}
+
+.item-estante__autor {
+    overflow: hidden;
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-sm);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.item-estante__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--espaco-2);
+    margin-top: var(--espaco-1);
+}
+
+/* Sem selo, nota nem resenha: a linha some e não deixa um buraco */
+.item-estante__meta:empty {
+    display: none;
+}
+
+.item-estante__resenha {
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-xs);
+    font-weight: 500;
+}
+
+.item-estante__progresso {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-3);
+    margin-top: var(--espaco-2);
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-xs);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.item-estante__progresso .barra-progresso {
+    max-width: 220px;
+}
+
+/* Coração: um botão discreto e redondo */
+.item-estante__favorito {
+    flex-shrink: 0;
+    width: 40px;
+    min-height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    color: var(--cor-texto-fraco);
+    font-size: 1.25rem;
+}
+
+.item-estante__favorito--ativo,
+.item-estante__favorito--ativo:hover:not(:disabled) {
+    color: var(--cor-perigo);
+}
+
+@media (max-width: 600px) {
+    .estante {
+        padding: var(--espaco-6) var(--espaco-4) var(--espaco-12);
+    }
+
+    .estante__topo h1 {
+        font-size: var(--texto-2xl);
+    }
+
+    .item-estante {
+        gap: var(--espaco-3);
+        padding: var(--espaco-3);
+    }
+
+    .item-estante__capa {
+        width: 48px;
+    }
+
+    .item-estante__progresso .barra-progresso {
+        max-width: none;
+    }
+}

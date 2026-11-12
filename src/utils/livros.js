@@ -6,16 +6,16 @@ export function forcarHttps(url) {
     return url?.replace(/^http:\/\//, 'https://');
 }
 
-// Retorna a URL da capa. Com { grande: true }, tenta a maior resolução disponível.
-export function getCapa(volumeInfo, { grande = false } = {}) {
+// Retorna a URL da capa.
+// Usamos sempre a "thumbnail": as versões maiores do Google Books às vezes
+// mostram a folha de rosto digitalizada em vez da capa.
+export function getCapa(volumeInfo) {
     const imagens = volumeInfo?.imageLinks;
-    if (!imagens) return undefined;
+    const url = imagens?.thumbnail || imagens?.smallThumbnail;
+    if (!url) return undefined;
 
-    const url = grande
-        ? imagens.medium || imagens.small || imagens.thumbnail || imagens.smallThumbnail
-        : imagens.thumbnail || imagens.smallThumbnail;
-
-    return forcarHttps(url);
+    // edge=curl desenha uma "orelha" dobrada no canto da imagem; removemos
+    return forcarHttps(url).replace('&edge=curl', '');
 }
 
 // ["Ana", "João"] → "Ana, João"
@@ -45,4 +45,48 @@ export function limparDescricao(html) {
 
     const doc = new DOMParser().parseFromString(comQuebras, 'text/html');
     return doc.body.textContent.trim();
+}
+
+// ISBN do livro (prefere o de 13 dígitos, que é o padrão atual)
+export function getIsbn(volumeInfo) {
+    const identificadores = volumeInfo?.industryIdentifiers ?? [];
+    const isbn =
+        identificadores.find((item) => item.type === 'ISBN_13') ??
+        identificadores.find((item) => item.type === 'ISBN_10');
+    return isbn?.identifier ?? null;
+}
+
+// // Capa da Open Library pelo ISBN (S = pequena, M = média, L = grande)
+// export function getCapaOpenLibrary(volumeInfo, tamanho = 'L') {
+//     const isbn = getIsbn(volumeInfo);
+//     if (!isbn) return null;
+//     // default=false: sem capa, a Open Library responde 404 (em vez de uma imagem em branco)
+//     return `https://covers.openlibrary.org/b/isbn/${isbn}-${tamanho}.jpg?default=false`;
+// }
+
+// Divide um bloco em parágrafos de até "porParagrafo" frases.
+// Uma frase termina em . ! ? ou … seguido de espaço e letra maiúscula.
+function agruparFrases(bloco, porParagrafo = 3) {
+    const frases = bloco.split(/(?<=[.!?…])\s+(?=[A-ZÀ-Ý])/);
+    const paragrafos = [];
+
+    for (let i = 0; i < frases.length; i += porParagrafo) {
+        paragrafos.push(frases.slice(i, i + porParagrafo).join(' '));
+    }
+
+    return paragrafos;
+}
+
+// Sinopses sem quebras de linha viram um "paredão" de texto.
+// Criamos parágrafos depois de estrelas, antes de citações e a cada 3 frases.
+export function separarParagrafos(texto) {
+    if (!texto || texto.includes('\n')) return texto; // já tem parágrafos: respeita
+
+    return texto
+        .replace(/((?:⭐\uFE0F?|★)+)\s*/g, '$1\n') // quebra depois de uma fileira de estrelas
+        .replace(/\s+(?=“)/g, '\n') // quebra antes de abrir aspas
+        .split('\n')
+        .flatMap((bloco) => agruparFrases(bloco.trim()))
+        .filter(Boolean)
+        .join('\n\n');
 }

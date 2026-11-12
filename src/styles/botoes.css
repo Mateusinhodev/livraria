@@ -1,0 +1,96 @@
+/* ==========================================================
+   Botões reutilizáveis
+   Uso: className="botao botao--primario [botao--pequeno]"
+   Funciona em <button> e em <Link>/<a>.
+   ========================================================== */
+
+.botao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espaco-2);
+    min-height: 40px;
+    padding: 0 var(--espaco-4);
+    border: 1px solid transparent;
+    border-radius: var(--raio-sm);
+    font-size: var(--texto-sm);
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+        background-color var(--transicao),
+        border-color var(--transicao),
+        color var(--transicao),
+        transform var(--transicao);
+}
+
+/* "Afunda" 1px ao clicar: um retorno físico sutil */
+.botao:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.botao:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ---------- Variantes ---------- */
+
+.botao--primario {
+    background-color: var(--cor-destaque);
+    color: var(--cor-sobre-destaque);
+}
+
+.botao--primario:hover:not(:disabled) {
+    background-color: var(--cor-destaque-hover);
+}
+
+.botao--secundario {
+    background-color: var(--cor-superficie);
+    border-color: var(--cor-borda-forte);
+    color: var(--cor-texto);
+    box-shadow: var(--sombra-sm);
+}
+
+.botao--secundario:hover:not(:disabled) {
+    background-color: var(--cor-superficie-suave);
+}
+
+.botao--discreto {
+    background-color: transparent;
+    color: var(--cor-texto-suave);
+}
+
+.botao--discreto:hover:not(:disabled) {
+    background-color: var(--cor-superficie-suave);
+    color: var(--cor-texto);
+}
+
+.botao--perigo {
+    background-color: transparent;
+    color: var(--cor-perigo);
+}
+
+.botao--perigo:hover:not(:disabled) {
+    background-color: var(--cor-perigo-suave);
+}
+
+/* ---------- Tamanhos ---------- */
+
+.botao--pequeno {
+    min-height: 32px;
+    padding: 0 var(--espaco-3);
+    font-size: var(--texto-xs);
+}
+
+.botao--grande {
+    min-height: 48px;
+    padding: 0 var(--espaco-6);
+    font-size: var(--texto-base);
+}
+
+.botao--bloco {
+    width: 100%;
+}

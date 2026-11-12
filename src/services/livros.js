@@ -4,36 +4,7 @@
 
 import api from './api';
 import { filtrarLivros } from '../utils/livros';
-
-const PREFIXO = 'livraria-cache:';
-const VALIDADE = 10 * 60 * 1000; // 10 minutos
-
-function lerCache(chave) {
-    try {
-        const salvo = JSON.parse(sessionStorage.getItem(PREFIXO + chave));
-        if (salvo && Date.now() - salvo.data < VALIDADE) {
-            return salvo.valor;
-        }
-    } catch {
-        // Cache inválido: ignora e busca na API
-    }
-    return null;
-}
-
-function limparCache() {
-    Object.keys(sessionStorage)
-        .filter((chave) => chave.startsWith(PREFIXO))
-        .forEach((chave) => sessionStorage.removeItem(chave));
-}
-
-function salvarCache(chave, valor) {
-    try {
-        sessionStorage.setItem(PREFIXO + chave, JSON.stringify({ data: Date.now(), valor }));
-    } catch {
-        // sessionStorage cheio: apaga o cache antigo e segue sem guardar
-        limparCache();
-    }
-}
+import { lerCache, salvarCache } from '../utils/cache';
 
 // Lista de livros para a Home
 export async function buscarLivros(termo, { signal } = {}) {

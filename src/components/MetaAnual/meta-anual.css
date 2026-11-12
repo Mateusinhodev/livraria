@@ -1,0 +1,137 @@
+.meta-anual__topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--espaco-1);
+}
+
+/* Convite */
+.meta-anual--convite {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--cor-texto-suave);
+}
+
+/* Números e barra */
+.meta-anual__numeros {
+    margin: 10px 0;
+    color: var(--cor-texto-suave);
+}
+
+.meta-anual__numeros strong {
+    font-size: 1.8rem;
+    color: var(--cor-texto);
+}
+
+.meta-anual__barra {
+    position: relative;
+    height: 14px;
+    background-color: var(--cor-superficie-forte);
+    border-radius: 7px;
+}
+
+.meta-anual__preenchido {
+    height: 100%;
+    background-color: var(--cor-destaque);
+    border-radius: 7px;
+    transition: width 0.4s ease;
+}
+
+/* A marquinha de "onde você deveria estar hoje" */
+.meta-anual__hoje {
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    width: 3px;
+    margin-left: -1.5px;
+    background-color: var(--cor-texto);
+    border-radius: 2px;
+}
+
+.meta-anual__situacao {
+    margin-top: 12px;
+    font-weight: 700;
+}
+
+.meta-anual__dica {
+    margin-top: 4px;
+    color: var(--cor-texto-suave);
+    font-size: 0.9rem;
+}
+
+/* Cores por situação */
+.meta-anual--adiantado .meta-anual__situacao,
+.meta-anual--concluida .meta-anual__situacao {
+    color: var(--cor-sucesso);
+}
+
+.meta-anual--atrasado .meta-anual__situacao {
+    color: var(--cor-perigo);
+}
+
+.meta-anual--concluida .meta-anual__preenchido {
+    background-color: var(--cor-sucesso);
+}
+
+/* Formulário */
+.meta-anual__form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 12px;
+}
+
+.meta-anual__form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-weight: 600;
+}
+
+.meta-anual__form input {
+    width: 120px;
+    padding: 8px 10px;
+    border: 1px solid var(--cor-borda-forte);
+    background-color: var(--cor-superficie);
+    color: var(--cor-texto);
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.meta-anual__form input:focus {
+    border-color: var(--cor-destaque);
+    outline: none;
+}
+
+.meta-anual__botoes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+}
+
+.meta-anual__link {
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--cor-texto-suave);
+    font-size: 0.9rem;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.meta-anual__link:hover:not(:disabled) {
+    color: var(--cor-destaque);
+}
+
+.meta-anual__link--perigo:hover:not(:disabled) {
+    color: var(--cor-perigo);
+}
+
+.meta-anual button:focus-visible,
+.meta-anual input:focus-visible {
+    outline-offset: 2px;
+}

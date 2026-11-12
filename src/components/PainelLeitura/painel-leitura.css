@@ -1,0 +1,203 @@
+.painel-leitura {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-5);
+    margin-top: var(--espaco-6);
+    padding: var(--espaco-6);
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-lg);
+}
+
+/* Rótulos das seções ("PROGRESSO", "SUA NOTA", "RESUMO OU RESENHA") */
+.painel-leitura h3,
+.painel-leitura .campo span {
+    margin-bottom: var(--espaco-3);
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-xs);
+    font-weight: 650;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* Convite para quem não está logado */
+.painel-leitura--convite {
+    align-items: flex-start;
+    gap: var(--espaco-4);
+    background-color: var(--cor-destaque-suave);
+    border-color: var(--cor-destaque-borda);
+    color: var(--cor-texto-suave);
+}
+
+/* Status + favorito */
+.painel-leitura__linha {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espaco-3);
+}
+
+/* Controle segmentado: uma trilha com a opção ativa "por cima" */
+.painel-leitura__status {
+    display: inline-flex;
+    gap: 2px;
+    padding: 4px;
+    background-color: var(--cor-superficie-suave);
+    border-radius: var(--raio);
+}
+
+.painel-leitura__status button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: var(--raio-sm);
+    background-color: transparent;
+    color: var(--cor-texto-suave);
+    font-size: var(--texto-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--transicao), color var(--transicao), box-shadow var(--transicao);
+}
+
+.painel-leitura__status button:hover {
+    color: var(--cor-texto);
+}
+
+.painel-leitura__status button.ativo {
+    background-color: var(--cor-superficie);
+    color: var(--cor-destaque);
+    box-shadow: var(--sombra-sm);
+}
+
+/* Favorito: a aparência vem do .botao--secundario; aqui só o vermelho */
+.painel-leitura__favorito:hover:not(:disabled),
+.painel-leitura__favorito.ativo {
+    border-color: var(--cor-perigo);
+    color: var(--cor-perigo);
+}
+
+.painel-leitura__remover {
+    align-self: flex-start;
+    margin-top: calc(-1 * var(--espaco-3));
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-xs);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.painel-leitura__remover:hover {
+    color: var(--cor-perigo);
+}
+
+/* Seções */
+.painel-leitura__secao {
+    padding-top: var(--espaco-5);
+    border-top: 1px solid var(--cor-borda);
+}
+
+.painel-leitura__progresso {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-3);
+    margin-bottom: var(--espaco-4);
+}
+
+.painel-leitura__progresso strong {
+    font-size: var(--texto-sm);
+    font-variant-numeric: tabular-nums;
+}
+
+.painel-leitura__paginas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: var(--espaco-3);
+}
+
+.painel-leitura__paginas label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-1);
+    color: var(--cor-texto-suave);
+    font-size: var(--texto-xs);
+    font-weight: 600;
+}
+
+.painel-leitura__paginas input {
+    width: 110px;
+    height: 40px;
+    padding: 0 var(--espaco-3);
+    border: 1px solid var(--cor-borda-forte);
+    border-radius: var(--raio-sm);
+    background-color: var(--cor-superficie);
+    font-size: var(--texto-base);
+    font-variant-numeric: tabular-nums;
+    transition: border-color var(--transicao), box-shadow var(--transicao);
+}
+
+.painel-leitura__paginas input:focus {
+    border-color: var(--cor-destaque);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--cor-anel-foco);
+}
+
+.painel-leitura__de {
+    padding-bottom: 10px;
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-sm);
+}
+
+/* "Lido em 21/10/2026" como uma pílula verde */
+.painel-leitura__concluido {
+    align-self: flex-start;
+    padding: 4px 12px;
+    border-radius: var(--raio-pilula);
+    background-color: var(--cor-sucesso-suave);
+    color: var(--cor-sucesso);
+    font-size: var(--texto-sm);
+    font-weight: 600;
+}
+
+.painel-leitura__rodape {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espaco-3);
+    margin-top: var(--espaco-3);
+}
+
+.painel-leitura__rodape small,
+.painel-leitura__dica {
+    color: var(--cor-texto-fraco);
+    font-size: var(--texto-xs);
+}
+
+.painel-leitura textarea {
+    resize: vertical;
+    line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+    .painel-leitura {
+        padding: var(--espaco-4);
+    }
+
+    .painel-leitura__status {
+        display: flex;
+        width: 100%;
+    }
+
+    .painel-leitura__status button {
+        flex: 1;
+        padding: 8px 6px;
+    }
+
+    .painel-leitura__favorito {
+        width: 100%;
+    }
+}

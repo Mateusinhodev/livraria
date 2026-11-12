@@ -1,38 +1,84 @@
-# Projeto Livraria
+# 📚 Livraria
 
-**Livraria Digital** é o meu primeiro projeto em **React**! Esta aplicação foi criada com o objetivo de explorar e aplicar os conceitos do React, proporcionando uma plataforma interativa onde os usuários podem pesquisar livros, salvar seus favoritos e visualizar detalhes de cada obra através da API do Google Books.
+Um gerenciador de leituras: encontre livros, organize sua estante, acompanhe o progresso e leia clássicos em domínio público direto no site.
 
-## 🌟 Funcionalidades Principais
+> 🔗 **Site no ar:** [livraria-virtual.netlify.app](https://livraria-virtual.netlify.app/)
 
-- **🔍 Busca Dinâmica**: Pesquise por livros e autores, com resultados atualizados em tempo real.
-- **📖 Detalhes do Livro**: Exibe informações completas sobre cada livro, como título, autor, descrição e imagem da capa.
-- **❤️ Favoritos**: Adicione livros à sua lista de favoritos para fácil acesso.
-- **🌐 Pesquisa no Google**: Ao visualizar os detalhes de um livro, é possível realizar uma pesquisa direta no Google para mais informações.
+![Página inicial da Livraria](docs/imagens/home.png)
 
-## 💻 Tecnologias Utilizadas
+## Funcionalidades
 
-- **React**: Framework para construção de interfaces dinâmicas e interativas.
-- **React Router**: Biblioteca para gerenciamento de navegação entre as páginas da aplicação.
-- **API Google Books**: Fonte de dados dos livros, que fornece informações sobre títulos, autores, descrições e imagens das capas.
-- **CSS**: Utilizados para a estilização da aplicação e garantir a responsividade.
+- **Busca de livros** na API do Google Books, com sugestões, capas em alta resolução (Open Library) e prévia embutida do Google.
+- **Conta de usuário** com cadastro e login (Supabase Auth).
+- **Estante pessoal** com as listas *Lendo*, *Quero ler*, *Lidos* e *Favoritos*.
+- **Acompanhamento de leitura:** página atual, progresso, nota de 1 a 5 estrelas e resenha.
+- **Clássicos grátis:** mais de 600 livros em português do Project Gutenberg, com um **leitor** próprio que salva o progresso sozinho.
+- **Meu ano de leitura:** estatísticas, gráfico de livros por mês, meta anual com ritmo e sequência de dias lendo 🔥.
+- **Modo escuro**, que pode seguir o sistema ou ser escolhido manualmente.
 
-## 📸 Demonstração
+| Página do livro | Leitor | Estatísticas (modo escuro) |
+|---|---|---|
+| ![Página do livro](docs/imagens/livro.png) | ![Leitor](docs/imagens/leitor.png) | ![Estatísticas](docs/imagens/estatisticas.png) |
 
-- **Página Inicial - Busca de Livros**
+## Tecnologias
 
-![Texto Alternativo](./public/imagens/home.png)
+- **Front-end:** React, Vite, React Router, Axios, Recharts e React Toastify
+- **Back-end:** Supabase (Postgres com Row Level Security, Auth e Edge Functions)
+- **APIs:** Google Books, Open Library e Gutendex (Project Gutenberg)
+- **Estilo:** CSS puro com design tokens, sem frameworks, e as fontes Inter e Literata
 
-- **Página de Detalhes**
+## Como rodar localmente
 
-![Texto Alternativo](./public/imagens/detalhes.png)
+**Pré-requisitos:** Node.js (versão LTS), uma conta no [Supabase](https://supabase.com) e uma chave da [Books API](https://console.cloud.google.com/apis/library/books.googleapis.com) do Google.
 
-- **Página de Favoritos**
+1. Clone o repositório e instale as dependências:
+   ```bash
+   git clone https://github.com/Mateusinhodev/livraria.git
+   cd livraria
+   npm install
+   ```
 
-![Texto Alternativo](./public/imagens/favoritos.png)
+2. Crie o arquivo `.env` a partir do modelo e preencha com os seus valores:
+   ```bash
+   cp .env.example .env
+   ```
 
-## 🧑‍💻 Autor
+3. No **SQL Editor** do Supabase, rode os scripts da pasta `supabase/`, nesta ordem:
+   `schema.sql` → `historico.sql` → `metas.sql` → `dias_leitura.sql`
 
-Desenvolvido com dedicação por Mateus Rodrigues.
+4. Publique a Edge Function `texto-livro` (pasta `supabase/functions/`), que entrega o texto dos clássicos ao leitor.
 
-📧 Entre em contato: mateusdev23@gmail.com
+5. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
+   O site abre em `http://localhost:3000`.
 
+## Estrutura do projeto
+
+```
+src/
+├── components/   # Peças reutilizáveis (CardLivro, PainelLeitura, MetaAnual...)
+├── contexts/     # Estado global: autenticação e estante
+├── hooks/        # Hooks próprios (useTema)
+├── lib/          # Clientes de serviços externos (Supabase, visualizador do Google)
+├── pages/        # Uma pasta por tela
+├── services/     # Comunicação com APIs e banco de dados
+├── styles/       # Estilos globais: botões, cartões e esqueletos
+└── utils/        # Funções auxiliares
+supabase/         # Scripts SQL e Edge Function
+```
+
+## Decisões e aprendizados
+
+- **Segurança no banco:** cada tabela tem **Row Level Security**, e cada pessoa só lê e altera os próprios dados, mesmo chamando a API diretamente.
+- **Diário de leitura automático:** um *trigger* no Postgres registra as páginas lidas a cada atualização de progresso, sem depender do front-end.
+- **Interface otimista:** a estante atualiza na hora e desfaz a mudança se o banco recusar.
+- **Design tokens em duas camadas** (paleta e papéis): o modo escuro foi feito redefinindo só os papéis, sem tocar nos componentes.
+- **Resiliência:** novas tentativas automáticas com espera exponencial para erros temporários da API e cache das buscas.
+- **Acessibilidade:** contraste conferido (WCAG AA), navegação por teclado, foco visível e rótulos para leitores de tela.
+- **Cadastro sem confirmação de e-mail:** escolha consciente para o portfólio, para quem visitar testar na hora. Em produção real, o caminho é ativar a confirmação com um servidor SMTP próprio, porque o serviço de e-mail padrão do Supabase só entrega para a equipe do projeto.
+
+## Autor
+
+Feito por **Mateus** · [GitHub](https://github.com/Mateusinhodev)
