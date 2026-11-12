@@ -77,6 +77,7 @@ supabase/         # Scripts SQL e Edge Function
 - **Design tokens em duas camadas** (paleta e papéis): o modo escuro foi feito redefinindo só os papéis, sem tocar nos componentes.
 - **Resiliência:** novas tentativas automáticas com espera exponencial para erros temporários da API e cache das buscas.
 - **Acessibilidade:** contraste conferido (WCAG AA), navegação por teclado, foco visível e rótulos para leitores de tela.
+- **Cadastro sem confirmação de e-mail:** escolha consciente para o portfólio, para quem visitar testar na hora. Em produção real, o caminho é ativar a confirmação com um servidor SMTP próprio, porque o serviço de e-mail padrão do Supabase só entrega para a equipe do projeto.
 
 ## Autor
 
